@@ -26,7 +26,7 @@ docker pull vgiotsas/ipfs-crawler
 For example:
 
 ```
-docker run --env AWS_ACCESS_KEY_ID=<my_key> --env AWS_SECRET_ACCESS_KEY=<my_secret> --env bucketname=ipfs-crawls --env ES_USER=vgiotsas --env=ES_PW=<my_password> ES_URL="https://search-observatory-bn4ftthzrkyzsbnkye5tnoqsbm.eu-west-1.es.amazonaws.com/observatory/_doc"  --name test-crawler-image ipfs-crawler
+docker run --env AWS_ACCESS_KEY_ID=<my_key> --env AWS_SECRET_ACCESS_KEY=<my_secret> --env bucketname=ipfs-crawls --env ES_USER=vgiotsas --env=ES_PW=<my_password> ES_URL="https://search-observatory-bn4ftthzrkyzsbnkye5tnoqsbm.eu-west-1.es.amazonaws.com/observatory/_doc" --name test-crawler-image ipfs-crawler
 ```
 
 3. Check that the crawler runs and that the output is uploaded in your S3 bucket
@@ -92,3 +92,4 @@ you need to install the the `software-properties-common` package:
 - Provision Elastic Search cluster through Terraform
 - Create Docker image for steps 1 and 2
 - Compile ipfs-crawler in Dockerfile
+- Get all variables from a config file instead of environment variables
