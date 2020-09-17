@@ -21,6 +21,7 @@ docker pull vgiotsas/ipfs-crawler
 | bucketname  |  The name of the bucket were the crawler's output will be uploaded  |
 | ES_USER | The username for accessing the Elastic Search cluster |
 | ES_PW   | The password for accessing the Elastic Search cluster |
+| ES_URL   | The URL of the Elastic Search cluster |
 
 For example:
 
