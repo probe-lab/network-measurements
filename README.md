@@ -26,7 +26,14 @@ docker pull vgiotsas/ipfs-crawler
 For example:
 
 ```
-docker run --env AWS_ACCESS_KEY_ID=<my_key> --env AWS_SECRET_ACCESS_KEY=<my_secret> --env bucketname=ipfs-crawls --env ES_USER=vgiotsas --env=ES_PW=<my_password> ES_URL="https://search-observatory-bn4ftthzrkyzsbnkye5tnoqsbm.eu-west-1.es.amazonaws.com/observatory/_doc" --name test-crawler-image ipfs-crawler
+docker run \
+--env AWS_ACCESS_KEY_ID=<my_key> \
+--env AWS_SECRET_ACCESS_KEY=<my_secret> \
+--env bucketname=ipfs-crawls \
+--env ES_USER=vgiotsas \
+--env ES_PW=<my_password> \
+--env ES_URL="https://search-observatory-bn4ftthzrkyzsbnkye5tnoqsbm.eu-west-1.es.amazonaws.com/observatory/_doc" \
+--name test-crawler-image ipfs-crawler
 ```
 
 3. Check that the crawler runs and that the output is uploaded in your S3 bucket
