@@ -1,5 +1,5 @@
 ---
-- hosts: probe
+- hosts: probes
   become: true
   tasks:
     - name: Install required system packages
