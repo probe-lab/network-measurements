@@ -31,7 +31,7 @@ docker run --env AWS_ACCESS_KEY_ID=<my_key> --env AWS_SECRET_ACCESS_KEY=<my_secr
 
 3. Check that the crawler runs and that the output is uploaded in your S3 bucket
 
-4. 
+
 ## Step 1: Provision the EC2 instances
 
 1. Install Terraform following the instructions below:
@@ -41,8 +41,8 @@ https://learn.hashicorp.com/tutorials/terraform/install-cli
 2. Set the following two environment variables for the Access Key and the Secret Key of your AWS account:
 
 ```
-TF_VAR_accessKey=AKIAIPYC7WDA7Z3KM4RA
-TF_VAR_secretKey=XgRIh3EqkWQHR7HXV6nbHsiBlP/s0Bcm0x+VwlQu
+TF_VAR_accessKey=AKIAC7WDA7Z3KM4RA
+TF_VAR_secretKey=XgRIh3EqkWQHR7HXV6nbHsiBl0xVwlQu
 ```
 
 3. Set the SSH key of the new instances in the `tf/variables.tf` file.
