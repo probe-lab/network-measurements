@@ -99,3 +99,4 @@ you need to install the the `software-properties-common` package:
 - Provision Elastic Search cluster through Terraform
 - Create Docker image for steps 1 and 2
 - Compile ipfs-crawler in Dockerfile
+- Get all variables from a config file instead of environment variables
