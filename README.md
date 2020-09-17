@@ -54,7 +54,10 @@ terraform init
 terraform apply
 ```
 
-After you apply the changes and the requested resources are created, you should have an `ansible/host` folder inside the `tf` folder. The contents of the file should be similar to the following:
+5. After you apply the changes and the requested resources are created, run the `./create_ansible_hosts` script
+
+This should populate the `ansible/host` file inside the `tf` folder with the IPs and credentials of the created instances. 
+The contents of the file should be similar to the following:
 
 ```
 [probe]
@@ -68,7 +71,7 @@ For example:
 34.245.136.224 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/.ssh/terraform
 ```
 
-5. Run the ansible playbook as follows:
+6. Run the ansible playbook as follows:
 
 ```
 ansible-playbook -i hosts ipfs-crawler.yml
