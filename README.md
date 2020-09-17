@@ -91,3 +91,4 @@ you need to install the the `software-properties-common` package:
 - Improve Elastic Search authentication
 - Provision Elastic Search cluster through Terraform
 - Create Docker image for steps 1 and 2
+- Compile ipfs-crawler in Dockerfile
