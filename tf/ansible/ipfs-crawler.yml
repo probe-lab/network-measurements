@@ -22,3 +22,22 @@
     - name: Install Docker Module for Python
       pip:
         name: docker
+    
+    - name: Pull Docker image
+      docker_image:
+        name: vgiotsas/ipfs-crawler:latest
+        source: pull
+        
+     - name: Running the container
+      docker_container:
+        image: vgiotsas/ipfs-crawler
+        path: docker
+        state: running
+        env:
+          AWS_ACCESS_KEY_ID: KEY
+          AWS_SECRET_ACCESS_KEY: SECRET
+          ES_USER: USERNAME
+          ES_PW: PASSWORD
+          ES_URL: URL
+          bucketname: BUCKET_NAME
+          
