@@ -28,11 +28,11 @@
         name: vgiotsas/ipfs-crawler:latest
         source: pull
         
-     - name: Running the container
+    - name: Running the container
       docker_container:
         image: vgiotsas/ipfs-crawler
-        path: docker
-        state: running
+        name: ipfs-crawler
+        state: started
         env:
           AWS_ACCESS_KEY_ID: KEY
           AWS_SECRET_ACCESS_KEY: SECRET
