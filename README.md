@@ -68,6 +68,12 @@ For example:
 34.245.136.224 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/.ssh/terraform
 ```
 
+5. Run the ansible playbook as follows:
+
+```
+ansible-playbook -i hosts ipfs-crawler.yml
+```
+
 ### Troubleshooting:
 
 If you get the error:
