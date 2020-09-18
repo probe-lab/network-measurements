@@ -32,9 +32,19 @@ This page lists measurements that can potentially bit useful in developing the P
 
 **[Tooling/Other notes](#tooling)**
 
-:thinking: **brainstorm** ; :memo: **draft** ; :monocle_face:	**ready for review** ; :ok_hand: **ready to implement** \&gt;
 
-\&lt;? **LOW** ; **MEDIUM** ; **HIGH** \&gt;
+#### List of RFM statuses
+
+:thinking: **brainstorm**  
+:memo: **draft**  
+:monocle_face:	**ready for review**  
+:ok_hand: **ready to implement**  
+
+#### List of RFM priorities
+
+:black_medium_square::white_medium_square::white_medium_square: **LOW**  
+:black_medium_square::black_medium_square::white_medium_square: **MEDIUM**  
+:black_medium_square::black_medium_square::black_medium_square: **HIGH**
 
 ---
 
