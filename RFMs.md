@@ -32,7 +32,7 @@ This page lists measurements that can potentially bit useful in developing the P
 
 **[Tooling/Other notes](#tooling)**
 
-\&lt;? **brainstorm** ; **draft** ; **ready for review** ; **ready to implement** \&gt;
+:thinking: **brainstorm** ; :memo: **draft** ; :monocle_face:	**ready for review** ; :ok_hand: **ready to implement** \&gt;
 
 \&lt;? **LOW** ; **MEDIUM** ; **HIGH** \&gt;
 
