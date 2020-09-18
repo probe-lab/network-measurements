@@ -136,7 +136,7 @@ We have a dashboard that shows the lifetime distribution of nodes
 
 ## 
 
-<a id="_rd50td3ym8dy></a>
+<a id="_rd50td3ym8dy"></a>
 ## RFM 3 - Location of IPFS end users and requested content.
 
 * _Status:_ **brainstorm**
