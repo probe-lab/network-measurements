@@ -4,15 +4,17 @@ This page lists measurements that can potentially bit useful in developing the P
 
 **[RFM 1 | Lifetime of a document in the IPFS Network vs Bittorrent vs DAT vs FreeNet](#_o575jad7aotj)**
 
-**[RFM ### | Lifetime of a node in the IPFS Network vs Bittorrent vs DAT vs FreeNet](#_3k3jj6wgwrra)**
+**[RFM 2 | Uptime  and churn P2P network nodes](#_3k3jj6wgwrra)**
 
-**[RFM ### - Location of IPFS end users and requested content.](#_rd50td3ym8dy)**
+**[RFM 3 | Location of IPFS end users and requested content](#_rd50td3ym8dy)**
 
-**[RFM ### | IP Churn (Roaming) for nodes in the IPFS Network](#_1mu1tfaw8au3)**
+**[RFM 4 | IP Churn (Roaming) for nodes in the IPFS Network](#_1mu1tfaw8au3)**
 
-**[RFM ### - IP Geolocation of P2P networks](#_fld2sr9emn3m)**
+**[RFM 5 | IP Geolocation of P2P networks](#_fld2sr9emn3m)**
 
-**[RFM ### - Mapping the AS-level topology of P2P networks](#_1xjatm7vfujn)**
+**[RFM 6 | Mapping the AS-level topology of P2P networks](#_1xjatm7vfujn)**
+
+**[RFM 7 | Distribution of DHT lookups time](#_mjvqjcvas5uh)**
 
 **[RFM ### - Path length and Latency measurements](#_22mtgvvx3kv0)**
 
@@ -28,8 +30,6 @@ This page lists measurements that can potentially bit useful in developing the P
 
 **[RFM ### - How efficient is caching in the IPFS network?](#_j426cm9u3j1h)**
 
-**[RFM ### - Distribution of DHT lookups time](#_mjvqjcvas5uh)**
-
 **[Tooling/Other notes](#_tfkzbli5mel1)**
 
 **[Longitudinal repository of IPFS crawling snapshots](#_kikmcgljnwwp)**
@@ -42,9 +42,8 @@ This page lists measurements that can potentially bit useful in developing the P
 
 ---
 
-
-## RFM 1 | Lifetime of a document in the IPFS Network vs Bittorrent vs DAT vs FreeNet
 <a id="_o575jad7aotj"></a>
+## RFM 1 | Lifetime of a document in the IPFS Network vs Bittorrent vs DAT vs FreeNet
 
 
 * * _Status:_ **draft**
@@ -54,13 +53,13 @@ This page lists measurements that can potentially bit useful in developing the P
 * * _Prerequisite(s):_ NONE
 * * _Value:_ **HIGH**
 
-## Proposal
+#### Proposal
 
 We want to learn what is the lifetime of documents (webpages, images, videos, etc) in different P2P Network to understand better the resiliency of these networks when it comes to permanency of data and the different behaviours and patterns that emerge around popular and non-popular content.
 
 Measuring this overtime will also be a strong indication of Network growth and adoption.
 
-## Measurement Plan
+#### Measurement Plan
 
 For IPFS:
 
@@ -85,11 +84,14 @@ For Freenet
 
 - ??
 
-## Success Criteria
+#### Success Criteria
 
 We have a dashboard that shows the lifetime of documents in the multiple networks, differentiated by different file size and type.
 
-## RFM 2 | Uptime of a node in the IPFS Network vs Bittorrent vs DAT vs FreeNet
+##
+
+<a id="_3k3jj6wgwrra"></a>
+## RFM 2 | Uptime  and churn P2P network nodes
 
 * _Status:_ **draft**
 
@@ -103,7 +105,7 @@ We have a dashboard that shows the lifetime of documents in the multiple network
 
 * _Value:_ 
 
-## Proposal
+#### Proposal
 
 This proposal seeks to compare the amount of regular participation in different P2P Networks. Comparing IPFS, Bittorrent, DAT and FreeNet.
 
@@ -114,7 +116,7 @@ We want to learn:
 - Average session length
 - Average uptime per year, month and day
 
-## Measurement Plan
+#### Measurement Plan
 
 For IPFS:
 
@@ -132,10 +134,13 @@ For Freenet
 
 - ??
 
-## Success Criteria
+#### Success Criteria
 
 We have a dashboard that shows the lifetime distribution of nodes
 
+## 
+
+<a id="_rd50td3ym8dy></a>
 ## RFM 3 - Location of IPFS end users and requested content.
 
 * _Status:_ **brainstorm**
@@ -150,21 +155,21 @@ We have a dashboard that shows the lifetime distribution of nodes
 
 * _Value:_ **MEDIUM**
 
-## Proposal
+#### Proposal
 
 Based on data from public IPFS gateways, get the location of IPFS users and the requested content. This would allow us to measure the locality of CIDs in relation to the users that issue requests. Also it would allow us to understand which nodes are actually involved in serving content.
 
-## Measurement Plan
+#### Measurement Plan
 
 For each request received by an IPFS gateway we will get the CID and the IP address of the requestor. We will then resolve the IP address to a location (city, country) and we will find the providers (peer IDs) that offer the requested CID at the time of the request based on data collected from HydraBooster nodes. By also mapping the Peer IDs to a location we will be able to understand the locality of requests in IPFS.
 
-## Success Criteria
+#### Success Criteria
 
 We have a dashboard that visualizes the volume of requests between different relationships. A visualization like a [Chord diagram](https://python-graph-gallery.com/chord-diagram/) can be used in addition to a map. The dashboard will also provide statistics on which ASNs and locations serve and consume most content.
 
 ##
 
-
+<a id="_1mu1tfaw8au3"></a>
 ## RFM 4 | IP Churn (Roaming) for nodes in the IPFS Network
 
 * _Status:_ **draft**
@@ -179,21 +184,24 @@ We have a dashboard that visualizes the volume of requests between different rel
 
 * _Value:_ **LOW**
 
-## Proposal
+#### Proposal
 
 We need to learn about how stable are the IPFS nodes location and if not, how much each roam (e.g. Laptop moving from home to coffee shop to work).
 
-## Measurement Plan
+#### Measurement Plan
 
 Using the Hydra Booster nodes, track PeerIds to multiaddrs and check how often these change by executing FindPeer queries regularly.
 
-## Success Criteria
+#### Success Criteria
 
 We have a dashboard that shows the IP churn of nodes. Ideas for dashboard:
 
 - Churn dashboard: we can have a dashboard where the y-axis measures churn rate and the x-axis is increasing reliability. On the x-axis nodes are &quot;listed&quot; according to the churn rate we have measured.
 - Roaming dashboard: we can have a dashboard where the y-axis shows change in location per 24hr period. The x-axis can again &quot;list&quot; nodes in increasing reliability in terms of location change.
 
+##
+
+<a id="_fld2sr9emn3m></a>
 ## RFM 5 - IP Geolocation of P2P networks
 
 * _Status:_ **draft**
@@ -208,18 +216,21 @@ We have a dashboard that shows the IP churn of nodes. Ideas for dashboard:
 
 * _Value:_ **MEDIUM**
 
-## Proposal
+#### Proposal
 
 Map the IPs of p2p nodes to city-level granularity. Knowing the geolocation of nodes is necessary for a lot of RFMs and follow-up analysis, as well as understanding the geographic penetration of the different p2p networks.
 
-## Measurement Plan
+#### Measurement Plan
 
 Using a geolocation database, such as MaxMind, will be the first step. However, Maxmind alone can yield inaccurate results. We will augment the MaxMind data with RIPE&#39;s IPMap which combines an array of data sources, including ping measurements, rDNS resolution and crowdsourced information to confirm the location of an IP.
 
-## Success Criteria
+#### Success Criteria
 
 We will have a dynamic database that will map IPs to geographic coordinates, and a real-time map of the location of the P2P nodes.
 
+##
+
+<a id="_1xjatm7vfujn"></a>
 ## RFM 6 - Mapping the AS-level topology of P2P networks
 
 * _Status:_ **draft**
@@ -234,18 +245,21 @@ We will have a dynamic database that will map IPs to geographic coordinates, and
 
 * _Value:_ **MEDIUM**
 
-## Proposal
+#### Proposal
 
 Map the IPs of p2p nodes to the corresponding AS Numbers (ASNs). Such a mapping will help us infer the network-level topology of the P2P nodes, which enables better-informed analysis of performance and resilience characteristics of the P2P network.
 
-## Measurement Plan
+#### Measurement Plan
 
 The IP addresses of each P2P network (e.g. IPFS, BitTorrent) will be collected by a crawler. The collected IPs will be mapped to an AS using BGP data obtained from BGPStream (real-time stream of BGP paths from RouteViews and RIPE RIS) as well as WHOIS and RIR data to filter artifacts of BGP paths. We can also use some free services, such as the API by [Team Cymry](https://team-cymru.com/community-services/ip-asn-mapping/) that can be used to assist in this task.
 
-## Success Criteria
+#### Success Criteria
 
 We have a dashboard that shows the distribution of nodes to ASNs, and an API that would allow the querying of the IP-to-ASN mapping.
 
+##
+
+<a id="_mjvqjcvas5uh"></a>
 ## RFM 7 - Distribution of DHT lookups time
 
 * _Status:_ **brainstorm**
@@ -260,7 +274,7 @@ We have a dashboard that shows the distribution of nodes to ASNs, and an API tha
 
 * _Value:_ 
 
-## Proposal
+#### Proposal
 
 With this measurement we look to understand how DHT lookups behave throughout time according to the specific file being searched, the status of the network, the location of nodes in the network, the time required to perform a connection, or load of the nodes. The result of this measurement should be a distribution of the time required to perform DHT lookups. For instance, if we chose to see the distribution of DHT lookups of the last 7 days we will output an histogram with the time invested to perform a lookup in the DHT by the different probes.
 
@@ -272,13 +286,13 @@ This gives a good sense of the state of the network at a specific epoch.
 
 Additionally, we could show the distribution of lookups in a specific probe, i.e. in a specific section of the network, in order to have a sense of the DHT lookup times to be expected for someone in the probe&#39;s premises.
 
-## Measurement Plan
+#### Measurement Plan
 
 To measure this, a set of probes would be deployed in different locations. Each of these probes would perform random lookups in the DHT and track the time until it succeeds up to a timeout (of 30 seconds?).
 
 To increase the accuracy and granularity of the measurement, we could distinguish between GET and PUT operations. According to the implementation of the underlying DHT in the network doing a GET lookup (until the specific content is found) may be faster than putting new content in the network (where we always try to find the nearest peer to the content possible).
 
-## Success Criteria
+#### Success Criteria
 
 We have a dashboard that shows different buckets with the number of requests for the different delays for a specific period of time.
 
@@ -296,15 +310,15 @@ We have a dashboard that shows different buckets with the number of requests for
 
 * _Value:_ 
 
-## Proposal
+#### Proposal
 
 Develop a map of pairwise path lengths and latencies between different tuples of (ASN, city) points. Such measurements can potentially inform the design of DTH construction, the selection of content providers (when a CID is available from multiple providers), and the deployment of Hydra Booster nodes or relays.
 
-## Measurement Plan
+#### Measurement Plan
 
 We will collect ping and traceroute measurements from multiple distributed vantage points available through platforms such as SpeedChecker and RIPE Atlas. The measurements vantage points and destinations will be selected based on the locations of the nodes in the P2P network so that we map only the relevant (ASN, city) tuples and not the entire Internet. The measurements will be repeated periodically (for instance daily) to maintain an updated dataset that will capture changes in the network layer.
 
-## Success Criteria
+#### Success Criteria
 
 A real-time observatory of latencies and path lengths in the form of a dashboard.
 
@@ -322,15 +336,15 @@ A real-time observatory of latencies and path lengths in the form of a dashboard
 
 * _Value:_ 
 
-## Proposal
+#### Proposal
 
 find which content is common between Web2 and IPFS. Then we will compare a number of metrics, such as stability, performance, and popularity in IPFS against HTTP-based web. Note that in this RMF we&#39;re interested in the availability of content (available or not) instead of the stability of the nodes that host that content.
 
-## Measurement Plan
+#### Measurement Plan
 
 Based on projects such as the HTTP Archive ([https://httparchive.org/reports/state-of-the-web](https://httparchive.org/reports/state-of-the-web)) or Common Crawl (https://commoncrawl.org), we will extract the files that are part of the most popular web pages (e.g. top 100K according to Alexa). We will map this content to CIDs and search IPFS for this content. This first measurement will allow us to map the availability of Web 2.0 content in IPFS, namely quantify the overlap. Then by parsing periodic snapshots of the above mentioned archives and Hydra Booster logs we will keep track of content availability over time.
 
-## Success Criteria
+#### Success Criteria
 
 A dashboard that will provide statistics on content overlap and content availability.
 
@@ -348,15 +362,15 @@ A dashboard that will provide statistics on content overlap and content availabi
 
 * _Value:_ 
 
-## Proposal
+#### Proposal
 
 Measure and analyze the performance of retrieving content between IPFS and Web2 for overlapping content, e.g. time to first byte.
 
-## Measurement Plan
+#### Measurement Plan
 
 ...
 
-## Success Criteria
+#### Success Criteria
 
 ...
 
@@ -374,7 +388,7 @@ Measure and analyze the performance of retrieving content between IPFS and Web2 
 
 * _Value:_ 
 
-## Proposal
+#### Proposal
 
 While IPFS is in theory less centralized than Web2, it is interesting to measure that decentralization in practice.
 
@@ -382,11 +396,11 @@ There are a lot of nodes deployed in cloud operators, while most users are locat
 
 That may have performance implications that are not apparent.
 
-## Measurement Plan
+#### Measurement Plan
 
 ...
 
-## Success Criteria
+#### Success Criteria
 
 ...
 
@@ -404,15 +418,15 @@ That may have performance implications that are not apparent.
 
 * _Value:_ 
 
-## Proposal
+#### Proposal
 
 Once we&#39;ve mapped the topology of the network, it may be useful to map the links (or sections of the network) that exchange more information. Measuring this may not be trivial, but we can have a good sense of what is happening with a latency map.
 
-## Measurement Plan
+#### Measurement Plan
 
 ...
 
-## Success Criteria
+#### Success Criteria
 
 ...
 
@@ -430,17 +444,17 @@ Once we&#39;ve mapped the topology of the network, it may be useful to map the l
 
 * _Value:_ 
 
-## Proposal
+#### Proposal
 
 It would be great to have an idea of the percentage of content that is served through the IPFS Gateways (PL-operated or not, it doesn&#39;t matter), as compared to regular IPFS server nodes. If we find that the vast majority of content is served from gateways, we need to further investigate the reason why. Are gateways more trusted by users? Is it just that it&#39;s difficult to get a public IP address in order to become a server? Excessive reliance on IPFS gateways could mean that the network is more centralised than we previously thought.
 
 As a further step it would be great to take measurements to see the delivery latency between serving content through the gateway and through some server nodes.
 
-## Measurement Plan
+#### Measurement Plan
 
 ...
 
-## Success Criteria
+#### Success Criteria
 
 ...
 
@@ -458,17 +472,17 @@ As a further step it would be great to take measurements to see the delivery lat
 
 * _Value:_ 
 
-## Proposal
+#### Proposal
 
 It would be interesting to figure out what is the performance improvement that caching provides in the IPFS network. Given some distribution of a content item in the network and some request distribution, how efficient is the content resolution mechanism in resolving the closest copy? Is the network actually delivering the closest copy to the requestor?
 
-## Measurement Plan
+#### Measurement Plan
 
 - …We have/control a number of clients located in different geographic locations (different countries and continents)
 - We have/control a number of servers located in different geograpich locations (different continents)
 - We plant a copy of some content in some (or all) of the servers and make a request from a client (or another server) in the same continent.
 
-## Success Criteria
+#### Success Criteria
 
 ...
 
