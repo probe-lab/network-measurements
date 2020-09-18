@@ -42,7 +42,9 @@ This page lists measurements that can potentially bit useful in developing the P
 
 ---
 
+
 ## RFM 1 | Lifetime of a document in the IPFS Network vs Bittorrent vs DAT vs FreeNet
+<a id="_o575jad7aotj"></a>
 
 
 * * _Status:_ **draft**
