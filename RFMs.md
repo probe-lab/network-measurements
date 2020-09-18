@@ -16,25 +16,21 @@ This page lists measurements that can potentially bit useful in developing the P
 
 **[RFM 7 | Distribution of DHT lookups time](#_mjvqjcvas5uh)**
 
-**[RFM ### - Path length and Latency measurements](#_22mtgvvx3kv0)**
+**[RFM 8 | Path length and Latency measurements](#_22mtgvvx3kv0)**
 
-**[RFM ### - Compare the lifetime of content in the Web 2.0 vs Web 3.0](#_shcpqw274ty2)**
+**[RFM 9 | Compare the lifetime of content in the Web 2.0 vs Web 3.0](#_shcpqw274ty2)**
 
-**[RFM ### - Compare the performance of content hosted in IPFS to Web2](#_nzea2tn76odd)**
+**[RFM 10 | Compare the performance of content hosted in IPFS to Web2](#_nzea2tn76odd)**
 
-**[RFM ### - Compare how distributed is IPFS compared to Web2](#_5jccmpwaow0)**
+**[RFM 11 | Compare how distributed is IPFS compared to Web2](#_5jccmpwaow0)**
 
-**[RFM ### - Bandwidth heat map](#_raqcome2o67l)**
+**[RFM 12 | Bandwidth heat map](#_raqcome2o67l)**
 
-**[RFM ### - The Impact of Gateways to IPFS as a content delivery network](#_ksnbuwtki94z)**
+**[RFM 13 | The Impact of Gateways to IPFS as a content delivery network](#_ksnbuwtki94z)**
 
-**[RFM ### - How efficient is caching in the IPFS network?](#_j426cm9u3j1h)**
+**[RFM 14 | How efficient is caching in the IPFS network?](#_j426cm9u3j1h)**
 
-**[Tooling/Other notes](#_tfkzbli5mel1)**
-
-**[Longitudinal repository of IPFS crawling snapshots](#_kikmcgljnwwp)**
-
-**[Map the AS/city-level topology to RIPE Atlas](#_eoakuuiebghl)**
+**[Tooling/Other notes](#tooling)**
 
 \&lt;? **brainstorm** ; **draft** ; **ready for review** ; **ready to implement** \&gt;
 
@@ -201,7 +197,7 @@ We have a dashboard that shows the IP churn of nodes. Ideas for dashboard:
 
 ##
 
-<a id="_fld2sr9emn3m></a>
+<a id="_fld2sr9emn3m"></a>
 ## RFM 5 - IP Geolocation of P2P networks
 
 * _Status:_ **draft**
@@ -296,6 +292,9 @@ To increase the accuracy and granularity of the measurement, we could distinguis
 
 We have a dashboard that shows different buckets with the number of requests for the different delays for a specific period of time.
 
+##
+
+<a id="_22mtgvvx3kv0"></a>
 ## RFM 8 - Path length and Latency measurements
 
 * _Status:_ **brainstorm**
@@ -322,6 +321,9 @@ We will collect ping and traceroute measurements from multiple distributed vanta
 
 A real-time observatory of latencies and path lengths in the form of a dashboard.
 
+##
+
+<a id="_shcpqw274ty2"></a>
 ## RFM 9 - Compare the availability and lifetime of content in the Web 2.0 vs Web 3.0
 
 * _Status:_ **brainstorm**
@@ -348,6 +350,9 @@ Based on projects such as the HTTP Archive ([https://httparchive.org/reports/sta
 
 A dashboard that will provide statistics on content overlap and content availability.
 
+##
+
+<a id="_nzea2tn76odd"></a>
 ## RFM 10 - Compare the speed of delivery of content hosted in IPFS to Web2
 
 * _Status:_ **brainstorm**
@@ -374,7 +379,10 @@ Measure and analyze the performance of retrieving content between IPFS and Web2 
 
 ...
 
-## RFM ### - Compare how distributed is IPFS compared to Web2
+##
+
+<a id="_5jccmpwaow0"></a>
+## RFM 11 | Compare how distributed is IPFS compared to Web2
 
 * _Status:_ **brainstorm**
 
@@ -404,7 +412,10 @@ That may have performance implications that are not apparent.
 
 ...
 
-## RFM ### - Bandwidth heat map
+##
+
+<a id="_raqcome2o67l"></a>
+## RFM 12 | Bandwidth heat map
 
 * _Status:_ **brainstorm**
 
@@ -430,7 +441,10 @@ Once we&#39;ve mapped the topology of the network, it may be useful to map the l
 
 ...
 
-## RFM ### - The Impact of Gateways to IPFS as a content delivery network
+##
+
+<a id="_ksnbuwtki94z"></a>
+## RFM 13 - The Impact of Gateways to IPFS as a content delivery network
 
 * _Status:_ **brainstorm**
 
@@ -458,7 +472,10 @@ As a further step it would be great to take measurements to see the delivery lat
 
 ...
 
-## RFM ### - How efficient is caching in the IPFS network?
+##
+
+<a id="_j426cm9u3j1h"></a>
+## RFM 14 | How efficient is caching in the IPFS network?
 
 * _Status:_ **brainstorm**
 
@@ -486,6 +503,9 @@ It would be interesting to figure out what is the performance improvement that c
 
 ...
 
+##
+
+<a id="tooling"></a>
 ## Tooling/Other notes
 
 ### Longitudinal repository of IPFS crawling snapshots
