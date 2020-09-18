@@ -4,115 +4,31 @@ This page lists measurements that can potentially bit useful in developing the P
 
 **[RFM 1 | Lifetime of a document in the IPFS Network vs Bittorrent vs DAT vs FreeNet](#_o575jad7aotj)**
 
-[Proposal](#_2klscn4wt5ai)
-
-[Measurement Plan](#_syg9flefeahm)
-
-[Success Criteria](#_2gnbe38nhshl)
-
 **[RFM ### | Lifetime of a node in the IPFS Network vs Bittorrent vs DAT vs FreeNet](#_3k3jj6wgwrra)**
-
-[Proposal](#_7jre5g7a0bhm)
-
-[Measurement Plan](#_v0aditjz7foe)
-
-[Success Criteria](#_jr6035lhged) 
 
 **[RFM ### - Location of IPFS end users and requested content.](#_rd50td3ym8dy)**
 
-[Proposal](#_x9nsthyk5l00)
-
-[Measurement Plan](#_8thwmdqzuvl2)
-
-[Success Criteria](#_ref2b87m0rh4)
-
 **[RFM ### | IP Churn (Roaming) for nodes in the IPFS Network](#_1mu1tfaw8au3)**
-
-[Proposal](#_pmn06sq6bfye)
-
-[Measurement Plan](#_mmgzhpun4sf8)
-
-[Success Criteria](#_45npc7legp5x)
 
 **[RFM ### - IP Geolocation of P2P networks](#_fld2sr9emn3m)**
 
-[Proposal](#_ye6pr7cfz27g)
-
-[Measurement Plan](#_hsengxu0qdal)
-
-[Success Criteria](#_ejjacby0bpuk)
-
 **[RFM ### - Mapping the AS-level topology of P2P networks](#_1xjatm7vfujn)**
-
-[Proposal](#_suimosz1bps3)
-
-[Measurement Plan](#_1a5px26i8kj7)
-
-[Success Criteria](#_s4rwkhgm2uuh)
 
 **[RFM ### - Path length and Latency measurements](#_22mtgvvx3kv0)**
 
-[Proposal](#_wm14nf4jdgw)
-
-[Measurement Plan](#_lhln47vf7mkc)
-
-[Success Criteria](#_s06p2uc81uzy)
-
 **[RFM ### - Compare the lifetime of content in the Web 2.0 vs Web 3.0](#_shcpqw274ty2)**
-
-[Proposal](#_c0mt6hb89tc2)
-
-[Measurement Plan](#_pr2lgqld9rhi)
-
-[Success Criteria](#_5iglfoyfp07q)
 
 **[RFM ### - Compare the performance of content hosted in IPFS to Web2](#_nzea2tn76odd)**
 
-[Proposal](#_89qmqcwllpqf)
-
-[Measurement Plan](#_hk20j0luxp1f)
-
-[Success Criteria](#_rh6hdmu2qqre)
-
 **[RFM ### - Compare how distributed is IPFS compared to Web2](#_5jccmpwaow0)**
-
-[Proposal](#_7uhzbwmy2gbr)
-
-[Measurement Plan](#_eg00a9ickhgp)
-
-[Success Criteria](#_jt1w0v8kt7ij)
 
 **[RFM ### - Bandwidth heat map](#_raqcome2o67l)**
 
-[Proposal](#_3ylal9dsuuqm)
-
-[Measurement Plan](#_ptctkcwjfea1)
-
-[Success Criteria](#_h0xwk7tufakf)
-
 **[RFM ### - The Impact of Gateways to IPFS as a content delivery network](#_ksnbuwtki94z)**
-
-[Proposal](#_pos0ihec6a65)
-
-[Measurement Plan](#_qlq135z8dz9v)
-
-[Success Criteria](#_57uih31eprtw)
 
 **[RFM ### - How efficient is caching in the IPFS network?](#_j426cm9u3j1h)**
 
-[Proposal](#_xhv80u6pl1dn)
-
-[Measurement Plan](#_tk48l0cp270i)
-
-[Success Criteria](#_qg86dslw4dws)
-
 **[RFM ### - Distribution of DHT lookups time](#_mjvqjcvas5uh)**
-
-[Proposal](#_dbm9qdyiejvj)
-
-[Measurement Plan](#_c4vhaqhsj997)
-
-[Success Criteria](#_9wz9k99dhyqe)
 
 **[Tooling/Other notes](#_tfkzbli5mel1)**
 
@@ -124,7 +40,7 @@ This page lists measurements that can potentially bit useful in developing the P
 
 \&lt;? **LOW** ; **MEDIUM** ; **HIGH** \&gt;
 
-##
+---
 
 ## RFM 1 | Lifetime of a document in the IPFS Network vs Bittorrent vs DAT vs FreeNet
 
