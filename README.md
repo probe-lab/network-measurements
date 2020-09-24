@@ -9,6 +9,31 @@ In order to promote a healthy ecosystem of protocol developers where hypotheses 
 
 ## Deployment instructions
 
+### Manifest file
+
+To deploy a measurement plan you first need to create a `.toml` manifest file that defines the plan deployment parameters. 
+The manifest file should include the following sections and fields
+
+- `[plan]`: section that defines the parameters of the measurement plan
+  - `name`: the name of the measurement plan
+  - `version`: the version of the measurement plan
+  - `root_directory`: the path to the root directory of the measurement plan files
+  - `output_directory`: the path to the directory where the results of the measurement (metrics) are stored
+- `[aws]`: section that defines the parameters of the AWS environment
+  - `access_key`: The AWS access key of the account where the measurement will be deployed
+  - `secret_key`: The AWS secret key of the account where the measurement will be deployed
+  - `metrics_s3_bucket`: The S3 bucket where the metrics of the measurement will be stored
+  - `[aws.servers]`: subsection that defines the parameters related to the deployment of the measurement servers
+    - `regions`: array that lists the desired region names for the servers to be deployed
+    - `availability_zones`: number of availability zones per region
+    - `az_servers`: number of servers per availability zone
+    - `instance_type`: the instance type name of the measurement servers
+- `[elasticsearch]`: section that defines the parameters of the ElasticSearch cluster
+  - `username`: The name of the master user
+  - `password`: The password of the master user
+  - `domain`: The domain of the elasticsearch cluster
+
+
 ### Step 0: Test Docker container locally
 
 ### Prerequisites
