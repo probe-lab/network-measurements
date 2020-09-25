@@ -9,89 +9,48 @@ In order to promote a healthy ecosystem of protocol developers where hypotheses 
 
 ## Deployment instructions
 
-### Step 0: Test Docker container locally
+### Manifest file
 
-### Prerequisites
+To deploy a measurement plan you first need to create a `.toml` manifest file that defines the plan deployment parameters. 
+The manifest file should include the following sections and fields
 
-You need an AWS account with access rights to S3 and access to an Elastic Search cluster for which you have the login credentials of the master user.
-
-1. Pull the Docker Image `vgiotsas/ipfs-crawler`
-
-```
-docker pull vgiotsas/ipfs-crawler
-```
-
-2. Run the `vgiotsas/ipfs-crawler` image providing the following environment variables:
-
-|  Variable Name | Value   |
-|---|---|
-| AWS_ACCESS_KEY_ID  | The AWS access key   |
-| AWS_SECRET_ACCESS_KEY  | The AWS secret key   |
-| bucketname  |  The name of the bucket were the crawler's output will be uploaded  |
-| ES_USER | The username for accessing the Elastic Search cluster |
-| ES_PW   | The password for accessing the Elastic Search cluster |
-| ES_URL   | The URL of the Elastic Search cluster |
-
-For example:
-
-```
-docker run \
---env AWS_ACCESS_KEY_ID=<my_key> \
---env AWS_SECRET_ACCESS_KEY=<my_secret> \
---env bucketname=ipfs-crawls \
---env ES_USER=vgiotsas \
---env ES_PW=<my_password> \
---env ES_URL="https://search-observatory-bn4ftthzrkyzsbnkye5tnoqsbm.eu-west-1.es.amazonaws.com/observatory/_doc" \
---name test-crawler-image ipfs-crawler
-```
-
-3. Check that the crawler runs and that the output is uploaded in your S3 bucket
+- `[plan]`: section that defines the parameters of the measurement plan
+  - `builder`: the two options are `go` or `python3`
+  - `name`: the name of the measurement plan
+  - `version`: the version of the measurement plan
+  - `app_directory`: the path to the root directory of the measurement plan files
+  - `output_directory`: the path to the directory where the results of the measurement (metrics) are stored
+  - `command`: the commmand that executes the measurement
+- `[aws]`: section that defines the parameters of the AWS environment
+  - `access_key`: The AWS access key of the account where the measurement will be deployed
+  - `secret_key`: The AWS secret key of the account where the measurement will be deployed
+  - `metrics_s3_bucket`: The S3 bucket where the metrics of the measurement will be stored
+  - `[aws.servers]`: subsection that defines the parameters related to the deployment of the measurement servers
+    - `regions`: array that lists the desired region names for the servers to be deployed
+    - `availability_zones`: number of availability zones per region
+    - `az_servers`: number of servers per availability zone
+    - `instance_type`: the instance type name of the measurement servers
+- `[elasticsearch]`: section that defines the parameters of the ElasticSearch cluster
+  - `username`: The name of the master user
+  - `password`: The password of the master user
+  - `domain`: The domain of the elasticsearch cluster
 
 
-### Step 1: Provision the EC2 instances
+### How to run
 
-1. Install Terraform following the instructions below:
+1. Install the following prerequisites:
+  * Terraform: https://learn.hashicorp.com/tutorials/terraform/install-cli
+  * Ansible: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
+  * Docker: https://docs.docker.com/get-docker/
 
-https://learn.hashicorp.com/tutorials/terraform/install-cli
+2. Populate the `toml` minefst file
 
-2. Set the following two environment variables for the Access Key and the Secret Key of your AWS account:
+3. Run the `start_observatory` script passing the manifest file as an argument:
 
 ```
-TF_VAR_accessKey=AKIAC7WDA7Z3KM4RA
-TF_VAR_secretKey=XgRIh3EqkWQHR7HXV6nbHsiBl0xVwlQu
+./start_observatory --manifest config.toml
 ```
 
-3. Set the SSH key of the new instances in the `tf/variables.tf` file.
-
-4. In the `tf/` directory run:
-
-```
-terraform init
-terraform apply
-```
-
-5. After you apply the changes and the requested resources are created, run the `./create_ansible_hosts` script
-
-This should populate the `ansible/host` file inside the `tf` folder with the IPs and credentials of the created instances. 
-The contents of the file should be similar to the following:
-
-```
-[probe]
-<instance_ip> ansible_user=ubuntu ansible_ssh_private_key_file=<path_to_private_ssh_key>
-```
-
-For example:
-
-```
-[probe]
-34.245.136.224 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/.ssh/terraform
-```
-
-6. Run the ansible playbook as follows:
-
-```
-ansible-playbook -i hosts ipfs-crawler.yml
-```
 
 ### Troubleshooting:
 
