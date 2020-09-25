@@ -36,89 +36,21 @@ The manifest file should include the following sections and fields
   - `domain`: The domain of the elasticsearch cluster
 
 
-### Step 0: Test Docker container locally
+### How to run
 
-### Prerequisites
+1. Install the following prerequisites:
+  * Terraform: https://learn.hashicorp.com/tutorials/terraform/install-cli
+  * Ansible: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
+  * Docker: https://docs.docker.com/get-docker/
 
-You need an AWS account with access rights to S3 and access to an Elastic Search cluster for which you have the login credentials of the master user.
+2. Populate the `toml` minefst file
 
-1. Pull the Docker Image `vgiotsas/ipfs-crawler`
-
-```
-docker pull vgiotsas/ipfs-crawler
-```
-
-2. Run the `vgiotsas/ipfs-crawler` image providing the following environment variables:
-
-|  Variable Name | Value   |
-|---|---|
-| AWS_ACCESS_KEY_ID  | The AWS access key   |
-| AWS_SECRET_ACCESS_KEY  | The AWS secret key   |
-| bucketname  |  The name of the bucket were the crawler's output will be uploaded  |
-| ES_USER | The username for accessing the Elastic Search cluster |
-| ES_PW   | The password for accessing the Elastic Search cluster |
-| ES_URL   | The URL of the Elastic Search cluster |
-
-For example:
+3. Run the `start_observatory` script passing the manifest file as an argument:
 
 ```
-docker run \
---env AWS_ACCESS_KEY_ID=<my_key> \
---env AWS_SECRET_ACCESS_KEY=<my_secret> \
---env bucketname=ipfs-crawls \
---env ES_USER=vgiotsas \
---env ES_PW=<my_password> \
---env ES_URL="https://search-observatory-bn4ftthzrkyzsbnkye5tnoqsbm.eu-west-1.es.amazonaws.com/observatory/_doc" \
---name test-crawler-image ipfs-crawler
+./start_observatory --manifest config.toml
 ```
 
-3. Check that the crawler runs and that the output is uploaded in your S3 bucket
-
-
-### Step 1: Provision the EC2 instances
-
-1. Install Terraform following the instructions below:
-
-https://learn.hashicorp.com/tutorials/terraform/install-cli
-
-2. Set the following two environment variables for the Access Key and the Secret Key of your AWS account:
-
-```
-TF_VAR_accessKey=AKIAC7WDA7Z3KM4RA
-TF_VAR_secretKey=XgRIh3EqkWQHR7HXV6nbHsiBl0xVwlQu
-```
-
-3. Set the SSH key of the new instances in the `tf/variables.tf` file.
-
-4. In the `tf/` directory run:
-
-```
-terraform init
-terraform apply
-```
-
-5. After you apply the changes and the requested resources are created, run the `./create_ansible_hosts` script
-
-This should populate the `ansible/host` file inside the `tf` folder with the IPs and credentials of the created instances. 
-The contents of the file should be similar to the following:
-
-```
-[probe]
-<instance_ip> ansible_user=ubuntu ansible_ssh_private_key_file=<path_to_private_ssh_key>
-```
-
-For example:
-
-```
-[probe]
-34.245.136.224 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/.ssh/terraform
-```
-
-6. Run the ansible playbook as follows:
-
-```
-ansible-playbook -i hosts ipfs-crawler.yml
-```
 
 ### Troubleshooting:
 
