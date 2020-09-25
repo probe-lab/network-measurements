@@ -15,10 +15,12 @@ To deploy a measurement plan you first need to create a `.toml` manifest file th
 The manifest file should include the following sections and fields
 
 - `[plan]`: section that defines the parameters of the measurement plan
+  - `builder`: the two options are `go` or `python3`
   - `name`: the name of the measurement plan
   - `version`: the version of the measurement plan
-  - `root_directory`: the path to the root directory of the measurement plan files
+  - `app_directory`: the path to the root directory of the measurement plan files
   - `output_directory`: the path to the directory where the results of the measurement (metrics) are stored
+  - `command`: the commmand that executes the measurement
 - `[aws]`: section that defines the parameters of the AWS environment
   - `access_key`: The AWS access key of the account where the measurement will be deployed
   - `secret_key`: The AWS secret key of the account where the measurement will be deployed
