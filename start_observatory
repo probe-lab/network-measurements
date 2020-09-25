@@ -1,0 +1,218 @@
+#!/usr/bin/env python3
+import os
+import sys
+import json
+import toml
+import yaml
+import logging
+import argparse
+import subprocess
+from collections import defaultdict
+from ansible.module_utils.basic import *
+
+
+import boto3
+from botocore.exceptions import ClientError
+
+
+def create_bucket(bucket_name, region=None):
+    """Create an S3 bucket in a specified region
+
+    If a region is not specified, the bucket is created in the S3 default
+    region (us-east-1).
+
+    :param bucket_name: Bucket to create
+    :param region: String region to create bucket in, e.g., 'us-west-2'
+    :return: True if bucket created, else False
+    """
+
+    # Create bucket
+    try:
+        dev = boto3.session.Session(profile_name='vng')
+        if region is None:
+            s3_client = dev.client('s3')
+            s3_client.create_bucket(Bucket=bucket_name)
+        else:
+            s3_client = dev.client('s3', region_name=region)
+            location = {'LocationConstraint': region}
+            s3_client.create_bucket(Bucket=bucket_name,
+                                    CreateBucketConfiguration=location)
+    except ClientError as e:
+        logging.error(e)
+        return False
+    return True
+
+
+def is_valid_file(parser, filepath):
+    """
+    Checks the existence of a file and throws an ArgumentParser errror
+    if the file does not exist.
+
+    :param parser: the ArgumentParser instance
+    :param filepath: the path of the file to check
+    :return: the filepath if it exists
+    """
+    if not os.path.exists(filepath):
+        parser.error("The file '{}' does not exist!".format(filepath))
+    else:
+        return filepath # return an open file handle
+
+
+def parse_toml_manifest(manifest_filepath):
+    """
+    Parses the manifest file
+
+    :param manifest_filepath: the path to the toml manifest file
+    :return: the dictionaries of the tf configuration files
+    """
+    # Templates for terraform main.tf.json and variables.tf.json
+    # configuration files
+
+    main_tf_json = {
+        "module": defaultdict(dict)
+    }
+
+    variables_tf_json = {
+        "variable": {
+            "access_key": {"default": ""},
+            "secret_key": {"default": ""},
+            "instances_per_az": {"default": 1},
+            "availability_zones": {"default": 1},
+            "instance_type": {"default": {}},
+            "ssh_pub_key": {"default": {}},
+            "ssh_private_key": {"default": {}},
+            "s3_bucket_name": {"default": {}},
+            "region": {}
+        }
+    }
+
+    plan = defaultdict()
+    # Read toml manifest file and populate terraform configuration templates
+    with open(args.manifest, "rt") as fin:
+        parsed_toml = toml.load(fin)
+        try:
+            plan["builder"] = parsed_toml["plan"]["builder"]
+            plan["app_directory"] = parsed_toml["plan"]["app_directory"]
+            if not os.path.isdir(plan["app_directory"]):
+                logging.error("The provided app_directory does not exist")
+                sys.exit("-1")
+            plan["output_directory"] = parsed_toml["plan"]["output_directory"]
+            plan["name"] = parsed_toml["plan"]["name"]
+            plan["version"] = parsed_toml["plan"]["version"]
+            plan["command"] = parsed_toml["plan"]["command"]
+            access_key = parsed_toml["aws"]["access_key"]
+            secret_key = parsed_toml["aws"]["secret_key"]
+            metrics_s3_bucket = parsed_toml["aws"]["metrics_s3_bucket"]
+            
+            servers_conf = parsed_toml["aws"]["servers"]
+            instance_type = servers_conf["instance_type"]
+            ssh_pub_key = servers_conf["ssh_pub_key"]
+            ssh_private_key = servers_conf["ssh_private_key"]
+            instances_per_az = 1
+            availability_zones = 1
+            if "instances_per_az" in servers_conf:
+                if int(servers_conf["instances_per_az"]) > 5 or int(servers_conf["instances_per_az"]) < 1:
+                    logging.warning("You cannot select less than 1 or more than 5 availability zones.")
+                    sys.exit(-1)
+                instances_per_az = servers_conf["instances_per_az"]
+            if "availability_zones" in servers_conf:
+                availability_zones = servers_conf["availability_zones"]
+        except KeyError as e:
+            logging.error("Error: The .toml manifest file does not have the required format")
+            logging.error(e)
+            sys.exit(-1)
+            
+        variables_tf_json["variable"]["access_key"]["default"] = access_key
+        variables_tf_json["variable"]["secret_key"]["default"] = secret_key
+        variables_tf_json["variable"]["s3_bucket_name"]["default"] = metrics_s3_bucket
+        variables_tf_json["variable"]["instance_type"]["default"] = instance_type
+        variables_tf_json["variable"]["ssh_pub_key"]["default"] = ssh_pub_key
+        variables_tf_json["variable"]["ssh_private_key"]["default"] = ssh_private_key
+        variables_tf_json["variable"]["instances_per_az"]["default"] = instances_per_az
+        variables_tf_json["variable"]["availability_zones"]["default"] = availability_zones
+
+        for region in servers_conf["regions"]:
+            module_name = "observatory-{}".format(region)
+            main_tf_json["module"][module_name]["region"] = region
+            main_tf_json["module"][module_name]["source"] = "./observatory"
+            main_tf_json["module"][module_name]["instance_type"] = servers_conf["instance_type"]
+        
+    return main_tf_json, variables_tf_json, plan
+
+
+if __name__ == '__main__':
+    description = 'Deploy a measurement to the P2P observatory'
+    parser = argparse.ArgumentParser(description=description)
+    # Add the permitted arguments
+    parser.add_argument('-m', '--manifest',
+                        type=lambda x: is_valid_file(parser, x),
+                        required=True,
+                        help="Path to manifest file")
+
+    args = parser.parse_args()
+
+    main_tf_json, variables_tf_json, plan = parse_toml_manifest(args.manifest)
+    create_bucket(variables_tf_json["variable"]["s3_bucket_name"]["default"])
+
+    with open("main.tf.json", "wt") as fout:
+        json.dump(main_tf_json, fout, indent=4)
+
+    with open("./observatory/variables.tf.json", "wt") as fout:
+        json.dump(variables_tf_json, fout, indent=4)
+
+    result = subprocess.run(['terraform', 'init'], stdout=subprocess.PIPE)
+    if result.returncode == 0:
+        tf_state_file = "terraform.tfstate"
+        result = subprocess.run(['terraform', 'apply', '--auto-approve'], stdout=subprocess.PIPE)
+        if result.returncode == 0 and os.path.isfile(tf_state_file):
+            public_ips = set()
+            keypath = False
+
+            # Parse the terraform state to extract the instance details
+            with open("terraform.tfstate") as fin:
+                tf_state = json.load(fin)
+                for resource in tf_state["resources"]:
+                    if resource["type"] == "aws_instance":
+                        for instance in resource["instances"]:
+                            public_ip = instance["attributes"]["public_ip"]
+                            public_ips.add(public_ip)
+                    elif resource["type"] == "aws_key_pair":
+                        for instance in resource["instances"]:
+                            keypath = instance["attributes"]["tags"]["Key"]
+            print(public_ips)
+            if keypath and len(public_ips) > 0:
+                # Create the ansible working directory
+                if not os.path.exists('ansible'):
+                    os.makedirs('ansible')
+
+                # Create the ansible hosts file
+                with open("ansible/hosts", "wt") as fout:
+                    fout.write("[probes]")
+                    for ip in public_ips:
+                        fout.write("\n{} ansible_user=ubuntu ansible_ssh_private_key_file={}".format(ip, keypath))
+        else:
+            logging.error("Terraform apply failed.")
+    else:
+        logging.error("Terraform init failed.")
+
+
+    os.chdir(plan["app_directory"])
+
+    with open("plan_executable.sh", "wt") as fout:
+        fout.write("#!/usr/bin/env bash\n")
+        fout.write("./{}\n".format(plan["command"]))
+        fout.write("aws s3 sync output_data_crawls/ s3://$bucketname\n")
+
+    with open("Dockerfile", "wt") as fout:
+        fout.write("FROM vgiotsas/p2p-observatory-base\n")
+        fout.write("WORKDIR /app\n")
+        fout.write("ADD . .\n")
+        if plan["builder"] == "go":
+            fout.write("RUN make build\n")
+            fout.write("WORKDIR /app\n")
+            fout.write("ADD . .\n")
+        fout.write("RUN chmod +x ./{}\n".format(plan["command"]))
+        fout.write("RUN chmod +x ./plan_executable.sh\n")
+        fout.write("RUN chmod +x ./."
+                   "aws_sync\n")
+        fout.write("CMD ['./plan_executable.sh']")
