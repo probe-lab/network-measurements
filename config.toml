@@ -1,25 +1,30 @@
 [plan]
-builder          = "go"
+builder          = ["go", "python3"]
 app_directory    = "/home/ubuntu/ipfs-crawler"
 output_directory = "/home/ubuntu/ipfs-crawler/output_data_crawls"
 name             = "ipfs-crawler"
 version          = "0.1"
+executable       = "start_crawl"
 command          = "start_crawl"
 
 [aws]
 access_key        = "AKIAIPYC7WDA7Z3KM4RA"
 secret_key        = "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"
-metrics_s3_bucket = "ipfs-crawls2"
+metrics_s3_bucket = "ipfs-crawls3"
 
     [aws.servers]
-    regions            = ["us-east-1", "us-west-1"]
-    availability_zones = 2
+    regions            = ["us-east-1"]
+    availability_zones = 1
     instances_per_az   = 1
-    instance_type      = "t2.micro"
-	ssh_pub_key        = "~/.ssh/terraform.pub"
-	ssh_private_key    = "~/.ssh/terraform"
+    instance_type      = "t2.large"
+    ssh_pub_key        = "~/.ssh/terraform.pub"
+    ssh_private_key    = "~/.ssh/terraform"
+
+[docker]
+hub_username = "vgiotsas"
+hub_password = "NEh33neH!"
 
 [elasticsearch]
-domain   = "https://search-observatory-bn4ftthzrkyzsbnkye5tnoqsbm.eu-west-1.es.amazonaws.com/"
+domain   = "observatory-rfms"
 username = "observatory"
 password = "$X2EsjBT-D$YB79"
