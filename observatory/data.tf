@@ -22,6 +22,38 @@ data "aws_ec2_instance_type_offering" "ec2_offerings" {
   //"${concat([var.instance_type], slice(tolist(data.aws_ec2_instance_type_offerings.all.instance_types), 0, min(length(data.aws_ec2_instance_type_offerings.all.instance_types), 199)))}"
 }
 
+
+data "http" "myip"{
+    url = "https://ipv4.icanhazip.com"
+}
+
+data "aws_ami" "default" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu-bionic-18.04-*"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+
+  owners = ["amazon"]
+}
+
+
 output "foo" {
   value = keys({ for az, details in data.aws_ec2_instance_type_offering.ec2_offerings : az => details.instance_type if details.instance_type == var.instance_type })
 }
