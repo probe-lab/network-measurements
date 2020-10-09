@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+export LIBP2P_ALLOW_WEAK_RSA_KEYS= && ./cmd/ipfs-crawler/crawler
+aws s3 sync output_data_crawls/ s3://$bucketname
+python3 parse_crawl.py
