@@ -5,7 +5,7 @@ Public, user-run, permissionless networks’ dynamics are rather unpredictable d
 
 In order to promote a healthy ecosystem of protocol developers where hypotheses are tested and verified through real world measurements, we envisioned the P2P Networks Observatory,  a project focused on measuring all kinds of Public P2P Networks. We believe that having the ability to get information from the real-time performance of the network can help tremendously in both real-time decision-making (e.g., request routing and forwarding) and in long-term protocol design (e.g., best ways to populate routing tables).
 
-[HERE](RFMs.md) list of measurements that will be implemented as part of the P2P observatory.
+[HERE](docs/RFMs.md) list of measurements that will be implemented as part of the P2P observatory.
 
 ## Deployment instructions
 
