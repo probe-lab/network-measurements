@@ -70,10 +70,19 @@ Measuring this overtime will also be a strong indication of Network growth and a
 For IPFS:
 
 - Collect the list of CIDs being requested on the IPFS Gateways for a good list of IPFS files being requested in the network.
+  - (@yiannisbot) Is that not restricting the set of queries we see to those mostly done through browsers? An altrnative, or complementary approach would be to use bitswap, increase the connection limit set per node, so that progressively the node gets connected to as many other peers in the network as it can and capture all the queries that others make (given that Bitswap is flooding all peers in its swarm).
 
 - Then, leverage the Hydra Booster nodes to track all the Provide Queries to check the presence of a document
+  - We keep track of the number of providers per item we are tracking. This will later give us interesting insights on the relation between `# of providers` <-> `liveness` period. For instance are there items that live on one provider only, but have a very long lifetime? How common is this?
 
 - Regularly, try to fetch the file to confirm that it is still presence in the network
+  - Instead of trying to actually fetch the file, which will add considerable traffic in the network depending on the number of CIDs we're doing this for, we could again leverage Bitswap to send WANT_HAVE messages. Assuming that nodes won't lie, we can count positive responses as "liveness" for that CID. In this way, we avoid extra traffic.
+  - We will have to define: i) the frequency at which the test is run, and ii) the number of items we will query, iii) our assumptions for the intervals between queries, e.g., if we query an item once a month, it is likely that the item has disappeared for a brief period of time, even if both of our queries are successful.
+  - A proposed algorithm to scale up the tests:
+    - we start with a number of items which we query on an hourly basis for 24hrs
+    - those CIDs that the queries prove successful, we increase the probing time to once in 24hrs for one week and leave the rest in the previous category where they're probed hourly.
+    - we continue by adavncing the probe to a weekly basis for those that have proved live on every 24hr period for seven consequtive days.
+    - in order to avoid overloading the probing nodes, we set a maximum number of queries each node can do and insert new CIDs into its set as previously probed items move to the "daily" and "weekly" probing periods.
 
 Additionally, expand the set of files known by looking at the Provide Queries and resolving the queries to rebuild the graphs of files and directories.
 
@@ -93,11 +102,12 @@ For Freenet
 #### Success Criteria
 
 We have a dashboard that shows the lifetime of documents in the multiple networks, differentiated by different file size and type.
+- We will have to run the test periodically (e.g., daily) so that we get some statistical convergence. The resulting graph would have to display the number of items queried and be able to infer averages based on some percentile error rate.
 
 ##
 
 <a id="_3k3jj6wgwrra"></a>
-## RFM 2 | Uptime  and churn P2P network nodes
+## RFM 2 | Uptime and churn P2P network nodes
 
 * _Status:_ **draft**
 
@@ -115,7 +125,7 @@ We have a dashboard that shows the lifetime of documents in the multiple network
 
 This proposal seeks to compare the amount of regular participation in different P2P Networks. Comparing IPFS, Bittorrent, DAT and FreeNet.
 
-For the purposes of this measurement, we declare a node to any process in these P2P networks that speaks the network protocol and stays online contributing to the network (e.g. Both IPFS Full DHT and DHT clients are content as nodes, same goes for Bittorrent and WebTorrent nodes).
+For the purposes of this measurement, we declare a node to any process in these P2P networks that speaks the network protocol and stays online contributing to the network (e.g. Both IPFS Full DHT and DHT clients are considered as nodes, same goes for Bittorrent and WebTorrent nodes).
 
 We want to learn:
 
@@ -127,6 +137,8 @@ We want to learn:
 For IPFS:
 
 - Leverage the Hydra Booster nodes to track all the FindPeer Queries to check the presence of multiaddr
+- In addition to that we can borrow some of the methodology sketched above for the liveness of content and adapt it to probe peerIDs instead.
+
 
 For DAT:
 
@@ -142,7 +154,7 @@ For Freenet
 
 #### Success Criteria
 
-We have a dashboard that shows the lifetime distribution of nodes
+We have a dashboard that shows the lifetime distribution of nodes. As a final target we will want to have a map of nodes with "server" vs "client" profile. A server profile would have stable connectivity and high upstream bandwidth. With this RFM we should cover the connectivity aspect.
 
 ## 
 
@@ -173,6 +185,8 @@ For each request received by an IPFS gateway we will get the CID and the IP addr
 
 We have a dashboard that visualizes the volume of requests between different relationships. A visualization like a [Chord diagram](https://python-graph-gallery.com/chord-diagram/) can be used in addition to a map. The dashboard will also provide statistics on which ASNs and locations serve and consume most content.
 
+Side note: it seems that, if implemented correctly, the first three RFMs can be carried out simultaneously.
+
 ##
 
 <a id="_1mu1tfaw8au3"></a>
@@ -197,6 +211,8 @@ We need to learn about how stable are the IPFS nodes location and if not, how mu
 #### Measurement Plan
 
 Using the Hydra Booster nodes, track PeerIds to multiaddrs and check how often these change by executing FindPeer queries regularly.
+
+- In order to avoid getting measurements for a huge number of peers, we can leverage results from the proposed algorithm in RFM-1 and RFM-2 and target only nodes that we have previously found to disconnect often and focus on those.
 
 #### Success Criteria
 
@@ -228,11 +244,13 @@ Map the IPs of p2p nodes to city-level granularity. Knowing the geolocation of n
 
 #### Measurement Plan
 
-Using a geolocation database, such as MaxMind, will be the first step. However, Maxmind alone can yield inaccurate results. We will augment the MaxMind data with RIPE&#39;s IPMap which combines an array of data sources, including ping measurements, rDNS resolution and crowdsourced information to confirm the location of an IP.
+Using a geolocation database, such as MaxMind, will be the first step. However, Maxmind alone can yield inaccurate results. We will augment the MaxMind data with RIPE's IPMap which combines an array of data sources, including ping measurements, rDNS resolution and crowdsourced information to confirm the location of an IP.
 
 #### Success Criteria
 
 We will have a dynamic database that will map IPs to geographic coordinates, and a real-time map of the location of the P2P nodes.
+
+(@yiannisbot): How does this RFM differ from RFM-3?
 
 ##
 
@@ -266,7 +284,7 @@ We have a dashboard that shows the distribution of nodes to ASNs, and an API tha
 ##
 
 <a id="_mjvqjcvas5uh"></a>
-## RFM 7 - Distribution of DHT lookups time
+## RFM 7 - Distribution of DHT lookup times
 
 * _Status:_ **brainstorm**
 
@@ -282,25 +300,28 @@ We have a dashboard that shows the distribution of nodes to ASNs, and an API tha
 
 #### Proposal
 
-With this measurement we look to understand how DHT lookups behave throughout time according to the specific file being searched, the status of the network, the location of nodes in the network, the time required to perform a connection, or load of the nodes. The result of this measurement should be a distribution of the time required to perform DHT lookups. For instance, if we chose to see the distribution of DHT lookups of the last 7 days we will output an histogram with the time invested to perform a lookup in the DHT by the different probes.
+With this measurement we look to understand how DHT lookups behave throughout time according to the specific file being searched, the status of the network, the location of nodes in the network, the time required to perform a connection, or load of the nodes. The result of this measurement should be a distribution of the time required to perform DHT lookups. For instance, if we chose to see the distribution of DHT lookups of the last 7 days we will output a histogram with the time invested to perform a lookup in the DHT by the different probes.
 
 - % of requests below 500 ms
 - % of requests between 500ms and 1 s.
--
+- correlation between slow lookups and geolocation or ASN. This will give us an insight on whether some part of the wider internet is slower, or if a particular node is either on a slow connection or overloaded.
+- stability of measurements over time, i.e., is a node consistently being involved in slow lookups?
 
-This gives a good sense of the state of the network at a specific epoch.
+This gives a good sense of the state of the network at a specific epoch. We should think of this as a "snapshot" of the network at a particular point in time.
 
-Additionally, we could show the distribution of lookups in a specific probe, i.e. in a specific section of the network, in order to have a sense of the DHT lookup times to be expected for someone in the probe&#39;s premises.
+Additionally, we could show the distribution of lookups in a specific probe, i.e. in a specific section of the network, in order to have a sense of the DHT lookup times to be expected for someone in the probe's premises.
 
 #### Measurement Plan
 
-To measure this, a set of probes would be deployed in different locations. Each of these probes would perform random lookups in the DHT and track the time until it succeeds up to a timeout (of 30 seconds?).
+To measure this, a set of probes would be deployed in different locations. Each of these probes would perform random lookups in the DHT and track the time until it succeeds up to a timeout (of 30 seconds?). It would also be interesting to try and connect to the same node from different vantage points in the network. For instance connect from a "us-central" probe to a peer whose geolocation is "eu-central" as compared to "eu-west" probe to to the same peer in "eu-central" geolocation. Intuitively, the latter pair should have shorter lookup time, but due to the DHT structure this might not be the case.
 
 To increase the accuracy and granularity of the measurement, we could distinguish between GET and PUT operations. According to the implementation of the underlying DHT in the network doing a GET lookup (until the specific content is found) may be faster than putting new content in the network (where we always try to find the nearest peer to the content possible).
 
+An extension to this RFM is to accompany lookups and the PUT/GET operation mentioned above with a file of specific size. This will further allow us to build "server vs client" profiles for peers, as discussed in RFM-2.
+
 #### Success Criteria
 
-We have a dashboard that shows different buckets with the number of requests for the different delays for a specific period of time.
+We have a dashboard that shows different buckets with the number of requests for the different delays for a specific period of time. We can also have the distribution of nodes with a "server" profile and how this correlates with the vantage point of the probe. For instance, how does the geolocation of a peer correlate with the geolocation of the vantage point from where we initiate the lookup?
 
 ##
 
@@ -321,7 +342,7 @@ We have a dashboard that shows different buckets with the number of requests for
 
 #### Proposal
 
-Develop a map of pairwise path lengths and latencies between different tuples of (ASN, city) points. Such measurements can potentially inform the design of DTH construction, the selection of content providers (when a CID is available from multiple providers), and the deployment of Hydra Booster nodes or relays.
+Develop a map of pairwise path lengths and latencies between different tuples of (ASN, city) points. Such measurements can potentially inform the design of DHT construction, the selection of content providers (when a CID is available from multiple providers), and the deployment of Hydra Booster nodes or relays.
 
 #### Measurement Plan
 
@@ -350,7 +371,7 @@ A real-time observatory of latencies and path lengths in the form of a dashboard
 
 #### Proposal
 
-find which content is common between Web2 and IPFS. Then we will compare a number of metrics, such as stability, performance, and popularity in IPFS against HTTP-based web. Note that in this RMF we&#39;re interested in the availability of content (available or not) instead of the stability of the nodes that host that content.
+find which content is common between Web2 and IPFS. Then we will compare a number of metrics, such as stability, performance, and popularity in IPFS against HTTP-based web. Note that in this RFM we're interested in the availability of content (available or not) instead of the stability of the nodes that host that content.
 
 #### Measurement Plan
 
@@ -359,6 +380,8 @@ Based on projects such as the HTTP Archive ([https://httparchive.org/reports/sta
 #### Success Criteria
 
 A dashboard that will provide statistics on content overlap and content availability.
+
+(@yiannisbot) Hmm, I'm not sure if the results of this will be hugely inshightful. Firstly, I do not expect much overlap and secondly, perhaps more importantly, the realisation of this RFM will be a very demanding and resource-expensive task.
 
 ##
 
@@ -416,11 +439,14 @@ That may have performance implications that are not apparent.
 
 #### Measurement Plan
 
-...
+- Crawl and find all the DHT server (i.e., dialable) nodes.
+- From the IP address of those nodes, identify whether a node is a peer with a public address or an AWS-hosted node.
+- Cross-check the above result from several vantage points (to avoid the case were a peer is reachable from one peer, but not from some other). In fact, in order to be able to do this, it would be great if we could run the crawler from several DHT servers _not_ on operating from within cloud infrastructure.
 
 #### Success Criteria
 
-...
+- Percentage of nodes operating from within cloud infra as compared to "normal" peers.
+- Stability of the above result: if we get snapshots of those measurements (or re-run the crawl several times), are results consistent, or do they fluctuate?
 
 ##
 
@@ -441,7 +467,7 @@ That may have performance implications that are not apparent.
 
 #### Proposal
 
-Once we&#39;ve mapped the topology of the network, it may be useful to map the links (or sections of the network) that exchange more information. Measuring this may not be trivial, but we can have a good sense of what is happening with a latency map.
+Once we've mapped the topology of the network, it may be useful to map the links (or sections of the network) that exchange more information. Measuring this may not be trivial, but we can have a good sense of what is happening with a latency map.
 
 #### Measurement Plan
 
@@ -470,7 +496,7 @@ Once we&#39;ve mapped the topology of the network, it may be useful to map the l
 
 #### Proposal
 
-It would be great to have an idea of the percentage of content that is served through the IPFS Gateways (PL-operated or not, it doesn&#39;t matter), as compared to regular IPFS server nodes. If we find that the vast majority of content is served from gateways, we need to further investigate the reason why. Are gateways more trusted by users? Is it just that it&#39;s difficult to get a public IP address in order to become a server? Excessive reliance on IPFS gateways could mean that the network is more centralised than we previously thought.
+It would be great to have an idea of the percentage of content that is served through the IPFS Gateways (PL-operated or not, it doesn't matter), as compared to regular IPFS server nodes. If we find that the vast majority of content is served from gateways, we need to further investigate the reason why. Are gateways more trusted by users? Is it just that it's difficult to get a public IP address in order to become a server? Excessive reliance on IPFS gateways could mean that the network is more centralised than we previously thought.
 
 As a further step it would be great to take measurements to see the delivery latency between serving content through the gateway and through some server nodes.
 
@@ -501,17 +527,19 @@ As a further step it would be great to take measurements to see the delivery lat
 
 #### Proposal
 
-It would be interesting to figure out what is the performance improvement that caching provides in the IPFS network. Given some distribution of a content item in the network and some request distribution, how efficient is the content resolution mechanism in resolving the closest copy? Is the network actually delivering the closest copy to the requestor?
+It would be interesting to figure out what is the performance improvement that caching provides in the IPFS network. Given some distribution of a content item in the network and some request distribution, how efficient is the content resolution mechanism in resolving the closest copy? Is the network actually delivering the closest copy to the requestor? From what point onwards (in terms of the item distribution) is Bitswap becoming effective in discovering the content before the user needs to go through the DHT path?
 
 #### Measurement Plan
 
-- …We have/control a number of clients located in different geographic locations (different countries and continents)
-- We have/control a number of servers located in different geograpich locations (different continents)
+- We have/control a number of clients located in different geographic locations (different countries and continents)
+- We have/control a number of servers located in different geographic locations (different continents)
 - We plant a copy of some content in some (or all) of the servers and make a request from a client (or another server) in the same continent.
+- We repeat requests for the same content item progressively from different clients, but in a managed way, that is, not altogether, but phased out. In the meantime we monitor the lookup latency of requests, both at the DHT level, but also (perhaps separately?) at the Bitswap level.
 
 #### Success Criteria
 
-...
+- We have a plot that shows how the lookup time evolves (y-axis) as time goes by (x-axis), which also has to translate to more requests from clients entering the network.
+- The above can be measured either in an aggregated manner (i.e., from all nodes), but also from the point of view of individual client nodes themselves. This last point would require that the client makes subsequent requests for the same item over time.
 
 ##
 
