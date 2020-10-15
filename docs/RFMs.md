@@ -63,7 +63,7 @@ This page lists measurements that can potentially bit useful in developing the P
 
 We want to learn what is the lifetime of documents (webpages, images, videos, etc) in different P2P Network to understand better the resiliency of these networks when it comes to permanency of data and the different behaviours and patterns that emerge around popular and non-popular content.
 
-Measuring this overtime will also be a strong indication of Network growth and adoption.
+Measuring this over time will also be a strong indication of Network growth and adoption.
 
 #### Measurement Plan
 
@@ -119,13 +119,14 @@ We have a dashboard that shows the lifetime of documents in the multiple network
 
 * _Prerequisite(s):_ NONE
 
-* _Value:_ 
+* _Value:_ **HIGH**
 
 #### Proposal
 
 This proposal seeks to compare the amount of regular participation in different P2P Networks. Comparing IPFS, Bittorrent, DAT and FreeNet.
 
-For the purposes of this measurement, we declare a node to any process in these P2P networks that speaks the network protocol and stays online contributing to the network (e.g. Both IPFS Full DHT and DHT clients are considered as nodes, same goes for Bittorrent and WebTorrent nodes).
+For the purposes of this measurement, we declare a node to any process in these P2P networks that speaks the network protocol and stays online contributing to the network (e.g. both IPFS Full DHT and DHT clients are considered as nodes, same goes for Bittorrent and WebTorrent nodes).
+- (@yiannisbot): I believe it would be valuable to evenutally do a match between uptime and node status. For instance, it is very likely to see that server nodes have much higher uptime than client nodes. I believe we should add this aspect in this RFM.
 
 We want to learn:
 
@@ -218,8 +219,8 @@ Using the Hydra Booster nodes, track PeerIds to multiaddrs and check how often t
 
 We have a dashboard that shows the IP churn of nodes. Ideas for dashboard:
 
-- Churn dashboard: we can have a dashboard where the y-axis measures churn rate and the x-axis is increasing reliability. On the x-axis nodes are &quot;listed&quot; according to the churn rate we have measured.
-- Roaming dashboard: we can have a dashboard where the y-axis shows change in location per 24hr period. The x-axis can again &quot;list&quot; nodes in increasing reliability in terms of location change.
+- Churn dashboard: we can have a dashboard where the y-axis measures churn rate and the x-axis is increasing reliability. On the x-axis nodes are "listed" according to the churn rate we have measured.
+- Roaming dashboard: we can have a dashboard where the y-axis shows change in location per 24hr period. The x-axis can again "list" nodes in increasing reliability in terms of location change.
 
 ##
 
@@ -296,7 +297,7 @@ We have a dashboard that shows the distribution of nodes to ASNs, and an API tha
 
 * _Prerequisite(s):_ 
 
-* _Value:_ 
+* _Value:_ **HIGH**
 
 #### Proposal
 
@@ -313,7 +314,7 @@ Additionally, we could show the distribution of lookups in a specific probe, i.e
 
 #### Measurement Plan
 
-To measure this, a set of probes would be deployed in different locations. Each of these probes would perform random lookups in the DHT and track the time until it succeeds up to a timeout (of 30 seconds?). It would also be interesting to try and connect to the same node from different vantage points in the network. For instance connect from a "us-central" probe to a peer whose geolocation is "eu-central" as compared to "eu-west" probe to to the same peer in "eu-central" geolocation. Intuitively, the latter pair should have shorter lookup time, but due to the DHT structure this might not be the case.
+To measure this, a set of probes would be deployed in different locations. Each of these probes would perform random lookups in the DHT and track the time until it succeeds up to a timeout (of 30 seconds?). It would also be interesting to try and (artificially) connect (i.e., do a lookup) to the same node from different vantage points in the network. For instance connect from a "us-central" probe to a peer whose geolocation is "eu-central" as compared to "eu-west" probe to to the same peer in "eu-central" geolocation. Intuitively, the latter pair should have shorter lookup time, but due to the DHT structure this might not be the case.
 
 To increase the accuracy and granularity of the measurement, we could distinguish between GET and PUT operations. According to the implementation of the underlying DHT in the network doing a GET lookup (until the specific content is found) may be faster than putting new content in the network (where we always try to find the nearest peer to the content possible).
 
@@ -338,7 +339,7 @@ We have a dashboard that shows different buckets with the number of requests for
 
 * _Prerequisite(s):_ IP Geolocation, IP-to-ASN
 
-* _Value:_ 
+* _Value:_ **HIGH**
 
 #### Proposal
 
@@ -367,7 +368,7 @@ A real-time observatory of latencies and path lengths in the form of a dashboard
 
 * _Prerequisite(s):_ 
 
-* _Value:_ 
+* _Value:_ **LOW**
 
 #### Proposal
 
@@ -427,7 +428,7 @@ Measure and analyze the performance of retrieving content between IPFS and Web2 
 
 * _Prerequisite(s):_ 
 
-* _Value:_ 
+* _Value:_ **HIGH**
 
 #### Proposal
 
@@ -441,7 +442,7 @@ That may have performance implications that are not apparent.
 
 - Crawl and find all the DHT server (i.e., dialable) nodes.
 - From the IP address of those nodes, identify whether a node is a peer with a public address or an AWS-hosted node.
-- Cross-check the above result from several vantage points (to avoid the case were a peer is reachable from one peer, but not from some other). In fact, in order to be able to do this, it would be great if we could run the crawler from several DHT servers _not_ on operating from within cloud infrastructure.
+- Exclude the nodes that are hosted in cloud infrastructure (as these should be dialable from everywhere) and cross-check the rest of the DHT server nodes from several vantage points (to avoid the case were a peer is reachable from one peer, but not from some other). In fact, in order to be able to do this, it would be great if we could run the crawler from several DHT servers _not_ on operating from within cloud infrastructure.
 
 #### Success Criteria
 
@@ -463,11 +464,11 @@ That may have performance implications that are not apparent.
 
 * _Prerequisite(s):_ 
 
-* _Value:_ 
+* _Value:_ **MEDIUM**
 
 #### Proposal
 
-Once we've mapped the topology of the network, it may be useful to map the links (or sections of the network) that exchange more information. Measuring this may not be trivial, but we can have a good sense of what is happening with a latency map.
+Once we've mapped the topology of the network, it may be useful to map the links (or sections of the network) that have the capacity to exchange more traffic at a faster rate. Measuring this may not be trivial, but we can have a good sense of what is happening with a latency map.
 
 #### Measurement Plan
 
@@ -492,21 +493,35 @@ Once we've mapped the topology of the network, it may be useful to map the links
 
 * _Prerequisite(s):_ 
 
-* _Value:_ 
+* _Value:_ **HIGH**
 
 #### Proposal
 
-It would be great to have an idea of the percentage of content that is served through the IPFS Gateways (PL-operated or not, it doesn't matter), as compared to regular IPFS server nodes. If we find that the vast majority of content is served from gateways, we need to further investigate the reason why. Are gateways more trusted by users? Is it just that it's difficult to get a public IP address in order to become a server? Excessive reliance on IPFS gateways could mean that the network is more centralised than we previously thought.
+It would be great to have an idea of the percentage of content that is served through the IPFS Gateways (PL-operated or not, it doesn't matter), as compared to regular IPFS server nodes. If we find that the vast majority of content is served from gateways, we need to further investigate the reason why.
+
+- Are gateways more trusted by users, i.e., are users explicitly requesting content through gateways?
+- Are they constantly more dialable than other nodes and therefore requests end up being served by them?
+- Do they have bigger cache than normal DHT server nodes?
+
+What are the implications if gateways serve most of the content?
+- Excessive reliance on IPFS gateways could mean that the network is more centralised than we previously thought.
+- There is an increase in the bandwidth requirement for public gateways if they end up serving a big amount of traffic. It is worth noting that in many cases this will not be traffic pinned on the specific gateway.
 
 As a further step it would be great to take measurements to see the delivery latency between serving content through the gateway and through some server nodes.
 
 #### Measurement Plan
 
-...
+- Gather a large number of CIDs, e.g., from Hydra nodes, or by sniffing bitswap WANT_LISTs.
+- Disable the DHT and initiate Bitswap queries for the list of CIDs.
+- Disable Bitswap and initiate DHT queries for the list of CIDs.
+- Gather the Multiaddresses of nodes that respond positively (with a WANT_HAVE in case of Bitswap or with the content in case of DHT).
+- Filter out the addresses that correspond to Public IFPS Gateways.
+
+Note: we need to figure out what is the right CID population we need in order to arrive to statistically correct results.
 
 #### Success Criteria
 
-...
+A plot to show the times content has been fetched from Gateways as compared to regular DHT server nodes for the two cases of Bitswap (with DHT disabled) and for DHT (for Bitswap disabled).
 
 ##
 
@@ -523,18 +538,20 @@ As a further step it would be great to take measurements to see the delivery lat
 
 * _Prerequisite(s):_ 
 
-* _Value:_ 
+* _Value:_ **HIGH**
 
 #### Proposal
 
 It would be interesting to figure out what is the performance improvement that caching provides in the IPFS network. Given some distribution of a content item in the network and some request distribution, how efficient is the content resolution mechanism in resolving the closest copy? Is the network actually delivering the closest copy to the requestor? From what point onwards (in terms of the item distribution) is Bitswap becoming effective in discovering the content before the user needs to go through the DHT path?
+
+NOTE: This is an important RFM, as it relates a lot with our ongoing project with AUEB and the ML-DHT approach. Depending on the outcome of this RFM, we will be able to quantify the value and the results that a ML-DHT approach will bring.
 
 #### Measurement Plan
 
 - We have/control a number of clients located in different geographic locations (different countries and continents)
 - We have/control a number of servers located in different geographic locations (different continents)
 - We plant a copy of some content in some (or all) of the servers and make a request from a client (or another server) in the same continent.
-- We repeat requests for the same content item progressively from different clients, but in a managed way, that is, not altogether, but phased out. In the meantime we monitor the lookup latency of requests, both at the DHT level, but also (perhaps separately?) at the Bitswap level.
+- We repeat requests for the same content item progressively from different clients, but in a managed way, that is, not at once, but phased out. In the meantime we monitor the lookup latency of requests, both at the DHT level, but also (perhaps separately?) at the Bitswap level.
 
 #### Success Criteria
 
