@@ -8,8 +8,6 @@ executable       = "start_crawl"
 command          = "start_crawl"
 
 [aws]
-access_key        = "AKIAIPYC7WDA7Z3KM4RA"
-secret_key        = "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"
 metrics_s3_bucket = "ipfs-crawls3"
 
     [aws.servers]
@@ -27,4 +25,4 @@ hub_password = "NEh33neH!"
 [elasticsearch]
 domain   = "observatory-rfms"
 username = "observatory"
-password = "$X2EsjBT-D$YB79"
+password = "NEh33neH!"
