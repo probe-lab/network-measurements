@@ -1,0 +1,38 @@
+{
+    "variable": {
+        "access_key": {
+            "default": "AKIAI4VVVWDRAPYTYQMA"
+        },
+        "secret_key": {
+            "default": "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"
+        },
+        "instances_per_az": {
+            "default": 1
+        },
+        "availability_zones": {
+            "default": 1
+        },
+        "instance_type": {
+            "default": "t2.large"
+        },
+        "ssh_pub_key": {
+            "default": "~/.ssh/terraform.pub"
+        },
+        "ssh_private_key": {
+            "default": "~/.ssh/terraform"
+        },
+        "s3_bucket_name": {
+            "default": "ipfs-crawls3"
+        },
+        "region": {},
+        "es_domain": {
+            "default": "observatory-rfms"
+        },
+        "es_username": {
+            "default": "observatory"
+        },
+        "es_password": {
+            "default": "NEh33neH!"
+        }
+    }
+}

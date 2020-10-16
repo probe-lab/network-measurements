@@ -1,0 +1,13 @@
+{
+    "module": {
+        "observatory-us-east-1": {
+            "region": "us-east-1",
+            "source": "./observatory",
+            "instance_type": "t2.large"
+        },
+        "es-domain-us-east-1": {
+            "region": "us-east-1",
+            "source": "./elasticsearch"
+        }
+    }
+}
