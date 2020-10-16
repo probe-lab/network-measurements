@@ -1,0 +1,10 @@
+---
+
+- name: Reload Systemd daemon
+    systemd:
+    daemon_reload: yes
+
+- name: Restart Grafana service
+    service:
+    name: docker.grafana
+    state: restarted

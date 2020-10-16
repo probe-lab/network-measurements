@@ -1,0 +1,19 @@
+grafana_docker_image_version: latest
+grafana_docker_image_name: grafana/grafana
+grafana_docker_publish_http_port: true
+grafana_docker_http_port: 3000
+grafana_docker_run_options: "--volume={{grafana_data_path}}:/var/lib/grafana --volume={{grafana_dashboards_path}}:/dashboards"
+grafana_docker_restart_container: always
+
+grafana_admin_user: admin
+grafana_admin_password: admin
+
+grafana_path: /opt/grafana
+grafana_dashboards_path: "{{grafana_path}}/dashboards"
+grafana_data_path: "{{grafana_path}}/data"
+grafana_etc_path: "{{grafana_path}}/etc"
+
+grafana_config_env: []
+grafana_datasources: []
+grafana_plugins: []
+grafana_users: []
