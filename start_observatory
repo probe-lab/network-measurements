@@ -22,7 +22,6 @@ logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 client = docker.from_env()
 
 
-
 def create_bucket(bucket_name, region=None):
     """Create an S3 bucket in a specified region
 
@@ -140,8 +139,8 @@ def parse_toml_manifest(manifest_filepath):
             logging.error(e)
             sys.exit(-1)
             
-        variables_tf_json["variable"]["access_key"]["default"] = access_key
-        variables_tf_json["variable"]["secret_key"]["default"] = secret_key
+        # variables_tf_json["variable"]["access_key"]["default"] = access_key
+        # variables_tf_json["variable"]["secret_key"]["default"] = secret_key
         variables_tf_json["variable"]["s3_bucket_name"]["default"] = metrics_s3_bucket
         variables_tf_json["variable"]["instance_type"]["default"] = instance_type
         variables_tf_json["variable"]["ssh_pub_key"]["default"] = ssh_pub_key
@@ -224,8 +223,8 @@ def create_ansible_extravars(variables_tf_json, image_name):
     :param image_name: the name of the docker image
     :return: True if operation is successful, False otherwise
     """
+    success = False
     try:
-        success = False
         # Create the ansible working directory
         Path("ansible/env").mkdir(parents=True, exist_ok=True)
         
@@ -249,8 +248,15 @@ def create_ansible_extravars(variables_tf_json, image_name):
         logging.error("Could not find required information to set the measurement variables")
     return success
 
+
 if __name__ == '__main__':
-    
+    from boto3 import Session
+
+    session = Session()
+    credentials = session.get_credentials()
+    current_credentials = credentials.get_frozen_credentials()
+
+
     description = 'Deploy a measurement to the P2P observatory'
     parser = argparse.ArgumentParser(description=description)
     # Add the permitted arguments
@@ -262,6 +268,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     main_tf_json, variables_tf_json, plan, docker_settings = parse_toml_manifest(args.manifest)
+    
+    variables_tf_json["variable"]["access_key"]["default"] = current_credentials.access_key
+    variables_tf_json["variable"]["secret_key"]["default"] = current_credentials.secret_key
     
     logging.info("Creating requested resources.")
     create_bucket(variables_tf_json["variable"]["s3_bucket_name"]["default"])
@@ -324,8 +333,8 @@ if __name__ == '__main__':
                     
                     logging.info("Uploading image to DockerHub")
                     resp = client.login(
-                      username = docker_settings["hub_username"],
-                      password = docker_settings["hub_password"]
+                      username=docker_settings["hub_username"],
+                      password=docker_settings["hub_password"]
                     )
                     p = client.images.push(os.path.join(image_name), stream=True, decode=True)
                     print(resp)
