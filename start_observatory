@@ -114,8 +114,6 @@ def parse_toml_manifest(manifest_filepath):
             plan["command"] = parsed_toml["plan"]["command"]
             docker_settings["hub_username"] = parsed_toml["docker"]["hub_username"]
             docker_settings["hub_password"] = parsed_toml["docker"]["hub_password"]
-            access_key = parsed_toml["aws"]["access_key"]
-            secret_key = parsed_toml["aws"]["secret_key"]
             metrics_s3_bucket = parsed_toml["aws"]["metrics_s3_bucket"]
             es_username       = parsed_toml["elasticsearch"]["username"]
             es_password       = parsed_toml["elasticsearch"]["password"]
@@ -262,7 +260,8 @@ if __name__ == '__main__':
     # Add the permitted arguments
     parser.add_argument('-m', '--manifest',
                         type=lambda x: is_valid_file(parser, x),
-                        required=True,
+                        required=False,
+                        default="config.toml",
                         help="Path to manifest file")
 
     args = parser.parse_args()
@@ -332,12 +331,26 @@ if __name__ == '__main__':
                     assert img.tag(image_name)
                     
                     logging.info("Uploading image to DockerHub")
-                    resp = client.login(
-                      username=docker_settings["hub_username"],
-                      password=docker_settings["hub_password"]
-                    )
+                    
+                    if "hub_password" in docker_settings:
+                        resp = client.login(
+                          username=docker_settings["hub_username"],
+                          password=docker_settings["hub_password"]
+                        )
+                    elif "dockercfg_path" in docker_settings:
+                        resp = client.login(
+                            username=docker_settings["hub_username"],
+                            dockercfg_path=docker_settings["dockercfg_path"]
+                        )
+                    else:
+                        home_dir = os.getenv('HOME')
+                        dockercfg_file = os.path.join(home_dir, ".docker/config.json")
+                        resp = client.login(username=docker_settings["hub_username"],
+                            dockercfg_path=dockercfg_file
+                        )
+                        
                     p = client.images.push(os.path.join(image_name), stream=True, decode=True)
-                    print(resp)
+
                     for l in p:
                         output_lines.append(l)
                     # clean-up build
