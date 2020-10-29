@@ -22,14 +22,17 @@ The manifest file should include the following sections and fields
   - `output_directory`: the path to the directory where the results of the measurement (metrics) are stored
   - `command`: the commmand that executes the measurement
 - `[aws]`: section that defines the parameters of the AWS environment
-  - `access_key`: The AWS access key of the account where the measurement will be deployed
-  - `secret_key`: The AWS secret key of the account where the measurement will be deployed
   - `metrics_s3_bucket`: The S3 bucket where the metrics of the measurement will be stored
   - `[aws.servers]`: subsection that defines the parameters related to the deployment of the measurement servers
     - `regions`: array that lists the desired region names for the servers to be deployed
     - `availability_zones`: number of availability zones per region
     - `az_servers`: number of servers per availability zone
     - `instance_type`: the instance type name of the measurement servers
+- `[docker]`
+  - `hub_username`: the username for the docker hub
+  - `hub_password`: [OPTIONAL] API Token or password for the docker hub
+  - `dockercfg_path`: [OPTIONAL] The path to the docker configuration file (if different from the default)  
+  Either the `hub_password` or the `dockercfg_path` attributes should be provided.
 - `[elasticsearch]`: section that defines the parameters of the ElasticSearch cluster
   - `username`: The name of the master user
   - `password`: The password of the master user
@@ -43,14 +46,24 @@ The manifest file should include the following sections and fields
   * Ansible: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
   * Docker: https://docs.docker.com/get-docker/
 
-2. Populate the `toml` minefst file
+2. Populate the `toml` minefst file.
 
-3. Run the `start_observatory` script passing the manifest file as an argument:
+3. The experiments are deployed and destroyed using the `p2po` binary, using the following syntax:
 
 ```
-./start_observatory --manifest config.toml
+usage: p2po [-h] [-m MANIFEST] (--deploy | --destroy)
+
+Deploy a measurement to the P2P observatory
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -m MANIFEST, --manifest MANIFEST
+                        Path to manifest file
+  --deploy              Deploy a new experiment
+  --destroy             Destroy the resources of a deployed experiment
 ```
 
+If the `--manifest` parameter is not provided, the `p2po` binary will use `config.toml` as the default location.
 
 ### Troubleshooting:
 
