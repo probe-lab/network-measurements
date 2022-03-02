@@ -42,9 +42,9 @@ This page lists measurements that can potentially bit useful in developing the P
 
 #### List of RFM priorities
 
-:black_medium_square::white_medium_square::white_medium_square: **LOW**  
-:black_medium_square::black_medium_square::white_medium_square: **MEDIUM**  
-:black_medium_square::black_medium_square::black_medium_square: **HIGH**
+:red_medium_square::white_medium_square::white_medium_square: **LOW**  
+:red_medium_square::red_medium_square::white_medium_square: **MEDIUM**  
+:red_medium_square::red_medium_square::red_medium_square: **HIGH**
 
 ---
 
