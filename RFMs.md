@@ -57,6 +57,7 @@ This page lists measurements that can potentially bit useful in developing the P
 * _Effort Needed:_ 
 * _Prerequisite(s):_ NONE
 * _Value:_ **HIGH**
+* _Report:_ \<insert link to report once work is complete\>
 
 #### Proposal
 
@@ -98,6 +99,7 @@ We have a dashboard that shows the lifetime of documents, differentiated by diff
 * _Effort Needed:_ 
 * _Prerequisite(s):_ NONE
 * _Value:_ **HIGH**
+* _Report:_ \<insert link to report once work is complete\>
 
 #### Proposal
 
@@ -128,6 +130,7 @@ We have a dashboard or plots that show the lifetime distribution of nodes. As a 
 * _Effort Needed:_ 
 * _Prerequisite(s):_ IP Geolocation, IP-to-ASN
 * _Value:_ **MEDIUM**
+* _Report:_ \<insert link to report once work is complete\>
 
 #### Proposal
 
@@ -151,6 +154,7 @@ We have a dashboard that visualizes the volume of requests between different rel
 * _Effort Needed:_ 
 * _Prerequisite(s):_ 
 * _Value:_ **LOW**
+* _Report:_ \<insert link to report once work is complete\>
 
 #### Proposal
 
@@ -179,6 +183,7 @@ We have a dashboard that shows the IP address churn of nodes. Ideas for dashboar
 * _Effort Needed:_ 
 * _Prerequisite(s):_ IPFS Network Crawler
 * _Value:_ **MEDIUM**
+* _Report:_ \<insert link to report once work is complete\>
 
 #### Proposal
 
@@ -204,6 +209,7 @@ We will have a dynamic database that will map IPs to geographic coordinates, and
 * _Effort Needed:_ 
 * _Prerequisite(s):_ IPFS Network Crawler
 * _Value:_ **MEDIUM**
+* _Report:_ \<insert link to report once work is complete\>
 
 #### Proposal
 
@@ -227,6 +233,7 @@ We have a dashboard or plot that shows the distribution of nodes to ASNs, and an
 * _Effort Needed:_ 
 * _Prerequisite(s):_ 
 * _Value:_ **HIGH**
+* _Report:_ \<insert link to report once work is complete\>
 
 #### Proposal
 
@@ -265,6 +272,7 @@ We have a dashboard that shows different buckets with the number of requests for
 * _Effort Needed:_ 
 * _Prerequisite(s):_ IP Geolocation, IP-to-ASN
 * _Value:_ **HIGH**
+* _Report:_ \<insert link to report once work is complete\>
 
 #### Proposal
 
@@ -288,6 +296,7 @@ A real-time observatory of latencies and path lengths in the form of a dashboard
 * _Effort Needed:_ 
 * _Prerequisite(s):_
 * _Value:_ **LOW**
+* _Report:_ \<insert link to report once work is complete\>
 
 #### Proposal
 
@@ -311,6 +320,7 @@ A dashboard that will provide statistics on content overlap and content availabi
 * _Effort Needed:_ 
 * _Prerequisite(s):_ RFM 8
 * _Value:_ **LOW**
+* _Report:_ \<insert link to report once work is complete\>
 
 #### Proposal
 
@@ -336,6 +346,7 @@ Measure and analyze the performance of retrieving content between IPFS and Web2 
 * _Effort Needed:_ 
 * _Prerequisite(s):_ 
 * _Value:_ **HIGH**
+* _Report:_ \<insert link to report once work is complete\>
 
 #### Proposal
 
@@ -366,6 +377,7 @@ That may have performance implications that are not apparent.
 * _Effort Needed:_ 
 * _Prerequisite(s):_ 
 * _Value:_ **MEDIUM**
+* _Report:_ \<insert link to report once work is complete\>
 
 #### Proposal
 
@@ -389,6 +401,7 @@ Once we have mapped the topology of the network, it may be useful to map the lin
 * _Effort Needed:_ 
 * _Prerequisite(s):_ 
 * _Value:_ **HIGH**
+* _Report:_ \<insert link to report once work is complete\>
 
 #### Proposal
 
@@ -428,6 +441,7 @@ A plot to show the times content has been fetched from Gateways as compared to r
 * _Effort Needed:_ 
 * _Prerequisite(s):_ 
 * _Value:_ **HIGH**
+* _Report:_ \<insert link to report once work is complete\>
 
 #### Proposal
 
