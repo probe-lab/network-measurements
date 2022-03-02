@@ -20,8 +20,14 @@ There are numerous decentralized, P2P networks. This projoect focuses primarily 
 
 **Get Involved:** There are two ways you can get involved:
 - You can choose an RFM you want to take on from the list of existing [RFMs](RFMs.md).
-- You can propose a new RFM, if the aspect of monitoring and measurement you want to work on is not on the list. In order to do this, please submit a PR to add your proposed RFM to the list of existing [RFMs](RFMs.md), using the template.
+- You can propose a new RFM, if the aspect of monitoring and measurement you want to work on is not on the list. In order to do this, please submit a PR to add your proposed RFM to the list of existing [RFMs](RFMs.md), using the template - see also the "Workflow" below.
 - You can propose a new RFM if you have ideas about valuable things, even if you don't have the capacity to do the actual work. RFMs will be picked up by others, based on priorities.
+
+**Workflow:**
+- If your RFM is not already present in the list of existing [RFMs](RFMs.md), or if you want to modify an existing RFM, start a PR in this repo to propose it and include a description according to the RFM teamplate.
+- If you prefer to discuss the RFM before starting a PR, or if the RFM you'd like to work on is already in the list, you can start an issue beforehand and then link to it from the PR.
+- The RFMs should move from `brainstorming`, to `draft` and then to `ongoing`. While in the `ongoing` phase there will likely need to be more issues and PRs associated with the initial RFM. All these should be grouped together under one `epic`.
+- These `epics` with their associated issues and PRs will be tracked in a GH Project Board.
 
 ## Important Notes
 
