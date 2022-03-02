@@ -28,6 +28,7 @@ There are numerous decentralized, P2P networks. This projoect focuses primarily 
 - If you prefer to discuss the RFM before starting a PR, or if the RFM you'd like to work on is already in the list, you can start an issue beforehand and then link to it from the PR.
 - The RFMs should move from `brainstorming`, to `draft` and then to `ongoing`. While in the `ongoing` phase there will likely need to be more issues and PRs associated with the initial RFM. All these should be grouped together under one `epic`.
 - These `epics` with their associated issues and PRs will be tracked in a GH Project Board.
+- Once work on the RFM has completed, submit a new PR to add a report to the [Reports](reports/) folder.
 
 ## Important Notes
 
