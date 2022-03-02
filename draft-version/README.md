@@ -2,6 +2,8 @@
 
 ## Deployment instructions
 
+The target is to have a unified way of building experiments, so that measurements are easy to reproduce. Below is a suggested approach, which should be followed to the extent possible, although it might not suitable for all of the RFMs that will be requested in the future.
+
 ### Manifest file
 
 To deploy a measurement plan you first need to create a `.toml` manifest file that defines the plan deployment parameters. 
