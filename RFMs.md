@@ -30,6 +30,8 @@ This page lists measurements that can potentially bit useful in developing the P
 
 **[RFM 14 | How efficient is caching in the IPFS network?](#_j426cm9u3j1h)**
 
+**[RFM 15 | Decentralized NAT Hole-Punching Performance](#rfm-15--decentralized-nat-hole-punching-performance)**
+
 **[Tooling/Other notes](#tooling)**
 
 
@@ -460,6 +462,42 @@ NOTE: This is an important RFM, as it relates a lot to our projects Multi-Level 
 
 - We have a plot that shows how the lookup time evolves (y-axis) as time goes by (x-axis), which also has to translate to more requests from clients entering the network.
 - The above can be measured either in an aggregated manner (i.e., from all nodes), but also from the point of view of individual client nodes themselves. This last point would require that the client makes subsequent requests for the same item over time.
+
+
+## RFM 15 | Decentralized NAT Hole-Punching Performance
+
+* _Status:_ **ready to implement**
+* _DRI/Team:_ @dennis-tra
+* _Effort Needed:_ 
+* _Prerequisite(s):_ 
+* _Value:_ **HIGH**
+* _Report:_ \<insert link to report once work is complete\>
+* _Material:_ https://github.com/dennis-tra/punchr
+
+#### Proposal
+
+NAT traversal is a quintessential problem in peer-to-peer networks.
+
+We currently utilize relays, which allow us to traverse NATs by using a third party as proxy. Relays are a reliable fallback, that can connect peers behind NAT albeit with a high-latency, low-bandwidth connection. Unfortunately, they are expensive to scale and maintain if they have to carry all the NATed node traffic in the network.
+
+It is often possible for two peers behind NAT to communicate directly by utilizing a technique called [hole punching](https://en.wikipedia.org/wiki/Hole_punching_(networking)). The technique relies on the two peers synchronizing and simultaneously opening connections to each other to their predicted external address. It works well for UDP, and reasonably well for TCP - at least, so we think.
+
+In this RFM we try to find out the success rate and general performance of the new [Direct Connection Upgrade through Relay](https://github.com/libp2p/specs/blob/master/relay/DCUtR.md) (DCUtR) protocol.
+
+#### Measurement Plan (DRAFT)
+
+Build a "**honeypot**" libp2p host to attract inbound connections from DCUtR capable peers behind NATs. These are then saved into a database which get served to hole punching **clients** via a **server** component. The hole punching clients ask the server if it knows about DCUtR capable peers. If it does the clients connect to the remote peer via a relay and waits for the remote to initiate a hole punch. The result is reported back to the server.
+
+All three components need to be build.
+
+#### Success Criteria
+
+- We have a setup that allows continuous measurement of performance metrics. This includes but is not limited to:
+  - success rate over time
+  - success rate by transport used (TCP/QUIC)
+  - success rate by type of router (could be inferred by the ISP which could be inferred by the IP address's Autonomous System)
+  - time it takes for the hole protocol to terminate (success + error cases)
+- The data should come from a large sample set. Hence, plenty (in the order of 10^1) of clients should be deployed and many (in the order of 10^3) peers should be hole punched continously
 
 ##
 
