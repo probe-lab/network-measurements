@@ -12,7 +12,7 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 **[RFM 6 | Mapping the AS-level topology of P2P networks](#_1xjatm7vfujn)**
 
-**[RFM 7 | Distribution of DHT lookups time](#_mjvqjcvas5uh)**
+**[RFM 7 | Distribution of DHT lookup times](#_mjvqjcvas5uh)**
 
 **[RFM 11 | Compare how distributed is IPFS compared to Web2](#_5jccmpwaow0)**
 
@@ -20,7 +20,7 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 **[RFM 16 | Effectiveness of Bitswap Discovery Process](#rfm-16--effectiveness-of-bitswap-discovery-process)**
 
-**[RFM 17 | Provider Record Liveness](#rfc-17--provider-record-liveness)**
+**[RFM 17 | Provider Record Liveness](#rfm-17--provider-record-liveness)**
 
 
 ## Next Priority
