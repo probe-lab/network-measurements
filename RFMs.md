@@ -365,8 +365,7 @@ Measure and analyze the performance of retrieving content between IPFS and Web2 
 <a id="_5jccmpwaow0"></a>
 ## RFM 11 | Compare how distributed is IPFS compared to Web2
 
-* _Status:_ **draft**
-
+* _Status:_ **ready**
 * _Area/Project of Measurement:_ IPFS
 * _DRI/Team:_
 * _Effort Needed:_ 
@@ -376,16 +375,17 @@ Measure and analyze the performance of retrieving content between IPFS and Web2 
 
 #### Proposal
 
-While IPFS is in theory less centralized than Web2, it is interesting to measure that decentralization in practice.
+While IPFS is in theory less centralized than Web2, it will be interesting to measure that decentralization in practice.
 
-There are a lot of nodes deployed in cloud operators, while most users are located in certain eyeballs so in reality the decentralization may be limited.
+There are a lot of nodes deployed in cloud operators, adding an element of centralized operation in the system, which has not been quantified until now.
 
-That may have performance implications that are not apparent.
+Excessive dependency on centralized cloud operators may have performance and resilience implications that are not apparent and which should be investigated further.
 
 #### Measurement Plan
 
 - Crawl and find all the DHT server (i.e., dialable) nodes.
-- From the IP address of those nodes, identify whether a node is a peer with a public address or an AWS-hosted node.
+- From the IP address of those nodes, identify whether they are hosted in one of the big cloud providers, which make their IP address ranges publicly available.
+- We currently cannot do the same for DHT client peers, as these are not shown in the DHT. But it would be great to be able to do that too.
 - Exclude the nodes that are hosted in cloud infrastructure (as these should be dialable from everywhere) and cross-check the rest of the DHT server nodes from several vantage points (to avoid the case were a peer is reachable from one peer, but not from some other). In fact, in order to be able to do this, it would be great if we could run the crawler from several DHT servers _not_ operating from within cloud infrastructure.
 
 #### Success Criteria
@@ -508,7 +508,7 @@ It is often possible for two peers behind NAT to communicate directly by utilizi
 
 In this RFM we try to find out the success rate and general performance of the new [Direct Connection Upgrade through Relay](https://github.com/libp2p/specs/blob/master/relay/DCUtR.md) (DCUtR) protocol.
 
-#### Measurement Plan (DRAFT)
+#### Measurement Plan
 
 Build a "**honeypot**" libp2p host to attract inbound connections from DCUtR capable peers behind NATs. These are then saved into a database which get served to hole punching **clients** via a **server** component. The hole punching clients ask the server if it knows about DCUtR capable peers. If it does the clients connect to the remote peer via a relay and waits for the remote to initiate a hole punch. The result is reported back to the server.
 
