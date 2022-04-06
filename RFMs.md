@@ -1,8 +1,8 @@
-# **RFMs - Proposals &amp; Ideas**
+# **RFMs: Requests for Measurements - Proposals &amp; Ideas**
 
-This page lists measurements that can potentially bit useful in developing the P2P observatory
+This page lists measurements that are useful to understand the dynamics and the current state of the live IPFS network. RFMs are categorized in priority order (i.e., **Current Priority** and **Next Priority**), according to current needs and funding opportunities.
 
-**[RFM 1 | Lifetime of a document in the IPFS Network](#_o575jad7aotj)**
+## Current Priority - Batch 1
 
 **[RFM 2 | Uptime  and churn P2P network nodes](#_3k3jj6wgwrra)**
 
@@ -10,11 +10,20 @@ This page lists measurements that can potentially bit useful in developing the P
 
 **[RFM 4 | IP Churn (Roaming) for nodes in the IPFS Network](#_1mu1tfaw8au3)**
 
-**[RFM 5 | IP Geolocation of P2P networks](#_fld2sr9emn3m)**
-
 **[RFM 6 | Mapping the AS-level topology of P2P networks](#_1xjatm7vfujn)**
 
 **[RFM 7 | Distribution of DHT lookups time](#_mjvqjcvas5uh)**
+
+**[RFM 11 | Compare how distributed is IPFS compared to Web2](#_5jccmpwaow0)**
+
+**[RFM 15 | Decentralized NAT Hole-Punching Performance](#rfm-15--decentralized-nat-hole-punching-performance)**
+
+
+## Next Priority
+
+**[RFM 1 | Lifetime of a document in the IPFS Network](#_o575jad7aotj)**
+
+**[RFM 5 | IP Geolocation of P2P networks](#_fld2sr9emn3m)**
 
 **[RFM 8 | Path length and Latency measurements](#_22mtgvvx3kv0)**
 
@@ -22,31 +31,16 @@ This page lists measurements that can potentially bit useful in developing the P
 
 **[RFM 10 | Compare the content delivery latency of content hosted in IPFS to Web2](#_nzea2tn76odd)**
 
-**[RFM 11 | Compare how distributed is IPFS compared to Web2](#_5jccmpwaow0)**
-
 **[RFM 12 | Bandwidth heat map](#_raqcome2o67l)**
 
 **[RFM 13 | The Impact of Gateways to IPFS as a content delivery network](#_ksnbuwtki94z)**
 
 **[RFM 14 | How efficient is caching in the IPFS network?](#_j426cm9u3j1h)**
 
-**[RFM 15 | Decentralized NAT Hole-Punching Performance](#rfm-15--decentralized-nat-hole-punching-performance)**
 
 **[Tooling/Other notes](#tooling)**
 
 
-#### List of RFM statuses
-
-:thinking: **brainstorm**  
-:memo: **draft**  
-:monocle_face:	**ready for review**  
-:ok_hand: **ready to implement**  
-
-#### List of RFM priorities
-
-:red_medium_square::white_medium_square::white_medium_square: **LOW**  
-:red_medium_square::red_medium_square::white_medium_square: **MEDIUM**  
-:red_medium_square::red_medium_square::red_medium_square: **HIGH**
 
 ---
 
@@ -96,7 +90,7 @@ We have a dashboard that shows the lifetime of documents, differentiated by diff
 <a id="_3k3jj6wgwrra"></a>
 ## RFM 2 | Uptime and churn of IPFS network nodes
 
-* _Status:_ **draft**
+* _Status:_ **Ready**
 * _DRI/Team:_
 * _Effort Needed:_ 
 * _Prerequisite(s):_ NONE
@@ -105,22 +99,29 @@ We have a dashboard that shows the lifetime of documents, differentiated by diff
 
 #### Proposal
 
-This proposal seeks to identify the participation and contribution of peers in Public IPFS Network.
+This proposal seeks to identify the participation and contribution of DHT server peers in the Public IPFS Network.
 
 We want to learn:
 
 - Average session length
-- Average uptime per year, month and day
-- Ideally differentiate between DHT client and DHT server nodes
+- Average uptime per day and month (and eventually per year)
 
-#### Measurement Plan (DRAFT)
+#### Measurement Plan
+
+Approach 1:
+
+- Develop a crawler and monitoring tool that initially finds nodes in the network and then dials into them.
+- The tool should continue dialling periodically into the nodes, so that we have a view of the session length.
+- From the session length we should be able to calculate the interarrival time of peers, i.e., how soon after a peer leaves the network it comes back online.
+
+Approach 2:
 
 - Leverage the Hydra Booster nodes to track all the FindPeer Queries to check the presence of `multiaddr`.
 - In addition to that we can borrow some of the methodology sketched above for the liveness of content (periodic pings) and adapt it to probe peerIDs instead.
 
 #### Success Criteria
 
-We have a dashboard or plots that show the lifetime distribution of nodes. As a final target we will want to have a map of nodes with "server" vs "client" profile. A server profile would have stable connectivity and high upstream bandwidth. With this RFM we should cover the connectivity aspect.
+We have a dashboard or plots that are produced periodically (e.g., daily or weekly) and show the lifetime distribution of nodes.
 
 ## 
 
