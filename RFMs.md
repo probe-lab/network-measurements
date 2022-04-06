@@ -18,6 +18,10 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 **[RFM 15 | Decentralized NAT Hole-Punching Performance](#rfm-15--decentralized-nat-hole-punching-performance)**
 
+**[RFM 16 | Effectiveness of Bitswap Discovery Process](#rfm-16--effectiveness-of-bitswap-discovery-process)**
+
+**[RFM 17 | Provider Record Liveness](#rfc-17--provider-record-liveness)**
+
 
 ## Next Priority
 
@@ -524,6 +528,81 @@ All three components need to be build.
 - The data should come from a large sample set. Hence, plenty (in the order of 10^1) of clients should be deployed and many (in the order of 10^3) peers should be hole punched continously
 
 ##
+
+## RFM 16 | Effectiveness of Bitswap Discovery Process
+
+* _Status:_ **ready**
+* _DRI/Team:_ 
+* _Effort Needed:_ 
+* _Prerequisite(s):_ 
+* _Value:_ **HIGH**
+* _Report:_ \<insert link to report once work is complete\>
+
+
+#### Proposal
+
+Bitswap is involved in the content discovery process and precedes the DHT walk. Nodes ask all of their connected peers for the CID they?re interested in, wait for 1sec to receive responses and in case of a negative result resort to the DHT.
+
+**We argue that the 1sec delay is too long to wait for**, unless the chances of finding content are high. We suspect that unless content is popular, then the vast majority of Bitswap discovery attempts are unsuccessful and add a significant delay to the discovery process. Our latest results show that content discovery through the DHT (DHT walk) can be pretty fast - in many cases sub-second. Adding an extra 1sec increases the discovery time by at least 50% in all cases, reaching up to 100% in many cases.
+
+Unless we find that the Bitswap content discovery success rate is worth the wait, we propose to get rid of this step, i.e., either disable the content discovery attempt through Bitswap, or initialise content discovery in parallel through the DHT and through Bitswap.
+
+Additional context can be found in this [Notion doc](https://pl-strflt.notion.site/Effectiveness-of-Bitswap-Discovery-Process-aab515ebc1774bee8193da415bfb98f4).
+
+#### Measurement Plan
+
+- Sniff Bitswap requests from the network. The WIBerlin/TUDarmstadt team already has most of the CIDs requested in the past year.
+- Spin up IPFS nodes in several areas around the globe and let them run for a long time to setup connections.
+- Pick a large number of random CIDs (as many as needed in order to be able to arrive to a statistically safe conclusion) and share them with all the nodes involved in the experiment.
+- Carry out Bitswap discovery for these CIDs.
+    - Not all of the spun up peers should be requesting the same CIDs.
+- CIDs should be requested at random time intervals after been seen (in wantlists received by other peers), not only (or not at all?) immediately after.
+    - The experiment should be extended to request CIDs periodically after 1hr, 5hrs, 10hrs, etc.
+- Observe success rate and the TTFB through the Bitswap discovery process.
+- Disable the Bitswap discovery process, or set it to run in parallel to the DHT discovery (set `ProvSearchDelay` to 0 in the [bitswap_defaults](https://github.com/ipfs/go-bitswap/blob/dbfc6a1d986e18402d8301c7535a0c39b2461cb7/internal/defaults/defaults.go#L10)), request the same CIDs as before and observe success rate, as well as lookup latency and TTFB.
+
+#### Success Criteria
+
+We carry out a sensitivity analysis based on the success rate we have observed to assess whether the Bitswap discovery delay is worthy or not.
+
+
+## RFM 17 | Provider Record Liveness
+
+* _Status:_ **ready**
+* _DRI/Team:_ 
+* _Effort Needed:_ 
+* _Prerequisite(s):_ 
+* _Value:_ **HIGH**
+* _Report:_ \<insert link to report once work is complete\>
+
+
+#### Proposal
+
+Provider records are replicated in the system to `k=20` peers and are re-provided after 12hrs in the hope that, despite network churn, at least one of them will be alive to provide the record throughout the 12hr interval. However, we have not tested whether provider records indeed stay alive for 12hrs. In addition, we have found that the network has very high churn rate (at times in the order of 50% per hour).
+
+Back of the envelope calculation suggests that with this rate of churn all 20 peers are likely to have gone offline after only 6hrs. In turn, this suggests that records might be unreachable for ~6hrs, which should be considered **unacceptable**. Of course, peers do not only leave, but also come back ? our results suggest that the interarrival time is of similar levels as the churn rate ? so it is likely that records become available again.
+
+Despite the above argumentation, the network seems to work fine (although there have been reports of content being unreachable), so there are three things that might be happening:
+
+- **Hydras help tremendously.** Hydras should not be seen as a component of the core architecture and more like a supporting component. So we should not assume full dependence on hydras and have the settings configured correctly.
+- **Peers churn, but come back online very often.** Peers go offline very often, but come back online again too, so if interarrival time is small enough, this helps with keeping records alive.
+- **Churn rate calculation is not accurate.** The actual churn rate is not as calculated and we?re missing something.
+
+Additional context can be found [here](https://pl-strflt.notion.site/Provider-Record-Liveness-0b777eb2a3164c67974097eb97be23ad).
+
+#### Measurement Plan
+
+- Spin up a node that generates random CIDs (ideally CIDs that will eventually cover the majority of the hash space, but hopefully hash-function randomness will take care of that) and publishes provider records.
+- Keep track of the peers that are chosen to provide the record.
+- Keep dialling into all of these provider nodes (or requesting the provider record, or both) for the following 12hrs, until republish takes place. The frequency of dialling should be less than one hour.
+- Keep track of when a provider node goes offline and then comes back online.
+- Confirm whether or not there is at least one provider live at any given point during the 12hr period.
+- Depending on the result, consider increasing or decreasing the replication factor `k=20` and repeat experiments to confirm.
+
+#### Success Criteria
+
+We have numbers to justify how often do provider records expire and have carried out experiments with alternative replication settings to justify new proposed settings.
+
 
 <a id="tooling"></a>
 ## Tooling/Other notes
