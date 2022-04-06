@@ -189,7 +189,7 @@ In order to avoid getting measurements for a huge number of peers, we can levera
 
 #### Success Criteria
 
-We have detailed results, similar to: [Week 42, 2021](https://github.com/dennis-tra/nebula-crawler-reports/blob/main/calendar-week-42/ipfs/README.md#top-10-rotating-hosts) [Week 43, 2021](https://github.com/dennis-tra/nebula-crawler-reports/blob/main/calendar-week-43/ipfs/README.md#top-10-rotating-hosts) [Week 44, 2021](https://github.com/dennis-tra/nebula-crawler-reports/blob/main/calendar-week-44/ipfs/README.md#top-10-rotating-hosts) on what fraction of nodes rotate their PeerIDs, what fraction of PeerIDs do the rotating IDs account for and what is the impact on the DHT, i.e., the discovery process through other peers? routing tables.
+We have detailed results, similar to: [[Week 42, 2021](https://github.com/dennis-tra/nebula-crawler-reports/blob/main/calendar-week-42/ipfs/README.md#top-10-rotating-hosts)], [[Week 43, 2021](https://github.com/dennis-tra/nebula-crawler-reports/blob/main/calendar-week-43/ipfs/README.md#top-10-rotating-hosts)], [[Week 44, 2021](https://github.com/dennis-tra/nebula-crawler-reports/blob/main/calendar-week-44/ipfs/README.md#top-10-rotating-hosts)] on what fraction of nodes rotate their PeerIDs, what fraction of PeerIDs do the rotating IDs account for and what is the impact on the DHT, i.e., the discovery process through other peers? routing tables.
 
 Additional ideas: we have a dashboard that shows the IP address churn of nodes:
 
@@ -227,7 +227,7 @@ We will have a dynamic database that will map IPs to geographic coordinates, and
 <a id="_1xjatm7vfujn"></a>
 ## RFM 6 - Mapping the AS-level topology of the IPFS Network
 
-* _Status:_ **draft**
+* _Status:_ **ready**
 * _DRI/Team:_
 * _Effort Needed:_ 
 * _Prerequisite(s):_ IPFS Network Crawler
@@ -238,9 +238,9 @@ We will have a dynamic database that will map IPs to geographic coordinates, and
 
 Map the IPs of IPFS nodes to the corresponding AS Numbers (ASNs). Such a mapping will help us infer the network-level topology of the P2P nodes, which enables better-informed analysis of performance and resilience characteristics of the P2P network.
 
-#### Measurement Plan (DRAFT)
+#### Measurement Plan
 
-The IP addresses of the IPFS Network will be collected by a crawler. The collected IPs will be mapped to an AS using BGP data obtained from BGPStream (real-time stream of BGP paths from RouteViews and RIPE RIS) as well as WHOIS and RIR data to filter artifacts of BGP paths. We can also use some free services, such as the API by [Team Cymry](https://team-cymru.com/community-services/ip-asn-mapping/) that can be used to assist in this task.
+The IP addresses of the IPFS Network will be collected by a crawler. The collected IPs will be mapped to an AS using BGP data obtained from BGPStream (real-time stream of BGP paths from RouteViews and RIPE RIS) as well as WHOIS and RIR data to filter artifacts of BGP paths, or some similar alternative. We can also use some free services, such as the API by [Team Cymry](https://team-cymru.com/community-services/ip-asn-mapping/) that can be used to assist in this task.
 
 #### Success Criteria
 
@@ -251,7 +251,7 @@ We have a dashboard or plot that shows the distribution of nodes to ASNs, and an
 <a id="_mjvqjcvas5uh"></a>
 ## RFM 7 - Distribution of DHT lookup times
 
-* _Status:_ **brainstorm**
+* _Status:_ **ready**
 * _DRI/Team:_
 * _Effort Needed:_ 
 * _Prerequisite(s):_ 
@@ -260,12 +260,13 @@ We have a dashboard or plot that shows the distribution of nodes to ASNs, and an
 
 #### Proposal
 
-With this measurement we look to understand how DHT lookups behave throughout time according to the specific file being searched, the status of the network, the location of nodes in the network, the time required to perform a connection, or load of the nodes. The result of this measurement should be a distribution of the time required to perform DHT lookups. For instance, if we chose to see the distribution of DHT lookups of the last 7 days we will output a histogram with the time invested to perform a lookup in the DHT by the different probes.
+With this measurement we look to understand how DHT lookups behave throughout time depending on several parameters, such as the specific file being searched (e.g., popular vs unpopular), the location of nodes in the network, the time required to perform a connection, or load of the nodes. The result of this measurement should be a distribution of the time required to perform DHT lookups. Ideally, we should have the option (e.g., in a dashboard-style tool) to chose to see the distribution of DHT lookups of the last 7 days, which will output a histogram with the time invested to perform a lookup in the DHT by the different probes.
+
+In order to achieve higher confidence in the results, we want to have nodes spun up in different location across the planet, which publish content that is then retrieved from other locations.
 
 We want to find out, among others:
 
-- % of requests below 500 ms
-- % of requests between 500ms and 1 s.
+- distribution of requests over time (e.g., below 500ms, below 1s, below 2s, above 10s etc).
 - correlation between slow lookups and geolocation or ASN. This will give us an insight on whether some part of the wider internet is slower, or if a particular node is either on a slow connection or overloaded.
 - stability of measurements over time, i.e., is a node consistently being involved in slow lookups?
 
@@ -273,17 +274,19 @@ This gives a good sense of the state of the network at a specific epoch. We shou
 
 Additionally, we could show the distribution of lookups in a specific probe, i.e. in a specific section of the network, in order to have a sense of the DHT lookup times to be expected for someone in the probe's premises.
 
-#### Measurement Plan (DRAFT)
+#### Measurement Plan
 
 To measure this, a set of probes would be deployed in different locations. Each of these probes would perform random lookups in the DHT and track the time until it succeeds. It would also be interesting to try and (artificially) connect (i.e., do a lookup) to the same node from different vantage points in the network. For instance connect from a "us-central" probe to a peer whose geolocation is "eu-central" as compared to "eu-west" probe to to the same peer in "eu-central" geolocation. Intuitively, the latter pair should have shorter lookup time, but due to the DHT structure this might not be the case.
 
 To increase the accuracy and granularity of the measurement, we could distinguish between GET and PUT operations. According to the implementation of the underlying DHT in the network doing a GET lookup (until the specific content is found) may be faster than putting new content in the network (where we always try to find the nearest peer to the content possible).
 
+An important parameter to test against is the duration of the peers being live in the network.
+
 An extension to this RFM is to accompany lookups and the PUT/GET operation mentioned above with a file of specific size. This will further allow us to build "server vs client" profiles for peers, as discussed in RFM-2.
 
 #### Success Criteria
 
-We have a dashboard that shows different buckets with the number of requests for the different delays for a specific period of time. We can also have the distribution of nodes with a "server" profile and how this correlates with the vantage point of the probe. For instance, how does the geolocation of a peer correlate with the geolocation of the vantage point from where we initiate the lookup?
+We have a dashboard, or plot that shows different buckets with the number of requests for the different delays for a specific period of time. We should be able to answer questions such as: how does the geolocation of a peer correlate with the geolocation of the vantage point from where we initiate the lookup?
 
 ##
 
