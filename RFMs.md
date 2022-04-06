@@ -90,7 +90,7 @@ We have a dashboard that shows the lifetime of documents, differentiated by diff
 <a id="_3k3jj6wgwrra"></a>
 ## RFM 2 | Uptime and churn of IPFS network nodes
 
-* _Status:_ **Ready**
+* _Status:_ **ready**
 * _DRI/Team:_
 * _Effort Needed:_ 
 * _Prerequisite(s):_ NONE
@@ -128,7 +128,7 @@ We have a dashboard or plots that are produced periodically (e.g., daily or week
 <a id="_rd50td3ym8dy"></a>
 ## RFM 3 - Location of IPFS end users and requested content.
 
-* _Status:_ **brainstorm**
+* _Status:_ **ready**
 * _DRI/Team:_
 * _Effort Needed:_ 
 * _Prerequisite(s):_ IP Geolocation, IP-to-ASN
@@ -137,41 +137,61 @@ We have a dashboard or plots that are produced periodically (e.g., daily or week
 
 #### Proposal
 
-Based on data from public IPFS gateways, get the location of IPFS users and the requested content. This would allow us to measure the locality of CIDs in relation to the users that issue requests. Also it would allow us to understand which nodes are actually involved in serving content.
+Based on data from public IPFS gateways, get the location of IPFS users and the requested content. This would allow us to measure the locality of CIDs in relation to the users that issue requests. Also it would allow us to understand at which locations are nodes actually involved in serving content.
 
-#### Measurement Plan (DRAFT)
+#### Measurement Plan
 
-For each request received by an IPFS gateway we will get the CID and the IP address of the requestor. We will then resolve the IP address to a location (city, country) and we will find the providers (peer IDs) that offer the requested CID at the time of the request based on data collected from HydraBooster nodes. By also mapping the Peer IDs to a location we will be able to understand the locality of requests in IPFS.
+For each request received by an IPFS gateway we will get the CID and the IP address of the requestor. We will then resolve the IP address to a location (city, country) and we will find the providers (peer IDs) that offer the requested CID at the time of the request. By also mapping the Peer IDs to a location we will be able to understand the locality of requests in IPFS.
 
 #### Success Criteria
 
-We have a dashboard that visualizes the volume of requests between different relationships. A visualization like a [Chord diagram](https://python-graph-gallery.com/chord-diagram/) can be used in addition to a map. The dashboard will also provide statistics on which ASNs and locations serve and consume most content.
+We have a heatmap-style plot that visualizes the volume of requests between different geographic locations. A visualization like a [Chord diagram](https://python-graph-gallery.com/chord-diagram/) or a heatmap can be used in addition to a map. The plot/dashboard should also ideally provide statistics on which ASNs and locations serve and consume most content.
 
 ##
 
 <a id="_1mu1tfaw8au3"></a>
 ## RFM 4 | IP address Churn (Roaming) for nodes in the IPFS Network
 
-* _Status:_ **draft**
+* _Status:_ **ready**
 * _DRI/Team:_
 * _Effort Needed:_ 
 * _Prerequisite(s):_ 
-* _Value:_ **LOW**
+* _Value:_ **HIGH**
 * _Report:_ \<insert link to report once work is complete\>
 
 #### Proposal
 
-We want to learn about how stable are the IPFS nodes' location and how much peers generally move between IP addresses (e.g. Laptop moving from home to coffee shop to work).
+We want to learn about how stable are the IPFS nodes' location and how much peers generally move between IP addresses (e.g. Laptop moving from home to coffee shop to work). We also want to be able to identify peers that rotate their PeerIDs. PeerID rotation is critical for the performance of the DHT and if done too often leads to orphan content, i.e., content that exists in the network but its provider record cannot be found.
 
-#### Measurement Plan (DRAFT)
+For additional context check this [Notion page](https://pl-strflt.notion.site/Rotating-PeerIDs-22e9ebebae0440ef873dc5143943e762).
+
+#### Measurement Plan
+
+Approach 1:
+
+- Take crawler data for a long period (e.g., one month)
+    - Expected schema: `<peer_id, all IPs, ASN, location, crawl timestamp, crawl_id>`
+    - Remove hydra nodes from data set
+- Identify: 
+    - Changing IP addresses for constant PeerID:
+    - Changing PeerID for a constant IP
+    - Rotating both IP and PeerID:
+- Find out whether nodes with Rotating PeerIDs end up storing provider records within the period that they appear with a given PeerID.
+- How frequent is PeerID rotation and how many records remain orphan?
+
+For additional context check this [Notion page](https://pl-strflt.notion.site/Rotating-PeerIDs-22e9ebebae0440ef873dc5143943e762).
+
+Approach 2:
 
 Using the Hydra Booster nodes, track PeerIds to `multiaddr`s and check how often these change by executing FindPeer queries regularly.
 
-- In order to avoid getting measurements for a huge number of peers, we can leverage results from the proposed algorithm in RFM-1 and RFM-2 and target only nodes that we have previously found to disconnect often and focus on those.
+In order to avoid getting measurements for a huge number of peers, we can leverage results from the proposed algorithm in RFM-1 and RFM-2 and target only nodes that we have previously found to disconnect often and focus on those.
 
 #### Success Criteria
 
-We have a dashboard that shows the IP address churn of nodes. Ideas for dashboard:
+We have detailed results, similar to: [Week 42, 2021](https://github.com/dennis-tra/nebula-crawler-reports/blob/main/calendar-week-42/ipfs/README.md#top-10-rotating-hosts) [Week 43, 2021](https://github.com/dennis-tra/nebula-crawler-reports/blob/main/calendar-week-43/ipfs/README.md#top-10-rotating-hosts) [Week 44, 2021](https://github.com/dennis-tra/nebula-crawler-reports/blob/main/calendar-week-44/ipfs/README.md#top-10-rotating-hosts) on what fraction of nodes rotate their PeerIDs, what fraction of PeerIDs do the rotating IDs account for and what is the impact on the DHT, i.e., the discovery process through other peers? routing tables.
+
+Additional ideas: we have a dashboard that shows the IP address churn of nodes:
 
 - Churn dashboard: we can have a dashboard where the y-axis measures churn rate and the x-axis is increasing reliability. On the x-axis nodes are "listed" according to the churn rate we have measured.
 - Roaming dashboard: we can have a dashboard where the y-axis shows change in location per 24hr period. The x-axis can again "list" nodes in increasing reliability in terms of location change.
