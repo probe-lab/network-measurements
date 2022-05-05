@@ -8,7 +8,7 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 **[RFM 3 | Location of IPFS end users and requested content](#_rd50td3ym8dy)**
 
-**[RFM 4 | IP Churn (Roaming) for nodes in the IPFS Network](#_1mu1tfaw8au3)**
+**[RFM 4 | IP address Churn (Roaming) & PeerID distribution for nodes in the IPFS Network](#_1mu1tfaw8au3)**
 
 **[RFM 6 | Mapping the AS-level topology of P2P networks](#_1xjatm7vfujn)**
 
@@ -154,7 +154,7 @@ We have a heatmap-style plot that visualizes the volume of requests between diff
 ##
 
 <a id="_1mu1tfaw8au3"></a>
-## RFM 4 | IP address Churn (Roaming) for nodes in the IPFS Network
+## RFM 4 | IP address Churn (Roaming) & PeerID distribution for nodes in the IPFS Network
 
 * _Status:_ **ready**
 * _DRI/Team:_
@@ -167,13 +167,15 @@ We have a heatmap-style plot that visualizes the volume of requests between diff
 
 We want to learn about how stable are the IPFS nodes' location and how much peers generally move between IP addresses (e.g. Laptop moving from home to coffee shop to work). We also want to be able to identify peers that rotate their PeerIDs. PeerID rotation is critical for the performance of the DHT and if done too often leads to orphan content, i.e., content that exists in the network but its provider record cannot be found.
 
+PeerID distribution is useful to identify whether malicious nodes generate PeerIDs and concentrate around a given part of the name space, e.g., to eclipse some particular content/CID.
+
 For additional context check this [Notion page](https://pl-strflt.notion.site/Rotating-PeerIDs-22e9ebebae0440ef873dc5143943e762).
 
 #### Measurement Plan
 
 Approach 1:
 
-- Take crawler data for a long period (e.g., one month)
+- Take crawler data for a long period (e.g., one month or more)
     - Expected schema: `<peer_id, all IPs, ASN, location, crawl timestamp, crawl_id>`
     - Remove hydra nodes from data set
 - Identify: 
@@ -182,6 +184,7 @@ Approach 1:
     - Rotating both IP and PeerID:
 - Find out whether nodes with Rotating PeerIDs end up storing provider records within the period that they appear with a given PeerID.
 - How frequent is PeerID rotation and how many records remain orphan?
+- Represent the hash space in a 0-1 line and depict the PeerIDs on this line to show the distribution of PeerIDs and whether there is unusual concentration of PeerIDs around a specific part of the hash space.
 
 For additional context check this [Notion page](https://pl-strflt.notion.site/Rotating-PeerIDs-22e9ebebae0440ef873dc5143943e762).
 
@@ -193,7 +196,9 @@ In order to avoid getting measurements for a huge number of peers, we can levera
 
 #### Success Criteria
 
-We have detailed results, similar to: [[Week 42, 2021](https://github.com/dennis-tra/nebula-crawler-reports/blob/main/calendar-week-42/ipfs/README.md#top-10-rotating-hosts)], [[Week 43, 2021](https://github.com/dennis-tra/nebula-crawler-reports/blob/main/calendar-week-43/ipfs/README.md#top-10-rotating-hosts)], [[Week 44, 2021](https://github.com/dennis-tra/nebula-crawler-reports/blob/main/calendar-week-44/ipfs/README.md#top-10-rotating-hosts)] on what fraction of nodes rotate their PeerIDs, what fraction of PeerIDs do the rotating IDs account for and what is the impact on the DHT, i.e., the discovery process through other peers? routing tables.
+We have detailed results, similar to: [[Week 42, 2021](https://github.com/dennis-tra/nebula-crawler-reports/blob/main/calendar-week-42/ipfs/README.md#top-10-rotating-hosts)], [[Week 43, 2021](https://github.com/dennis-tra/nebula-crawler-reports/blob/main/calendar-week-43/ipfs/README.md#top-10-rotating-hosts)], [[Week 44, 2021](https://github.com/dennis-tra/nebula-crawler-reports/blob/main/calendar-week-44/ipfs/README.md#top-10-rotating-hosts)] on what fraction of nodes rotate their PeerIDs, what fraction of PeerIDs do the rotating IDs account for and what is the impact on the DHT, i.e., the discovery process through other peers' routing tables.
+
+We have a plot that shows the hash-space from 0 to 1 and the PeerIDs distributed acros the x-axis. We can see the distribution and identify whether there is concentration of PeerIDs across any part of the name space.
 
 Additional ideas: we have a dashboard that shows the IP address churn of nodes:
 
