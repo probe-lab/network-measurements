@@ -4,8 +4,6 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 ## Current Priority - Batch 1
 
-**[RFM 2 | Uptime  and churn P2P network nodes](#_3k3jj6wgwrra)**
-
 **[RFM 3 | Location of IPFS end users and requested content](#_rd50td3ym8dy)**
 
 **[RFM 4 | IP address Churn (Roaming) & PeerID distribution for nodes in the IPFS Network](#_1mu1tfaw8au3)**
@@ -45,10 +43,11 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 **[RFM 14 | How efficient is caching in the IPFS network?](#_j426cm9u3j1h)**
 
+## Completed
+
+**[RFM 2 | Uptime and churn P2P network nodes](#rfm-2--uptime-and-churn-of-ipfs-network-nodes)**
 
 **[Tooling/Other notes](#tooling)**
-
-
 
 ---
 
@@ -95,15 +94,14 @@ We have a dashboard that shows the lifetime of documents, differentiated by diff
 
 ##
 
-<a id="_3k3jj6wgwrra"></a>
-## RFM 2 | Uptime and churn of IPFS network nodes
+## RFM 2 | Uptime and churn P2P network nodes
 
-* _Status:_ **ready**
-* _DRI/Team:_
-* _Effort Needed:_ 
+* _Status:_ **completed**
+* _DRI/Team:_ [`@dennis-tra`](https://github.com/dennis-tra)
+* _Effort Needed:_ **HIGH**
 * _Prerequisite(s):_ NONE
 * _Value:_ **HIGH**
-* _Report:_ \<insert link to report once work is complete\>
+* _Report:_ [`./reports/RFM2.md`](./reports/RFM2.md)
 
 #### Proposal
 
