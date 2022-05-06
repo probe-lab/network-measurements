@@ -22,6 +22,8 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 **[RFM 17 | Provider Record Liveness](#rfm-17--provider-record-liveness)**
 
+**[RFM 18 | TTFB through different architecture components](#rfm-18--ttfb-through-different-architecture-components)**
+
 
 ## Next Priority
 
@@ -585,7 +587,7 @@ We carry out a sensitivity analysis based on the success rate we have observed t
 
 Provider records are replicated in the system to `k=20` peers and are re-provided after 12hrs in the hope that, despite network churn, at least one of them will be alive to provide the record throughout the 12hr interval. However, we have not tested whether provider records indeed stay alive for 12hrs. In addition, we have found that the network has very high churn rate (at times in the order of 50% per hour).
 
-Back of the envelope calculation suggests that with this rate of churn all 20 peers are likely to have gone offline after only 6hrs. In turn, this suggests that records might be unreachable for ~6hrs, which should be considered **unacceptable**. Of course, peers do not only leave, but also come back ? our results suggest that the interarrival time is of similar levels as the churn rate ? so it is likely that records become available again.
+Back of the envelope calculation suggests that with this rate of churn all 20 peers are likely to have gone offline after only 6hrs. In turn, this suggests that records might be unreachable for ~6hrs, which should be considered **unacceptable**. Of course, peers do not only leave, but also come back - our results suggest that the interarrival time is of similar levels as the churn rate - so it is likely that records become available again.
 
 Despite the above argumentation, the network seems to work fine (although there have been reports of content being unreachable), so there are three things that might be happening:
 
@@ -607,6 +609,51 @@ Additional context can be found [here](https://pl-strflt.notion.site/Provider-Re
 #### Success Criteria
 
 We have numbers to justify how often do provider records expire and have carried out experiments with alternative replication settings to justify new proposed settings.
+
+## RFM 18 | TTFB through different architecture components
+
+* _Status:_ **ready**
+* _DRI/Team:_ 
+* _Effort Needed:_ 
+* _Prerequisite(s):_ 
+* _Value:_ **HIGH**
+* _Report:_ \<insert link to report once work is complete\>
+
+
+#### Proposal
+
+The IPFS architecture has grown to include several ways to retrieve content, sometimes referred to "content routing subsystems". These include the original go-ipfs approach, but also pinning services, which normally work through a public gateway. The addition of Hydra nodes, which help to keep content (i.e., provider records) alive, but also help with faster retrieval of those records, presents a separate boost to the architecture.
+
+We have not yet studied the latency (particularly the Time To First Byte - TTFB) observed by clients using these different content retrieval methods in a systematic way.
+
+#### Measurement Plan
+
+We'd like to have a benchmark and comparison of the performance when retrieving content through the following Retrieval Methods (RMs):
+
+RM-1. Through go-ipfs.
+RM-2. Through go-ipfs, but without interacting with/using the Hydra boosters. Two ways to do that: 
+  - By ignoring responses from Hydras at request time.
+  - By completing the experiment with all responses (including those from Hydras) and post-processing to filter out those that included responses from a Hydra peer.
+RM-3. Through a clustered node, when content is pinned/cached in a clustered node's storage. The experiment should repeat for:
+  - content stored in the same clustered node's storage.
+  - content stored in other clustered nodes.
+RM-4. Through a clustered node, when content is not pinned/cached.
+
+Requirements to get valid results:
+- All retrievals should be carried out (roughly) simultaneously to achieve similar network conditions across all retrievals.
+- Retrievals should be carried out from several different geographic locations to observe differences in latency from several vantage points.
+- The experiments should be carried out with a new CID for each experiment, in order to avoid content being cached in more peers and obtain baseline performance. Comparisons with existing CIDs will also be interesting to have.
+- The experiments involving requests from go-ipfs clients should repeat for both newly spun-up client/requesting peers and long-running peers. This should be done to identify differences in the routing table entries of new vs old peers.
+- If using cloud infrastructure to store and retrieve content, it would be good to experiment with diverse cloud infrastructures (i.e., not both client and provider in the same cloud provider's infra).
+- For all retrievals we should be collecting results for the Time To First Byte (TTFB).
+
+#### Sucess Criteria
+
+- We have enough results, in the order of hundreds of retrievals for each Retrieval Method, to draw conclusive results on the latencies observed with each.
+- The primary metric of interest is the Time To First Byte (TTFB).
+- The experiments and scripts developed as part of this RFM should be easy to re-deploy and re-use. 
+
+Intuitively, we are expecting the following order in terms of latency: RM-3 < RM-1 < RM-2 < RM-4. Large differences, unusual spikes, or unexpected results should be investigated further to be able to explain these events.
 
 
 <a id="tooling"></a>
