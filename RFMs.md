@@ -642,7 +642,7 @@ RM-4. Through a clustered node, when content is not pinned/cached.
 Requirements to get valid results:
 - All retrievals should be carried out (roughly) simultaneously to achieve similar network conditions across all retrievals.
 - Retrievals should be carried out from several different geographic locations to observe differences in latency from several vantage points.
-- The experiments should be carried out with a new CID for each experiment, in order to avoid content being cached in more peers and obtain baseline performance. Comparisons with existing CIDs will also be interesting to have.
+- The experiments should be carried out with a new CID for each experiment, in order to avoid content being cached in more peers and obtain baseline performance. For RM-3 content should be handled accordingly (i.e., cached) in order to achieve the RM's objective. Comparisons with existing, where possible popular CIDs will also be interesting to have.
 - The experiments involving requests from go-ipfs clients should repeat for both newly spun-up client/requesting peers and long-running peers. This should be done to identify differences in the routing table entries of new vs old peers.
 - If using cloud infrastructure to store and retrieve content, it would be good to experiment with diverse cloud infrastructures (i.e., not both client and provider in the same cloud provider's infra).
 - For all retrievals we should be collecting results for the Time To First Byte (TTFB).
