@@ -630,14 +630,14 @@ We have not yet studied the latency (particularly the Time To First Byte - TTFB)
 
 We'd like to have a benchmark and comparison of the performance when retrieving content through the following Retrieval Methods (RMs):
 
-RM-1. Through go-ipfs.
-RM-2. Through go-ipfs, but without interacting with/using the Hydra boosters. Two ways to do that: 
+- RM-1. Through go-ipfs.
+- RM-2. Through go-ipfs, but without interacting with/using the Hydra boosters. Two ways to do that: 
   - By ignoring responses from Hydras at request time.
   - By completing the experiment with all responses (including those from Hydras) and post-processing to filter out those that included responses from a Hydra peer.
-RM-3. Through a clustered node, when content is pinned/cached in a clustered node's storage. The experiment should repeat for:
+- RM-3. Through a clustered node, when content is pinned/cached in a clustered node's storage. The experiment should repeat for:
   - content stored in the same clustered node's storage.
   - content stored in other clustered nodes.
-RM-4. Through a clustered node, when content is not pinned/cached.
+- RM-4. Through a clustered node, when content is not pinned/cached.
 
 Requirements to get valid results:
 - All retrievals should be carried out (roughly) simultaneously to achieve similar network conditions across all retrievals.
