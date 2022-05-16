@@ -669,7 +669,7 @@ Intuitively, we are expecting the following order in terms of latency: RM-3 < RM
 
 #### Proposal
 
-Distributed Hash Tables (DHTs) are a central piece of decentralized peer-to-peer systems.
+Distributed Hash Tables (DHTs) are a core component of decentralized peer-to-peer systems.
 We want to measure the health of the [Kademlia](https://www.scs.stanford.edu/~dm/home/papers/kpos.pdf) routing table in the running IPFS network. The measurements will help us understand better the state of the routing table in practice and will provide hints on how to improve routing in libp2p/IPFS.
 
 #### Measurement Plan
