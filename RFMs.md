@@ -24,6 +24,8 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 **[RFM 18 | TTFB through different architecture components](#rfm-18--ttfb-through-different-architecture-components)**
 
+**[ RFM 19 | DHT Routing Table Health](#rfm-19--dht-routing-table-health)**
+
 
 ## Next Priority
 
@@ -655,6 +657,34 @@ Requirements to get valid results:
 
 Intuitively, we are expecting the following order in terms of latency: RM-3 < RM-1 < RM-2 < RM-4. Large differences, unusual spikes, or unexpected results should be investigated further to be able to explain these events.
 
+## RFM 19 | DHT Routing Table Health
+
+* _Status:_ **ongoing**
+* _DRI/Team:_ @guillaumemichel
+* _Effort Needed:_ 
+* _Prerequisite(s):_ None
+* _Value:_ **HIGH**
+* _Report:_ \<insert link to report once work is complete\>
+* _Material:_ [Notion page](https://www.notion.so/pl-strflt/DHT-Routing-Table-Health-f8e6836c4b09440baa909a4448a88fbf)
+
+#### Proposal
+
+Distributed Hash Tables (DHTs) are a core component of decentralized peer-to-peer systems.
+We want to measure the health of the [Kademlia](https://www.scs.stanford.edu/~dm/home/papers/kpos.pdf) routing table in the running IPFS network. The measurements will help us understand better the state of the routing table in practice and will provide hints on how to improve routing in libp2p/IPFS.
+
+#### Measurement Plan
+
+The [Nebula Crawler](https://github.com/dennis-tra/nebula-crawler) can be used to crawl the IPFS network to get information about all online peers and their routing table. Given a peer ID and the peers in its routing table, it is possible to reconstruct its k-buckets and to monitor them over time.
+
+We want to compute the theoretical _Perfect Routing Table_ provided the network state at a given time. The _Perfect Routing Table_ is defined as the most efficient routing table to reach any identifier in a minimal number of hops, given a set of peers. We can then compute the distance / Faccard coefficient between the actual DHT routing table and the theoretical perfect one to measure the efficiency of the DHT routing in practice.
+
+#### Sucess Criteria
+
+- Verify if each node has its 20 closest neighbors in its routing table, which is expected by Kademlia
+- Check if non-full k-buckets are missing any online peer
+- Unresponsive nodes rate in the routing table
+- Routing Table evolution over time, and consequences of churn
+- Difference between actual DHT Routing Table and the _Perfect Routing Table_
 
 <a id="tooling"></a>
 ## Tooling/Other notes
@@ -682,3 +712,4 @@ This measurement will probably require adequate storage space.
 After collecting the AS-level and IP-level topology of p2p networks, we can map these topologies on top of [RIPE Atlas](https://atlas.ripe.net/).
 
 Consequently, we can check if RIPE Atlas provides the necessary abstraction for measurements.
+
