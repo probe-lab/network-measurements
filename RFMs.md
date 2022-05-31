@@ -688,7 +688,7 @@ We want to compute the theoretical _Perfect Routing Table_ provided the network 
 - Difference between actual DHT Routing Table and the _Perfect Routing Table_
 
 <a id="data-volume"></a>
-## RFM 20 | Data volume stored and file size distribution
+## RFM 20 | Data volume stored on IPFS and file size distribution
 
 * _Status:_ **brainstorm**
 * _DRI/Team:_
