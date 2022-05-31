@@ -45,7 +45,7 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 **[RFM 14 | How efficient is caching in the IPFS network?](#_j426cm9u3j1h)**
 
-**[RFM 20 | Data volume and file size distribution](#data-volume)**
+**[RFM 20 | Data volume stored on IPFS and file size distribution](#data-volume)**
 
 **[Tooling/Other notes](#tooling)**
 
