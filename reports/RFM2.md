@@ -102,7 +102,7 @@ We define the following node classifications:
 * `oneoff` - A peer that was seen coming online and then going offline **only once** during the measurement period
 * `online` - A peer that was not seen offline at all during the measurement period (always online)
 * `left` - A peer that was online at the beginning of the measurement period, did go offline and didn't come back online
-* `entered` - A peer that was offline at the beginning of the measurement period but appeared within and didn't go offline since then
+* `entered` - A peer that was offline at the beginning of the measurement period but appeared online later and didn't go offline since then
 
 ### Node Churn
 
