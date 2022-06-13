@@ -59,7 +59,7 @@ Crawling the entire network takes around 5 minutes on commodity hardware with a 
 * `crawl_duration` - The time it took to crawl the peer (requesting routing table entries) or until an error occurred
 * `type` - The type of this visit (`crawl` or `monitor`)
 * `agent_version` - Which agent version did this peer have
-* `peer_multi_hash` - The peer ID multi hash
+* `peer_multi_hash` - The peer ID multihash
 * `protocols` - Which protocols does this peer support
 * `multi_addresses` - All multi addresses for this peer
 * `error_message` - The error if one occurred
