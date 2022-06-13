@@ -118,7 +118,7 @@ The above graphs show the times between two session-start events of **the same p
 
 ## Conclusion
 
-This RFM had short term as well as long term benefits. On the one hand, it answered the aforementioned measurement questions and on the other hand it initiated the development of valuable measurement tooling that can be used for future research. By diving into the data, many more questions arose that led to other RFMs like RFM5 or RFM6. Both of which can be tackeled with the the software that was developed in the scope of this RFM2.
+This RFM had short term as well as long term benefits. On the one hand, it answered the aforementioned measurement questions and on the other hand it initiated the development of valuable measurement tooling that can be used for future research. By diving into the data, many more questions arose that led to other RFMs like RFM5 or RFM6. Both of which can be tackled with the software that was developed in the scope of this RFM2.
 
 The measurement results itself reveal a couple of interesting insights. For one, the churn rate in the IPFS network is quite high and does not differ much from previous peer-to-peer networks from over 20 years ago. Translating this finding in an evaluation for network wide parameters like record redundancy, or query concurrency is part of the future work.
 
