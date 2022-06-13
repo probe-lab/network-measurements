@@ -108,7 +108,7 @@ We define the following node classifications:
 
 ![Three graphs depicting node churn](./rfm2/churn.png)
 
-The above graphs show the churn of DHT server nodes of the public IPFS network over the course of one week. The first graph shows the percentage of online peers over the number of hours they actually were online. There we can see that 80% of all peers that join the network stay online for 8 hours **or less**. Similarly, 50% of all peers stay only online for ~2 hours or less. The remaining two graphs show this information by different agent versions. There we can see that `ioi` peers are the most unstable while the `go-ipfs 0.9.0` peers are the most stable among the `go-ipfs` peers.
+The above graphs show the CDF of the churn of DHT server nodes in the public IPFS network over the course of one week. The first graph shows the percentage of online peers over the number of hours they actually were online. There we can see that 80% of all peers that join the network stay online for 8 hours **or less**. Similarly, 50% of all peers stay only online for ~2 hours or less. The remaining two graphs show this information by different agent versions. There we can see that `ioi` peers are the most unstable while the `go-ipfs 0.9.0` peers are the most stable among the `go-ipfs` peers.
 
 ### Node Inter Arrival Times
 
