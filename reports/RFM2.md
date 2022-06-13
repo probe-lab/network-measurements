@@ -41,11 +41,11 @@ As stated above, we wanted to learn the average session length of DHT server nod
 1. Identify DHT server nodes in the Public IPFS Network
 2. Track when DHT server nodes join and leave the network.
 
-To identify DHT server nodes, we built the [Nebula Crawler](https://raw.githubusercontent.com/dennis-tra/nebula-crawler) that "enumerates" the DHT of the public IPFS network with emphasis on continuous node monitoring to allow for high accuracy session length measurements. We augmented the crawler with a highly normalized RDBMS-backed data persistence that on the one hand yields a low data footprint and on the other hand allows near-arbitrary retrospective analyses.
+To identify DHT server nodes, we built the [Nebula Crawler](https://raw.githubusercontent.com/dennis-tra/nebula-crawler) that "enumerates" the DHT of the public IPFS network with emphasis on continuous node monitoring to allow for high accuracy session length measurements. We augmented the crawler with highly normalized, RDBMS-backed data persistence that on the one hand yields a low data footprint and on the other hand allows near-arbitrary retrospective analyses.
 
 ### Identifying DHT server nodes
 
-There were already several crawlers available that we could use, but did not meet all our criteria. They were outdated ([`wiberlin/ipfs-crawler`](https://github.com/wiberlin/ipfs-crawler)), used a persistance backend unsuitable for complex data analysis ([`adlrocha/go-libp2p-crawler`](https://github.com/adlrocha/go-libp2p-crawler)), or did only provide the core crawling functionality without any additional features ([`libp2p/go-libp2p-kad-dht`](https://github.com/libp2p/go-libp2p-kad-dht/tree/master/crawler)). Nonetheless, the [Nebula Crawler](https://raw.githubusercontent.com/dennis-tra/nebula-crawler) draws a lot of inspiration from all of these projects and wouldn't have been possible without all of them.
+There were already several crawlers available that we could use, but did not meet all our criteria. They were outdated ([`wiberlin/ipfs-crawler`](https://github.com/wiberlin/ipfs-crawler)), used a persistence backend unsuitable for complex data analysis ([`adlrocha/go-libp2p-crawler`](https://github.com/adlrocha/go-libp2p-crawler)), or did only provide the core crawling functionality without any additional features ([`libp2p/go-libp2p-kad-dht`](https://github.com/libp2p/go-libp2p-kad-dht/tree/master/crawler)). Nonetheless, the [Nebula Crawler](https://raw.githubusercontent.com/dennis-tra/nebula-crawler) draws a lot of inspiration from all of these projects and wouldn't have been possible without all of them.
 
 To crawl the network Nebula starts by connecting to a set of bootstrap peers and constructing the routing tables (Kademlia k-buckets) of the remote peers based on their PeerIds. Then it builds random PeerIds with common prefix lengths (CPL) that fall in each of the remote peers' buckets, and asks them if they know any peers closer to the ones Nebula just constructed (XOR distance). This will effectively yield a list of all PeerIds that a peer has in its routing table. The process repeats recursively for all found peers until Nebula does not find any new PeerIds. This process is heavily inspired by the basic-crawler in [`libp2p/go-libp2p-kad-dht`](https://github.com/libp2p/go-libp2p-kad-dht/tree/master/crawler) from @aschmahmann and the descriptions in [^2].
 
@@ -62,10 +62,10 @@ Crawling the entire network takes around 5 minutes on commodity hardware with a 
 * `peer_multi_hash` - The peer ID multihash
 * `protocols` - Which protocols does this peer support
 * `multi_addresses` - All multi addresses for this peer
-* `error_message` - The error if, one occurred
+* `error_message` - The error; if one occurred
 * `created_at` - Database timestamp when this entry was recorded
 
-All this information is saved in a normalized way into the database to allow for comprehensive retrospective analysis.
+All this information is saved in a normalized way into the database to allow for comprehensive retrospective analyses.
 
 ### Track when DHT Server Nodes join and leave the Network
 
@@ -89,7 +89,7 @@ The `session` information is essential for the objectives mentioned above. We ca
 
 Protocol Labs runs an instance of the Nebula Crawler in their infrastructure. This instance is augmented with a report script that periodically produces graphics and statistics about the IPFS DHT network. You can find a list of all reports at [https://stats.ipfs.network](https://stats.ipfs.network). The analysis code that produced those graphs is also publicly available and can be found [here](https://github.com/dennis-tra/nebula-crawler#analysis).
 
-For completeness, we present a selected number of graphs from the recent results (2022-05-05) in this report as well.
+For completeness, we present a selected number of graphs from the recent results (2022-05-05) in this report as well. The data was collected from a Nebula instance running in Protocol Labs infrastructure on AWS. The graphs below show information from data aggregated over one week (`2022-04-28` to `2022-05-05`).
 
 ### Node Classifications
 
@@ -118,7 +118,7 @@ The above graphs show the times between two session-start events of **the same p
 
 ## Conclusion
 
-This RFM had short term as well as long term benefits. On the one hand, it answered the aforementioned measurement questions and on the other hand it initiated the development of valuable measurement tooling that can be used for future research. By diving into the data, many more questions arose that led to other RFMs like RFM5 or RFM6. Both of which can be tackled with the software that was developed in the scope of this RFM2.
+This RFM had short term as well as long term benefits. On the one hand, it answered the aforementioned measurement questions and on the other hand it initiated the development of valuable measurement tooling that can be used for future research. By diving into the data, many more questions arose that led to other RFMs like [RFM5](https://github.com/protocol/network-measurements/blob/master/RFMs.md#_fld2sr9emn3m) or [RFM6](https://github.com/protocol/network-measurements/blob/master/RFMs.md#_1xjatm7vfujn). Both of which can be tackled with the software that was developed in the scope of this RFM2.
 
 The measurement results themselves reveal a couple of interesting insights. For one, the churn rate in the IPFS network is quite high and does not differ much from previous peer-to-peer networks from over 20 years ago. Translating this finding in an evaluation for network wide parameters like record redundancy, or query concurrency is part of our future work.
 
