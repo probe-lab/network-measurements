@@ -23,7 +23,7 @@
 
 ## Motivation
 
-A major performance indicator for an unstructured peer-to-peer network is participant churn, meaning how long do peers stay in the network after joining before going offline again. Network-wide parameters that cover the number of record replication and request concurrency rely on an accurate understanding of this dynamic. The average session length of a peer-to-peer network is a global measure of the network's resiliency and therefore could also reveal (un)intentional misbehaviour of certain peers.
+A major performance indicator for an unstructured peer-to-peer network is participant churn, meaning how long do peers stay in the network after joining before going offline again. Network-wide parameters, such as those that cover the number of record replication and request concurrency rely on an accurate understanding of this dynamic. The average session length of a peer-to-peer network is a global measure of the network's resiliency and therefore could also reveal (un)intentional misbehaviour of certain peers.
 
 In the past, measurements on network churn have been conducted for networks like BitTorrent or Gnutella [^1] and only one team has briefly looked into churn of the Public IPFS Network [^2]. However, their data is dated by now as it was gathered before the release of DHT client vs. server node distinction in version `go-ipfs 0.5.0` and has not the same granularity as we are about to present. In the scope of this RFM we seek to identify the participation and contribution of DHT server peers in the Public IPFS Network. More specifically, we want to learn:
 
