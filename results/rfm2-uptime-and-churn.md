@@ -7,8 +7,20 @@
 * _Value:_ **HIGH**
 * _Report:_ [`reports/rfm2/README.md`](reports/rfm2/README.md)
 
+## Highlights
+
+* Peer churn is quite high with 50% of new peers leaving after 2h.
+* `go-ipfs` v0.9.x peers are constantly the most stable.
+* The IPFS network has a very low cloud provider (AWS etc.) dependency.
+* The country where most IPFS nodes are located is China followed by the US.
+* The country where nodes stay online the longest is the US, followed by Germany.
+* Churn rates per agent version can flag potential bugs of new releases.
+* We developed [`Nebula`](https://github.com/dennis-tra/nebula-crawler), a DHT crawler and monitoring tool.
+* All source code and analysis scripts are available in the [`nebula-crawler` repository](https://github.com/dennis-tra/nebula-crawler). The tool is comprehensively documented and set up so that the below results can be easily reproduced by anyone.
+
 ## Table of Contents
 
+- [Highlights](#highlights)
 - [Table of Contents](#table-of-contents)
 - [Motivation](#motivation)
 - [Measurement Methodology](#measurement-methodology)
@@ -89,7 +101,7 @@ The `session` information is essential for the objectives mentioned above. We ca
 
 Protocol Labs runs an instance of the Nebula Crawler in their infrastructure. This instance is augmented with a report script that periodically produces graphics and statistics about the IPFS DHT network. You can find a list of all reports at [https://stats.ipfs.network](https://stats.ipfs.network). The analysis code that produced those graphs is also publicly available and can be found [here](https://github.com/dennis-tra/nebula-crawler#analysis).
 
-For completeness, we present a selected number of graphs from the recent results (2022-05-05) in this report as well. The data was collected from a Nebula instance running in Protocol Labs infrastructure on AWS. The graphs below show information from data aggregated over one week (`2022-04-28` to `2022-05-05`).
+For completeness, we present a selected number of graphs from the recent results (2022-05-05) in this report as well. The data was collected from a Nebula instance running in Protocol Labs infrastructure on AWS. The graphs below show information from data aggregated over one week (`2022-04-28` to `2022-05-05`). Note, that the reports at [https://stats.ipfs.network](https://stats.ipfs.network) contain many more graphs, that cover e.g., agent version analysis, geo location distribution, or cloud provider coverage.
 
 ### Node Classifications
 
@@ -124,7 +136,7 @@ The measurement results themselves reveal a couple of interesting insights. For 
 
 Secondly, nodes that IPFS release v0.9.x are constantly the most stable nodes in terms of uptime, with nodes that run later releases being less stable and v0.8.x being the least stable.
 
-Thirdly, the country where the most IPFS nodes were located was by far China followed by the US, but the country where nodes stay online the longest is the US, followed by Germany.
+Thirdly, the country where most IPFS nodes are located is by far China followed by the US, but the country where nodes stay online the longest is the US, followed by Germany.
 
 Finally, the tool identifies and reports nodes that rotate their PeerIDs, which can be very useful to spot temporary malfunction, as has happened recently with [hydra-booster](https://github.com/libp2p/hydra-booster) peers (and was patched immediately).
 
