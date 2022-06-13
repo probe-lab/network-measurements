@@ -62,7 +62,7 @@ Crawling the entire network takes around 5 minutes on commodity hardware with a 
 * `peer_multi_hash` - The peer ID multihash
 * `protocols` - Which protocols does this peer support
 * `multi_addresses` - All multi addresses for this peer
-* `error_message` - The error if one occurred
+* `error_message` - The error if, one occurred
 * `created_at` - Database timestamp when this entry was recorded
 
 All this information is saved in a normalized way into the database to allow for comprehensive retrospective analysis.
