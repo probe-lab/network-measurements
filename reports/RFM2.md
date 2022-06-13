@@ -36,7 +36,7 @@ The following sections cover an overview of the measurement tool, methodology an
 
 ## Measurement Methodology
 
-As stated above, we wanted to learn the average session length of DHT server nodes in the Public IPFS Network and track their uptime. To do so, we need a way to
+As stated above, we wanted to learn the average session length of DHT server nodes in the Public IPFS Network and track their uptime. To do so, we needed a way to:
 
 1. Identify DHT server nodes in the Public IPFS Network
 2. Track when DHT server nodes join and leave the network.
