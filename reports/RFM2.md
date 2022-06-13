@@ -71,7 +71,7 @@ All this information is saved in a normalized way into the database to allow for
 
 After we have identified all DHT server nodes, we want to track their uptime. To do so, we implemented a `monitoring` mode into Nebula that periodically _`visits`_ all  peers that were identified during one of the crawls and were online at that time. The `visits` are recorded in the same way as described above with a `type` of `monitor`. Further, Nebula updates a `session` object in the database that tracks the uptime of individual peers. A `session` object gets created when Nebula finds a new online peer in the DHT during a crawl and contains the following information:
 
-* `peer_multi_hash` - The peer ID multi hash
+* `peer_multi_hash` - The peer ID multihash
 * `first_successful_dial` - When was the peer successfully dialed/crawled the first time
 * `last_successful_dial` - When was the most recent successful dial/crawl to/of the peer
 * `next_dial_attempt` - When should we try to dial the peer again
