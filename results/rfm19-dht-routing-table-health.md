@@ -17,15 +17,18 @@ _[Provide details on the methodology used in a way that others can reproduce the
 
 _[Summary of main results together with a description of what we see behind the plots. What do these results mean wrt your initial goal and how do they answer the motivation?]_
 
-![alt text](../implementations/rfm19-dht-routing-table-health/plots/distribution-10-closest-peers.png)
 
 ![alt text](../implementations/rfm19-dht-routing-table-health/plots/kbucket-filling-distribution.png)
 
 ![alt text](../implementations/rfm19-dht-routing-table-health/plots/missing-peers-in-non-full-kbuckets.png)
 
+![alt text](../implementations/rfm19-dht-routing-table-health/plots/known-peers-among-20-closest.png)
+
+![alt text](../implementations/rfm19-dht-routing-table-health/plots/missing-peers.png)
+
 ![alt text](../implementations/rfm19-dht-routing-table-health/plots/kbucket-distribution-20-closest-peers.png)
 
-![alt text](../implementations/rfm19-dht-routing-table-health/plots/known-peers-among-20-closest.png)
+![alt text](../implementations/rfm19-dht-routing-table-health/plots/distribution-10-closest-peers.png)
 
 ![alt text](../implementations/rfm19-dht-routing-table-health/plots/peerid-distribution.png)
 
