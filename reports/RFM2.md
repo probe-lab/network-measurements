@@ -122,7 +122,7 @@ This RFM had short term as well as long term benefits. On the one hand, it answe
 
 The measurement results themselves reveal a couple of interesting insights. For one, the churn rate in the IPFS network is quite high and does not differ much from previous peer-to-peer networks from over 20 years ago. Translating this finding in an evaluation for network wide parameters like record redundancy, or query concurrency is part of our future work.
 
-Further, by investigating peer churn we identified problems with [hydra-booster](https://github.com/libp2p/hydra-booster) peers that were then timely resolved.
+Finally, the tool identifies and reports nodes that rotate their PeerIDs, which can be very useful to spot temporary malfunction, as has happened recently with [hydra-booster](https://github.com/libp2p/hydra-booster) peers (and was patched immediately).
 
 ## References
 
