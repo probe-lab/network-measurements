@@ -1,0 +1,3 @@
+[submodule "implementations/rfm2-uptime-and-churn/nebula-crawler"]
+	path = implementations/rfm2-uptime-and-churn/nebula-crawler
+	url = https://github.com/dennis-tra/nebula-crawler.git
