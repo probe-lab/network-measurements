@@ -5,7 +5,7 @@
 * _Effort Needed:_ **HIGH**
 * _Prerequisite(s):_ NONE
 * _Value:_ **HIGH**
-* _Report:_ [`reports/rfm2/README.md`](reports/rfm2/README.md)
+* _Report:_ [`reports/rfm2-uptime-and-churn/README.md`](reports/rfm2-uptime-and-churn/README.md)
 
 ## Highlights
 
@@ -105,7 +105,7 @@ For completeness, we present a selected number of graphs from the recent results
 
 ### Node Classifications
 
-![A graph showing node classifications in offline (37.7 %), dangling (27.1 %), oneoff (21.3 %), online (10.5 %), entered (2.2 %), left (1.1 %)](./rfm2/classifications.png)
+![A graph showing node classifications in offline (37.7 %), dangling (27.1 %), oneoff (21.3 %), online (10.5 %), entered (2.2 %), left (1.1 %)](./rfm2-uptime-and-churn/classifications.png)
 
 We define the following node classifications:
 
@@ -118,13 +118,13 @@ We define the following node classifications:
 
 ### Node Churn
 
-![Three graphs depicting node churn](./rfm2/churn.png)
+![Three graphs depicting node churn](./rfm2-uptime-and-churn/churn.png)
 
 The above graphs show the CDF of the churn of DHT server nodes in the public IPFS network over the course of one week. The first graph shows the percentage of online peers over the number of hours they actually were online. There we can see that 80% of all peers that join the network stay online for 8 hours **or less**. Similarly, 50% of all peers stay only online for ~2 hours or less. The remaining two graphs show this information by different agent versions. There we can see that `ioi` peers are the most unstable while the `go-ipfs 0.9.0` peers are the most stable among the `go-ipfs` peers.
 
 ### Node Inter Arrival Times
 
-![CDF of inter arrival times](./rfm2/inter-arrival.png)
+![CDF of inter arrival times](./rfm2-uptime-and-churn/inter-arrival.png)
 
 The above graphs show the times between two session-start events of **the same peer**. Therefore, the CDFs only cover "dangling" peers (see above). However, this is not exactly the "inter-arrival" time but rather the time between the **start** of one session and the **start** of another session of the same peer. The inter-arrival time would track the time between the **end** of one session and the **start** of the next session of the same peer.
 
