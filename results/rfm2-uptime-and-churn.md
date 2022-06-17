@@ -122,6 +122,8 @@ We define the following node classifications:
 
 The above graphs show the CDF of the churn of DHT server nodes in the public IPFS network over the course of one week. The first graph shows the percentage of online peers over the number of hours they actually were online. There we can see that 80% of all peers that join the network stay online for 8 hours **or less**. Similarly, 50% of all peers stay only online for ~2 hours or less. The remaining two graphs show this information by different agent versions. There we can see that `ioi` peers are the most unstable while the `go-ipfs 0.9.0` peers are the most stable among the `go-ipfs` peers.
 
+Subject of future work is the investigation of ioi and storm nodes. While we know that Storm peers are associated with the [IPStorm](https://www.zdnet.com/article/ipstorm-botnet-expands-from-windows-to-android-mac-and-linux/) botnet, we need to further look into the role of ioi peers.
+
 ### Node Inter Arrival Times
 
 ![CDF of inter arrival times](../implementations/rfm2-uptime-and-churn/plots/inter-arrival.png)
