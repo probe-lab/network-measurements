@@ -1,0 +1,16 @@
+# TODO before PR
+
+## report
+
+- peerid distribution: change to alive peers only
+- peerid distribution: change "share" to "chunk"
+
+## others
+- finish report
+- get feedback
+- remove useless python notebooks
+- explain how to reproduce results
+- maybe include some data from crawls to allow reproducibility
+- generate plots with more data?
+- mark RFM19 as completed in RFMs.md
+- remove this todo file
