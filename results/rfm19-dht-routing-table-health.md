@@ -1,13 +1,23 @@
 # RFM19 Report: DHT Routing Table Health
 
 Author: [Guillaume Michel](https://github.com/guillaumemichel)\
-Date: 2022-06-14
+Date: 2022-06-22
 
 ## Table of Contents
 
 - [Motivation](#motivation)
 - [Measurement Methodology](#measurement-methodology)
+  - [Nebula Crawler](#nebula-crawler)
+  - [Binary Trie](#binary-trie)
+  - [Building the k-buckets](#building-the-k-buckets)
+  - [Finding k-bucket missing peers](#finding-k-buckets-missing-peers)
 - [Measurement Results](#measurement-results)
+  - [Peers distribution in the k-buckets](#peers-distribution-in-the-k-buckets)
+  - [Offline peers](#offline-peers)
+  - [Incomplete k-buckets](#incomplete-k-buckets)
+  - [20 closest peers awareness](#20-closest-peers-awareness)
+  - [Closest peers distribution in the k-buckets](#closest-peers-distribution-in-k-buckets)
+  - [PeerID distribution](#peer-id-distribution)
 - [Conclusion](#conclusion)
 - [Future Work](#future-work)
 - [References](#references)
@@ -20,33 +30,36 @@ We are building a decentralized system that we are not operating ourselves. We w
 
 ## Measurement Methodology
 
-_[Provide details on the methodology used in a way that others can reproduce the experiments. Please reason about your choices and why your chosen methodology meets the needs of the RFM.]_
-
 ### Nebula Crawler
 
-We used the [Nebula Crawler](https://github.com/dennis-tra/nebula-crawler) to get the content of the routing table of nodes in the IPFS network. The Nebula Crawler starts with a couple of bootstrap peers, ask them for handcrafted CIDs in order to discover all peers in the network. To fetch the routing table from a node, the crawler will request `k=20` handcrafted CIDs uniformely distributed in each of the kbuckets of the peer.
+We used the [Nebula Crawler](https://github.com/dennis-tra/nebula-crawler) [2] to get the content of the routing table of peers in the IPFS network. The Nebula Crawler starts a `libp2p` node with bootstrap peers and ask them for random handcrafted CIDs in order to discover all peers in the network. To fetch the routing table from a peer, the crawler will request handcrafted CIDs matching the Common Prefix Length (CPL) of each k-bucket of this peer. The queried peer will then return the closest peers to the requested CID in their routing table, and the crawler will eventually collect the complete routing table.
 
-The Nebula Crawler provides us the peerIDs of the nodes in the IPFS networks, as well as the routing tables of these nodes at each crawl.
-
-Once the Nebula Crawler returns all the routing tables, we can reconstruct the kbuckets of each peer using the peerIDs.
-
-Given all the alive nodes in the network at the time of the crawl, we can have a _global_ vision of what is supposed to be in the nodes' kbuckets.
+The Nebula Crawler provides us the peer IDs of the peers in the IPFS networks, as well as the routing tables of these peers at each crawl. Once the Nebula Crawler returns all the routing tables, we are able to reconstruct the k-buckets for all peers using the peerIDs. Given all the alive nodes in the network at the time of the crawl, we can have a _global_ view on the network, and on the health of the peers' routing table.
 
 #### Technical limitations
 
-The Nebula Crawler may be unaware of nodes that are not well connected to the IPFS network, or in a network split. Thus, when we talk about the resilience of the network, we talk about the resilience of the largest partition, provided by the Nebula Crawler.
+The Nebula Crawler may be unaware of nodes that are not well connected to the IPFS network, or in a split network. Hence, we will only discuss the DHT routing table health of the largest partition, as provided by the Nebula Crawler.
 
 ### Binary Trie
 
-Kademlia XOR distance is non linear. Thus it is computationnaly expensive to build the kbuckets. The Binary Trie structure is a good data representation for this purpose. We built a simple python [Binary Trie](https://github.com/guillaumemichel/py-binary-trie) to compute XOR distance in the Kademlia keyspace.
+Kademlia XOR distance is non linear [4]. Hence, it is computationnaly expensive to sort a large number of peers by XOR distance to build the k-buckets. The Binary Trie structure is a good data representation for this purpose. We built a simple python [Binary Trie](https://github.com/guillaumemichel/py-binary-trie) to efficiently compute XOR distance in a `n-bit` keyspace, such as `libp2p` implementation of Kademlia. The Binary Trie provides a function to get the `n` closest keys to a specific key. It is helpful to determine the XOR _closeness_ of the IPFS peers. This function is used to compute which peers fit in the routing table k-buckets.
 
-The Binary Trie provides functions to get the `n` closest keys to a specific key. It is thus helpful to determine the Kademlia _closeness_ of the IPFS peers.
+### Building the k-buckets
+
+The Nebula Crawler provides a list of peers, and for each one of them, all of the peers inside its routing table, referred as _neighbors_. For all peers, we go through the list of neighbors, and order them in buckets. The buckets are identified by the Common Prefix Length that the `peerID`s of the neighbors inside this bucket share with the peer's `peerID`, or in other words the XOR distance between the neighbor's `peerID` and the peer's `peerID`.
+
+### Finding k-buckets missing peers
+
+With the peers list provided by the Nebula Crawler, we construct a global binary trie using the `peerID`s as keys. For each peer $p_i$ for $0 \leq i \leq n$, `n` being the number of peers in the network, we create a list of all other peers $[p_0, p_1, ..., p_n] \setminus p_i$, sorted according to the XOR distance between $p_i$'s `peerID` and the other's peer `peerID`. It is easy to build the expected k-buckets from these sorted lists of peers. Comparing the expected k-buckets with the actual ones allows us to observe any peer missing from the actual routing table, and provides us information on the health of the routing table. **[FEEDBACK WELCOME]**
+
+**[TODO: alternative phrasing]**
+Using this trie, we sort all the peers of the network according to the XOR distance to every peers, which produces `n` ordered lists of `n` peers if there are `n` peers in the network. We can then easily build the expected k-buckets from these sorted lists of peers. Comparing the expected k-buckets with the actual ones allows us to observe any peer missing from the actual routing table.
 
 ### Reproducing the Measurements
 
-The python scripts used to produce the following plots live in the [`implementations/rfm19-dht-routing-table-health/`](https://github.com/protocol/network-measurements/tree/master/implementations/rfm19-dht-routing-table-health) folder.
+The python scripts used to produce the following plots and instruction to reproduce the results are located in the [`implementations/rfm19-dht-routing-table-health/`](https://github.com/protocol/network-measurements/tree/master/implementations/rfm19-dht-routing-table-health) folder.
 
-The data **will be** available in the `data/` subfolder if not too large.
+The data **[TODO: will be]** available in the `data/` subfolder if not too large.
 
 ## Measurement Results
 
@@ -65,11 +78,11 @@ This boxplot represents the filling status of Kademlia `k-bucket` in the IPFS ne
 Statistically, bucket `i` is expected to have $\frac{N}{2+i}$ candidates with `N` being the network size. 
 
 **[TODO: correct plot with online peers only]**
-Buckets `0-8` are full, which is expected as $N=???$ **[TODO: verify numbers]** $N/10 >= 20$. Then we can see that the amount of peers in buckets `9` to `14` approvimatively halves at each bucket (**[TODO: add exact average]**). Buckets 15 and above contain no peers, with the exception of a few outliers.
+Buckets `0-8` are full, which is expected as $N=31'000$ **[TODO: verify numbers]** $N/10 >= 20$. Then we can see that the amount of peers in buckets `9` to `14` approvimatively halves at each bucket (**[TODO: add exact average]**). Buckets 15 and above contain no peers, with the exception of a few outliers.
 
 From these numbers, we can say that the filling status of the `k-buckets` is as expected.
 
-### Dead peers
+### Offline peers
 
 **[TODO: add dead peers plot]**
 
@@ -97,8 +110,6 @@ The plot displays the Probability Density Function (PDF) and Cumulative Distribu
 
 ### Closest Peers distribution in k-buckets
 
-In the following plots, we will study the `k-bucket` distribution of the peers in a close locality.
-
 **[TODO: replace avg line with x's]**
 
 ![alt text](../implementations/rfm19-dht-routing-table-health/plots/kbucket-distribution-20-closest-peers.png)
@@ -111,7 +122,7 @@ This plot shows the k-bucket distribution for the $n^{th}$ closest peer. The sta
 
 Distribution of the 10 closest peers in the k-buckets. Note that buckets `9` to `12` contain more peers that are not in the 10 closest ones.
 
-### Peer ID Distribution
+### `PeerID` Distribution
 
 ![alt text](../implementations/rfm19-dht-routing-table-health/plots/peerid-distribution.png)
 
@@ -122,22 +133,32 @@ The represented data is the average number of alive peer over **[TODO: INSERT TI
 
 ## Future Work
 
-- Churn impact in routing tables
-- Perfect routing table
+### Churn impact in routing tables
+
+The current k-bucket replacement policy fosters old and stable peers over new ones. Measuring how the churn in the IPFS network impacts the routing table will help evaluating the performance of the replacement policy. It may also reveal potential weaknesses in the routing process, and provide improvement approaches for the k-bucket replacement policy.
+
+### Perfect routing table
+
+Given all the Peer IDs of a network, it would be possible to build the _perfect_ routing table for a given point in time. The _perfect_ routing table is defined as the most efficient routing table to reach any identifier in a minimal number of hops, given a set of peers.
+Computing the difference/statistical distance between the actual routing table and the perfect routing table would allow us to evaluate the performance of the actual DHT routing, and propose improvements. The [Jaccard index](https://en.wikipedia.org/wiki/Jaccard_index) could be used to quantify the performance of the current DHT compared with the perfect one.
+
+The perfect routing table can be computed by filling the non-full buckets as much as possible, and cherry picking the peer IDs to be uniformely distributed over the keyspace of the full buckets. Distributing the peer IDs as uniformely as possible gives the lowest expected hop number to reach all CIDs. However, the perfect routing table is expected to change a lot with churn, whereas the current routing table is more stable. If the statistical distance between the perfect routing table and the actual one turns out to be large, this measurement could lead to a k-bucket replacement policy improvement.
 
 ## Conclusion
 
 _[Please include the main take-home points. What are the 2-3 most important findings that someone should remember if they forgot about everything else in this report? If appropriate, include this short list as a TL;DR at the beginning of the report. This is a good place to point to any items that need further attention, or a separte RFM.]_
 
-The DHT is healthy =D
+Our measurements show that the DHT Routing Table appears to be healthy on all measured aspects, which is great news for IPFS, Filecoin and all other projects based on `libp2p`. 
 
 ## References
 
-_[Pointers to related works, studies, papers, or repos]_
-
 [1] Petar Maymounkov and David Mazières. Kademlia: A peer-to-peer information system based on the XOR metric. In Proceedings of the 1st International Workshop on Peer-to-Peer Systems (IPTPS '02), pages 53-65, March 2002. [paper](https://ipfs.io/ipfs/QmaVrnwZrnoG4YramcN75mbE5AUfCymiEErrHGXoQR968V)
 
-[2] [Nebula Crawler](https://github.com/dennis-tra/nebula-crawler) from  [Dennis Trautwein](https://github.com/dennis-tra)
+[2] [Nebula Crawler](https://github.com/dennis-tra/nebula-crawler) from [Dennis Trautwein](https://github.com/dennis-tra)
 
-[3] [DHT Routing Table Health Notion Page](https://www.notion.so/pl-strflt/DHT-Routing-Table-Health-f8e6836c4b09440baa909a4448a88fbf)
+[3] [Binary Trie](https://github.com/guillaumemichel/py-binary-trie) from [Guillaume Michel](https://github.com/guillaumemichel)
+
+[4] [Blogpost](https://metaquestions.me/2014/08/01/shortest-distance-between-two-points-is-not-always-a-straight-line/) from [Daniel Irvine](https://metaquestions.me/author/davidofirvine/)
+
+[5] [DHT Routing Table Health Notion Page](https://www.notion.so/pl-strflt/DHT-Routing-Table-Health-f8e6836c4b09440baa909a4448a88fbf)
 
