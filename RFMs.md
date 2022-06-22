@@ -101,7 +101,7 @@ We have a dashboard that shows the lifetime of documents, differentiated by diff
 * _Effort Needed:_ **HIGH**
 * _Prerequisite(s):_ NONE
 * _Value:_ **HIGH**
-* _Report:_ [`./reports/RFM2.md`](./reports/RFM2.md)
+* _Report:_ [`./results/rfm2-uptime-and-churn.md`](./results/rfm2-uptime-and-churn.md)
 
 #### Proposal
 
