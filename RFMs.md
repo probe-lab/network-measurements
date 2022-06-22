@@ -43,6 +43,8 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 **[RFM 14 | How efficient is caching in the IPFS network?](#_j426cm9u3j1h)**
 
+**[RFM 20 | Data volume stored on IPFS and file size distribution](#data-volume)**
+
 ## Completed
 
 **[RFM 2 | Uptime and churn P2P network nodes](#rfm-2--uptime-and-churn-of-ipfs-network-nodes)**
@@ -57,7 +59,7 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 * _Status:_ **draft**
 * _DRI/Team:_
-* _Effort Needed:_ 
+* _Effort Needed:_
 * _Prerequisite(s):_ NONE
 * _Value:_ **HIGH**
 * _Report:_ \<insert link to report once work is complete\>
@@ -129,14 +131,14 @@ Approach 2:
 
 We have a dashboard or plots that are produced periodically (e.g., daily or weekly) and show the lifetime distribution of nodes.
 
-## 
+##
 
 <a id="_rd50td3ym8dy"></a>
 ## RFM 3 - Location of IPFS end users and requested content.
 
 * _Status:_ **ready**
 * _DRI/Team:_
-* _Effort Needed:_ 
+* _Effort Needed:_
 * _Prerequisite(s):_ IP Geolocation, IP-to-ASN
 * _Value:_ **MEDIUM**
 * _Report:_ \<insert link to report once work is complete\>
@@ -160,8 +162,8 @@ We have a heatmap-style plot that visualizes the volume of requests between diff
 
 * _Status:_ **ready**
 * _DRI/Team:_
-* _Effort Needed:_ 
-* _Prerequisite(s):_ 
+* _Effort Needed:_
+* _Prerequisite(s):_
 * _Value:_ **HIGH**
 * _Report:_ \<insert link to report once work is complete\>
 
@@ -180,7 +182,7 @@ Approach 1:
 - Take crawler data for a long period (e.g., one month or more)
     - Expected schema: `<peer_id, all IPs, ASN, location, crawl timestamp, crawl_id>`
     - Remove hydra nodes from data set
-- Identify: 
+- Identify:
     - Changing IP addresses for constant PeerID:
     - Changing PeerID for a constant IP
     - Rotating both IP and PeerID:
@@ -214,7 +216,7 @@ Additional ideas: we have a dashboard that shows the IP address churn of nodes:
 
 * _Status:_ **draft**
 * _DRI/Team:_
-* _Effort Needed:_ 
+* _Effort Needed:_
 * _Prerequisite(s):_ IPFS Network Crawler
 * _Value:_ **MEDIUM**
 * _Report:_ \<insert link to report once work is complete\>
@@ -240,7 +242,7 @@ We will have a dynamic database that will map IPs to geographic coordinates, and
 
 * _Status:_ **ready**
 * _DRI/Team:_
-* _Effort Needed:_ 
+* _Effort Needed:_
 * _Prerequisite(s):_ IPFS Network Crawler
 * _Value:_ **MEDIUM**
 * _Report:_ \<insert link to report once work is complete\>
@@ -264,8 +266,8 @@ We have a dashboard or plot that shows the distribution of nodes to ASNs, and an
 
 * _Status:_ **ready**
 * _DRI/Team:_
-* _Effort Needed:_ 
-* _Prerequisite(s):_ 
+* _Effort Needed:_
+* _Prerequisite(s):_
 * _Value:_ **HIGH**
 * _Report:_ \<insert link to report once work is complete\>
 
@@ -306,7 +308,7 @@ We have a dashboard, or a range of plots that show different buckets with the nu
 
 * _Status:_ **brainstorm**
 * _DRI/Team:_
-* _Effort Needed:_ 
+* _Effort Needed:_
 * _Prerequisite(s):_ IP Geolocation, IP-to-ASN
 * _Value:_ **HIGH**
 * _Report:_ \<insert link to report once work is complete\>
@@ -330,7 +332,7 @@ A real-time observatory of latencies and path lengths in the form of a dashboard
 
 * _Status:_ **brainstorm**
 * _DRI/Team:_
-* _Effort Needed:_ 
+* _Effort Needed:_
 * _Prerequisite(s):_
 * _Value:_ **LOW**
 * _Report:_ \<insert link to report once work is complete\>
@@ -354,7 +356,7 @@ A dashboard that will provide statistics on content overlap and content availabi
 
 * _Status:_ **brainstorm**
 * _DRI/Team:_
-* _Effort Needed:_ 
+* _Effort Needed:_
 * _Prerequisite(s):_ RFM 8
 * _Value:_ **LOW**
 * _Report:_ \<insert link to report once work is complete\>
@@ -379,8 +381,8 @@ Measure and analyze the performance of retrieving content between IPFS and Web2 
 * _Status:_ **ready**
 * _Area/Project of Measurement:_ IPFS
 * _DRI/Team:_
-* _Effort Needed:_ 
-* _Prerequisite(s):_ 
+* _Effort Needed:_
+* _Prerequisite(s):_
 * _Value:_ **HIGH**
 * _Report:_ \<insert link to report once work is complete\>
 
@@ -411,8 +413,8 @@ Excessive dependency on centralized cloud operators may have performance and res
 
 * _Status:_ **brainstorm**
 * _DRI/Team:_
-* _Effort Needed:_ 
-* _Prerequisite(s):_ 
+* _Effort Needed:_
+* _Prerequisite(s):_
 * _Value:_ **MEDIUM**
 * _Report:_ \<insert link to report once work is complete\>
 
@@ -435,8 +437,8 @@ Once we have mapped the topology of the network, it may be useful to map the lin
 
 * _Status:_ **brainstorm**
 * _DRI/Team:_
-* _Effort Needed:_ 
-* _Prerequisite(s):_ 
+* _Effort Needed:_
+* _Prerequisite(s):_
 * _Value:_ **HIGH**
 * _Report:_ \<insert link to report once work is complete\>
 
@@ -475,8 +477,8 @@ A plot to show the times content has been fetched from Gateways as compared to r
 
 * _Status:_ **brainstorm**
 * _DRI/Team:_
-* _Effort Needed:_ 
-* _Prerequisite(s):_ 
+* _Effort Needed:_
+* _Prerequisite(s):_
 * _Value:_ **HIGH**
 * _Report:_ \<insert link to report once work is complete\>
 
@@ -503,8 +505,8 @@ NOTE: This is an important RFM, as it relates a lot to our projects Multi-Level 
 
 * _Status:_ **ready to implement**
 * _DRI/Team:_ @dennis-tra
-* _Effort Needed:_ 
-* _Prerequisite(s):_ 
+* _Effort Needed:_
+* _Prerequisite(s):_
 * _Value:_ **HIGH**
 * _Report:_ \<insert link to report once work is complete\>
 * _Material:_ https://github.com/dennis-tra/punchr
@@ -539,9 +541,9 @@ All three components need to be build.
 ## RFM 16 | Effectiveness of Bitswap Discovery Process
 
 * _Status:_ **ready**
-* _DRI/Team:_ 
-* _Effort Needed:_ 
-* _Prerequisite(s):_ 
+* _DRI/Team:_
+* _Effort Needed:_
+* _Prerequisite(s):_
 * _Value:_ **HIGH**
 * _Report:_ \<insert link to report once work is complete\>
 
@@ -576,9 +578,9 @@ We carry out a sensitivity analysis based on the success rate we have observed t
 ## RFM 17 | Provider Record Liveness
 
 * _Status:_ **ready**
-* _DRI/Team:_ 
-* _Effort Needed:_ 
-* _Prerequisite(s):_ 
+* _DRI/Team:_
+* _Effort Needed:_
+* _Prerequisite(s):_
 * _Value:_ **HIGH**
 * _Report:_ \<insert link to report once work is complete\>
 
@@ -613,9 +615,9 @@ We have numbers to justify how often do provider records expire and have carried
 ## RFM 18 | TTFB through different architecture components
 
 * _Status:_ **ready**
-* _DRI/Team:_ 
-* _Effort Needed:_ 
-* _Prerequisite(s):_ 
+* _DRI/Team:_
+* _Effort Needed:_
+* _Prerequisite(s):_
 * _Value:_ **HIGH**
 * _Report:_ \<insert link to report once work is complete\>
 
@@ -631,7 +633,7 @@ We have not yet studied the latency (particularly the Time To First Byte - TTFB)
 We'd like to have a benchmark and comparison of the performance when retrieving content through the following Retrieval Methods (RMs):
 
 - RM-1. Through go-ipfs.
-- RM-2. Through go-ipfs, but without interacting with/using the Hydra boosters. Two ways to do that: 
+- RM-2. Through go-ipfs, but without interacting with/using the Hydra boosters. Two ways to do that:
   - By ignoring responses from Hydras at request time.
   - By completing the experiment with all responses (including those from Hydras) and post-processing to filter out those that included responses from a Hydra peer.
 - RM-3. Through a clustered node, when content is pinned/cached in a clustered node's storage. The experiment should repeat for:
@@ -651,7 +653,7 @@ Requirements to get valid results:
 
 - We have enough results, in the order of hundreds of retrievals for each Retrieval Method, to draw conclusive results on the latencies observed with each.
 - The primary metric of interest is the Time To First Byte (TTFB).
-- The experiments and scripts developed as part of this RFM should be easy to re-deploy and re-use. 
+- The experiments and scripts developed as part of this RFM should be easy to re-deploy and re-use.
 
 Intuitively, we are expecting the following order in terms of latency: RM-3 < RM-1 < RM-2 < RM-4. Large differences, unusual spikes, or unexpected results should be investigated further to be able to explain these events.
 
@@ -659,7 +661,7 @@ Intuitively, we are expecting the following order in terms of latency: RM-3 < RM
 
 * _Status:_ **ongoing**
 * _DRI/Team:_ @guillaumemichel
-* _Effort Needed:_ 
+* _Effort Needed:_
 * _Prerequisite(s):_ None
 * _Value:_ **HIGH**
 * _Report:_ \<insert link to report once work is complete\>
@@ -683,6 +685,35 @@ We want to compute the theoretical _Perfect Routing Table_ provided the network 
 - Unresponsive nodes rate in the routing table
 - Routing Table evolution over time, and consequences of churn
 - Difference between actual DHT Routing Table and the _Perfect Routing Table_
+
+<a id="data-volume"></a>
+## RFM 20 | Data volume stored on IPFS and file size distribution
+
+* _Status:_ **brainstorm**
+* _DRI/Team:_
+* _Effort Needed:_
+* _Prerequisite(s):_
+* _Value:_ **MEDIUM**
+* _Report:_ \<insert link to report once work is complete\>
+
+#### Proposal
+
+The idea is to get a view of the amount of data currently stored on IPFS as well as the file size distribution. Regular measurements can help us estimate whether IPFS use is increasing or decreasing and what type of files are stored (file size). This can help us detect what are the most common use cases for IPFS(music, movies, NFTs).
+
+#### Measurement Plan
+
+- Get the total number of records stored on hydra nodes
+- Listen through Bitswap to CID requests.
+- Fetch a large-enough number of those CIDs to have statistical significance over the entire number of provider records
+- Fetch smaller number of CIDs and compare with a large number to determine the minimum number of CIDs that is still statistically robust
+- From that data derive the distribution of content items published/stored on IPFS
+- Apply that distribution to the number of records seen on hydra nodes and get a relatively good estimate of the volume ￼
+
+#### Sucess Criteria
+
+- Get a statistically robust view of the file size distribution over time
+- Get a good estimate of the data volume stored on IPFS
+
 
 <a id="tooling"></a>
 ## Tooling/Other notes
