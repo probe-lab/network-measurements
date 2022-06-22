@@ -24,11 +24,19 @@ Date: 2022-06-22
 
 ## Motivation
 
-_[What was the need for this RFM and why is it important? What was the expected impact?]_
+Measuring the performance of decentralized peer-to-peer systems is often not as straightforward as for centrally operated systems, for they contain no central monitoring. However, it is crucial for these systems to set up measurements and metrics, to understand what can be improved. The goal of this Request For Measurement (RFM) is to study Kademlia DHT Routing Table Health in the IPFS network. The measurements described in this report will help us understand better the state of the routing table in practice as well as provide hints on libp2p and IPFS routing improvements.
 
-We are building a decentralized system that we are not operating ourselves. We want to continuously improve this system to make it faster, easier to use etc. If we want to improve something, we have to measure it first. The goal of this project is to study Kademlia Routing Table Health in the IPFS network. This will allow us to understand if the routing tables behave as we expect, to monitor if any routing attack (DHT eclipse etc.) is being performed, and to propose some improvements to Kademlia Routing.
+Our study focuses in particular on:
+- the ratio of stale entries in the routing tables
+- the peers distribution in Kademila k-buckets
+- the measure of missing peers in the k-buckets
+- whether IPFS nodes have their 20 closest peers in their routing tables
+
+These metrics will help us evaluate the state of the DHT Routing Table in practice, its strengths and its weaknesses. We will be able to detect problems or propose improvements suggestions from the results of this study.
 
 ## Measurement Methodology
+
+Kademlia [1] routing table is composed of `k-buckets`, sorting remote peers according to the XOR distance between the peer's own 256-bits ID and the remote peer ID. Peer `P0` will have peer `P1` in its bucket `i` if `P0`'s ID and `P1`'s ID share a common `i-bit` prefix. Each bucket is capped at a maximum of `k=20` peers by design. Note that in theory, the routing table should contain 256 buckets, with most of them being totally empty. `libp2p` implementation of Kademlia only creates the necessary buckets, and the bucket with the highest ID will contain up to 20 peers with the longest CPL, even though the peer IDs would theoretically belong to different buckets. **[TODO: add reference to implementation]** We will discuss only the theoretical buckets, represented by the CPL.
 
 ### Nebula Crawler
 
@@ -42,7 +50,7 @@ The Nebula Crawler may be unaware of nodes that are not well connected to the IP
 
 ### Binary Trie
 
-Kademlia XOR distance is non linear [4]. Hence, it is computationnaly expensive to sort a large number of peers by XOR distance to build the k-buckets. The Binary Trie structure is a good data representation for this purpose. We built a simple python [Binary Trie](https://github.com/guillaumemichel/py-binary-trie) to efficiently compute XOR distance in a `n-bit` keyspace, such as `libp2p` implementation of Kademlia. The Binary Trie provides a function to get the `n` closest keys to a specific key. It is helpful to determine the XOR _closeness_ of the IPFS peers. This function is used to compute which peers fit in the routing table k-buckets.
+Kademlia XOR distance is non linear [4]. Hence, it is computationally expensive to sort a large number of peers by XOR distance to build the k-buckets. The Binary Trie structure is a good data representation for this purpose. We built a simple python [Binary Trie](https://github.com/guillaumemichel/py-binary-trie) to efficiently compute XOR distance in a `n-bit` keyspace, such as `libp2p` implementation of Kademlia. The Binary Trie provides a function to get the `n` closest keys to a specific key. It is helpful to determine the XOR _closeness_ of the IPFS peers. This function is used to compute which peers fit in the routing table k-buckets.
 
 ### Building the k-buckets
 
@@ -63,28 +71,24 @@ The data **[TODO: will be]** available in the `data/` subfolder if not too large
 
 ## Measurement Results
 
-_[Summary of main results together with a description of what we see behind the plots. What do these results mean wrt your initial goal and how do they answer the motivation?]_
+For the measurements, we used data from **X** crawls of the Nebula Crawler, obtained on **[TODO: ADD DATES]**
+
+### Offline peers
+
+**[TODO: add dead peers plot]**
 
 ### Peers distribution in the k-buckets
 
-The plot below shows the buckets in which the peers from the routing table belong. Note that it is not exactly the bucket in which they belong on the host, because of the implementation. The bucket shown on the plot is the theoretical bucket, computer from the distance between the hosts.
-
 ![alt text](../implementations/rfm19-dht-routing-table-health/plots/kbucket-filling-distribution.png)
-
-Kademlia [1] routing table is composed of `k-buckets`, sorting remote peers according to the XOR distance between the peer's own 256-bits ID and the remote peer ID. Peer `P0` will have peer `P1` in its `k-bucket` if `P0`'s ID and `P1`'s ID share a common `k-bit` prefix. Each bucket is capped at a maximum of `20` peers by design. Note that in theory, the routing table should contain 256 buckets, with most of them totally empty. The actual `libp2p` implementation only create the necessary buckets, and the bucket with the highest ID will contain up to 20 peers with the longest CPL, even though the peer IDs would theoretically belong to different buckets. **[TODO: add reference to implementation]** We will discuss only the theoretical buckets, represented by the CPL.
 
 This boxplot represents the filling status of Kademlia `k-bucket` in the IPFS network. We removed the outliers from the boxplot for sake of readability because the high number of samples induce a high number of outliers. The yellow bar indicate the mean number of peers in each bucket. The bottom of the box represents the 25th percentile, or `Q1` and the top of the box represents the 75th percentile or `Q3`. **[TODO: outliers as Circle with various radius / whisker representing 95th percentile]**.
 
 Statistically, bucket `i` is expected to have $\frac{N}{2+i}$ candidates with `N` being the network size. 
 
 **[TODO: correct plot with online peers only]**
-Buckets `0-8` are full, which is expected as $N=31'000$ **[TODO: verify numbers]** $N/10 >= 20$. Then we can see that the amount of peers in buckets `9` to `14` approvimatively halves at each bucket (**[TODO: add exact average]**). Buckets 15 and above contain no peers, with the exception of a few outliers.
+Buckets `0-8` are full, which is expected as $N=31'000$ **[TODO: verify numbers]** $N/10 >= 20$. Then we can see that the amount of peers in buckets `9` to `14` approximately halves at each bucket (**[TODO: add exact average]**). Buckets 15 and above contain no peers, with the exception of a few outliers.
 
 From these numbers, we can say that the filling status of the `k-buckets` is as expected.
-
-### Offline peers
-
-**[TODO: add dead peers plot]**
 
 ### Incomplete k-buckets
 
@@ -106,7 +110,7 @@ Concerning buckets with ID `9` and above, the number of missing peers per bucket
 
 ![alt text](../implementations/rfm19-dht-routing-table-health/plots/known-peers-among-20-closest.png)
 
-The plot displays the Probability Density Function (PDF) and Cumulative Distribution Function (CDF) of the number of peers, among the 20 closest, in a node's routing table **[FEEDBACK WELCOME: IS IT CLEAR? REFORMULATION WELCOME]**. It shows that 59.XX% **[TODO: INSERT NUMBER]** of the peers have all of their 20 closest peers in their routing table, which is expected in a network with no churn. Only 5.XX% of the nodes **[TODO: INSERT NUMBER]** know 17 or less of their 20 closest peers. These results show how resilient is the Kademlia routing table in the IPFS network. **[TODO: ADD SOMETHING CONCRETE TO UNDERLINE THE PERFORMANCE]**
+The plot displays the Probability Density Function (PDF) and Cumulative Distribution Function (CDF) of the number of peers, among the 20 closest, in a node's routing table **[FEEDBACK WELCOME: IS IT CLEAR? REFORMULATION WELCOME]**. It shows that 59.XX% **[TODO: INSERT NUMBER]** of the peers have all of their 20 closest peers in their routing table, which is expected in a network with no churn. Only 5.XX% of the nodes **[TODO: INSERT NUMBER]** know 17 or less of their 20 closest peers, which is surprisingly good given the high churn rate studied in [RFM2](./rfm2-uptime-and-churn.md). These results show how resilient is the Kademlia routing table in the IPFS network. **[TODO: ADD SOMETHING CONCRETE TO UNDERLINE THE PERFORMANCE]**
 
 ### Closest Peers distribution in k-buckets
 
@@ -142,13 +146,11 @@ The current k-bucket replacement policy fosters old and stable peers over new on
 Given all the Peer IDs of a network, it would be possible to build the _perfect_ routing table for a given point in time. The _perfect_ routing table is defined as the most efficient routing table to reach any identifier in a minimal number of hops, given a set of peers.
 Computing the difference/statistical distance between the actual routing table and the perfect routing table would allow us to evaluate the performance of the actual DHT routing, and propose improvements. The [Jaccard index](https://en.wikipedia.org/wiki/Jaccard_index) could be used to quantify the performance of the current DHT compared with the perfect one.
 
-The perfect routing table can be computed by filling the non-full buckets as much as possible, and cherry picking the peer IDs to be uniformely distributed over the keyspace of the full buckets. Distributing the peer IDs as uniformely as possible gives the lowest expected hop number to reach all CIDs. However, the perfect routing table is expected to change a lot with churn, whereas the current routing table is more stable. If the statistical distance between the perfect routing table and the actual one turns out to be large, this measurement could lead to a k-bucket replacement policy improvement.
+The perfect routing table can be computed by filling the non-full buckets as much as possible, and cherry picking the peer IDs to be uniformly distributed over the keyspace of the full buckets. Distributing the peer IDs as uniformly as possible gives the lowest expected hop number to reach all CIDs. However, the perfect routing table is expected to change a lot with churn, whereas the current routing table is more stable. If the statistical distance between the perfect routing table and the actual one turns out to be large, this measurement could lead to a k-bucket replacement policy improvement.
 
 ## Conclusion
 
-_[Please include the main take-home points. What are the 2-3 most important findings that someone should remember if they forgot about everything else in this report? If appropriate, include this short list as a TL;DR at the beginning of the report. This is a good place to point to any items that need further attention, or a separte RFM.]_
-
-Our measurements show that the DHT Routing Table appears to be healthy on all measured aspects, which is great news for IPFS, Filecoin and all other projects based on `libp2p`. 
+Our measurements show that the Kademlia DHT Routing Table appears to be healthy on all measured aspects in the IPFS network. We showed in this RFM that 94.XX% **[TODO: INSERT NUMBER]** of the peers in the IPFS network know at least 18 of their 20 closest peers, which is surprisingly good given high churn rate. We observed that the number of peers in the k-buckets follows an exponential growth from bucket `14` to `9`, and is then capped at 20 peers for bucket `8` and lower, as expected. We found that on average 0.1 peers are missing per full k-bucket, and XX.XX% **[TODO: INSERT NUMBERS]** per non-full k-bucket, which is a great performance given that the Kademlia DHT may miss some peers in the k-buckets by design.
 
 ## References
 
