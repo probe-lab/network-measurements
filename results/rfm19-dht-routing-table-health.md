@@ -29,7 +29,7 @@ Measuring the performance of decentralized peer-to-peer systems is often not as 
 Our study focuses in particular on:
 - the ratio of stale entries in the routing tables
 - the peers distribution in Kademila k-buckets
-- the measure of missing peers in the k-buckets
+- the number of missing peers in the k-buckets
 - whether IPFS nodes have their 20 closest peers in their routing tables
 
 These metrics will help us evaluate the state of the DHT Routing Table in practice, its strengths and its weaknesses. We will be able to detect problems or propose improvements suggestions from the results of this study.
@@ -40,9 +40,9 @@ Kademlia [1] routing table is composed of `k-buckets`, sorting remote peers acco
 
 ### Nebula Crawler
 
-We used the [Nebula Crawler](https://github.com/dennis-tra/nebula-crawler) [2] to get the content of the routing table of peers in the IPFS network. The Nebula Crawler starts a `libp2p` node with bootstrap peers and ask them for random handcrafted CIDs in order to discover all peers in the network. To fetch the routing table from a peer, the crawler will request handcrafted CIDs matching the Common Prefix Length (CPL) of each k-bucket of this peer. The queried peer will then return the closest peers to the requested CID in their routing table, and the crawler will eventually collect the complete routing table.
+We used the [Nebula Crawler](https://github.com/dennis-tra/nebula-crawler) [2] to get the content of the routing table of peers in the IPFS network. The Nebula Crawler starts a `libp2p` node with bootstrap peers and asks them for random handcrafted CIDs in order to discover all peers in the network. To fetch the routing table from a peer, the crawler will request handcrafted CIDs matching the Common Prefix Length (CPL) of each k-bucket of this peer. The queried peer will then return the closest peers to the requested CID in their routing table, and by doing this continuously the crawler will eventually collect the complete routing table.
 
-The Nebula Crawler provides us the peer IDs of the peers in the IPFS networks, as well as the routing tables of these peers at each crawl. Once the Nebula Crawler returns all the routing tables, we are able to reconstruct the k-buckets for all peers using the peerIDs. Given all the alive nodes in the network at the time of the crawl, we can have a _global_ view on the network, and on the health of the peers' routing table.
+The Nebula Crawler provides us the peer IDs of the peers in the IPFS network, as well as the routing tables of these peers at each crawl. Once the Nebula Crawler returns all the routing tables, we are able to reconstruct the k-buckets for all peers using the peerIDs. Given all the alive nodes in the network at the time of the crawl, we can have a _global_ view of the network, and all the required information to derive the health of the peers' routing table.
 
 #### Technical limitations
 
@@ -50,22 +50,22 @@ The Nebula Crawler may be unaware of nodes that are not well connected to the IP
 
 ### Binary Trie
 
-Kademlia XOR distance is non linear [4]. Hence, it is computationally expensive to sort a large number of peers by XOR distance to build the k-buckets. The Binary Trie structure is a good data representation for this purpose. We built a simple python [Binary Trie](https://github.com/guillaumemichel/py-binary-trie) to efficiently compute XOR distance in a `n-bit` keyspace, such as `libp2p` implementation of Kademlia. The Binary Trie provides a function to get the `n` closest keys to a specific key. It is helpful to determine the XOR _closeness_ of the IPFS peers. This function is used to compute which peers fit in the routing table k-buckets.
+Kademlia XOR distance is non linear [4]. Hence, it is computationally expensive to sort a large number of peers by XOR distance to build the k-buckets. The Binary Trie structure is a good data representation for this purpose. We built a simple python [Binary Trie](https://github.com/guillaumemichel/py-binary-trie) to efficiently compute XOR distance in a `n-bit` keyspace, such as `libp2p` implementation of Kademlia. The Binary Trie provides a function to get the `n` closest keys to a specific key. It is helpful to determine the XOR _closeness_ of the IPFS peers. This function is used to compute which peers fit in each of the routing table's k-buckets.
 
 ### Building the k-buckets
 
-The Nebula Crawler provides a list of peers, and for each one of them, all of the peers inside its routing table, referred as _neighbors_. For all peers, we go through the list of neighbors, and order them in buckets. The buckets are identified by the Common Prefix Length that the `peerID`s of the neighbors inside this bucket share with the peer's `peerID`, or in other words the XOR distance between the neighbor's `peerID` and the peer's `peerID`.
+The Nebula Crawler provides a list of peers, and for each one of them, all of the peers inside its routing table, referred to as _neighbors_. For all peers, we go through the list of neighbors, and order them in buckets. The buckets are identified by the Common Prefix Length that the `peerID`s of the neighbors inside this bucket share with the peer's `peerID`, or in other words the XOR distance between the neighbor's `peerID` and the peer's `peerID`.
 
 ### Finding k-buckets missing peers
 
-With the peers list provided by the Nebula Crawler, we construct a global binary trie using the `peerID`s as keys. For each peer $p_i$ for $0 \leq i \leq n$, `n` being the number of peers in the network, we create a list of all other peers $[p_0, p_1, ..., p_n] \setminus p_i$, sorted according to the XOR distance between $p_i$'s `peerID` and the other's peer `peerID`. It is easy to build the expected k-buckets from these sorted lists of peers. Comparing the expected k-buckets with the actual ones allows us to observe any peer missing from the actual routing table, and provides us information on the health of the routing table. **[FEEDBACK WELCOME]**
+With the peers list provided by the Nebula Crawler, we construct a global binary trie using the `peerID`s as keys. For each peer $p_i$ for $0 \leq i \leq n$, `n` being the number of peers in the network, we create a list of all other peers $[p_0, p_1, ..., p_n] \setminus p_i$, sorted according to the XOR distance between $p_i$'s `peerID` and the other peer's `peerID`. Having this information, it is easy to build the expected k-buckets of all other peers from these sorted lists. Comparing the expected k-buckets with the actual ones allows us to observe any peer missing from the actual routing table, and provides us information on the health of the routing table. **[FEEDBACK WELCOME]**
 
 **[TODO: alternative phrasing]**
-Using this trie, we sort all the peers of the network according to the XOR distance to every peers, which produces `n` ordered lists of `n` peers if there are `n` peers in the network. We can then easily build the expected k-buckets from these sorted lists of peers. Comparing the expected k-buckets with the actual ones allows us to observe any peer missing from the actual routing table.
+Using this trie, we sort all the peers in the network according to their XOR distance to every other peer, which produces `n` ordered lists of `n` peers, assuming there are `n` peers in the network. We can then easily build the expected k-buckets from these sorted lists of peers. Comparing the expected k-buckets with the actual ones allows us to observe any peer missing from the actual routing table.
 
 ### Reproducing the Measurements
 
-The python scripts used to produce the following plots and instruction to reproduce the results are located in the [`implementations/rfm19-dht-routing-table-health/`](https://github.com/protocol/network-measurements/tree/master/implementations/rfm19-dht-routing-table-health) folder.
+The python scripts used to produce the following plots and instructions to reproduce the results are located in the [`implementations/rfm19-dht-routing-table-health/`](https://github.com/protocol/network-measurements/tree/master/implementations/rfm19-dht-routing-table-health) folder.
 
 The data **[TODO: will be]** available in the `data/` subfolder if not too large.
 
@@ -81,7 +81,7 @@ For the measurements, we used data from **X** crawls of the Nebula Crawler, obta
 
 ![alt text](../implementations/rfm19-dht-routing-table-health/plots/kbucket-filling-distribution.png)
 
-This boxplot represents the filling status of Kademlia `k-bucket` in the IPFS network. We removed the outliers from the boxplot for sake of readability because the high number of samples induce a high number of outliers. The yellow bar indicate the mean number of peers in each bucket. The bottom of the box represents the 25th percentile, or `Q1` and the top of the box represents the 75th percentile or `Q3`. **[TODO: outliers as Circle with various radius / whisker representing 95th percentile]**.
+This boxplot represents the filling status of Kademlia `k-bucket` in the IPFS network. We removed the outliers from the boxplot for the sake of readability because the high number of samples induce a high number of outliers. The yellow bar indicates the mean number of peers in each bucket. The bottom of the box represents the 25th percentile, or `Q1` and the top of the box represents the 75th percentile or `Q3`. **[TODO: outliers as Circle with various radius / whisker representing 95th percentile]**.
 
 Statistically, bucket `i` is expected to have $\frac{N}{2+i}$ candidates with `N` being the network size. 
 
@@ -100,9 +100,9 @@ From these numbers, we can say that the filling status of the `k-buckets` is as 
 
 A _missing_ peer is defined as a peer ID that would fit a non-full k-bucket, but is not included. We define the maximum number of missing peers per k-buckets to be $m=20-\#peers$. The plot shows the average number of missing peers per bucket, compared with the average number of missing peers per non-full k-bucket and with the average total number of peers per bucket. 
 
-The buckets that are almost always full (19.XX peers on average **[TODO: INSERT NUMBER]**), IDs `0` to `8` have a very low number of missing peers, 0.XX **[TODO: INSERT NUMBER]** on average. However, the same buckets have a quite high number of missing peer per non-full bucket, 4.XX on average **[TODO: INSERT NUMBER]**. This implies that most of these buckets 9X.XX% **[TODO: INSERT NUMBER]** are full, but the non-full bucket are missing multiple peers on average **[TODO: INCLUDE ZOOM GRAPH ON THESE NON FULL BUCKETS?]**. One possible explanation is that the peers recently joined the network, and their routing table isn't fully populated yet. **[TODO: CHECK if it is the same peerIDs for which the different buckets are not full]**
+The buckets that are almost always full (19.XX peers on average **[TODO: INSERT NUMBER]**), IDs `0` to `8` have a very low number of missing peers, 0.XX **[TODO: INSERT NUMBER]** on average. However, the same buckets have a quite high number of missing peers per non-full bucket, 4.XX on average **[TODO: INSERT NUMBER]**. This implies that most of these buckets 9X.XX% **[TODO: INSERT NUMBER]** are full, but the non-full buckets are missing multiple peers on average **[TODO: INCLUDE ZOOM GRAPH ON THESE NON FULL BUCKETS?]**. One possible explanation is that the peers recently joined the network, and their routing table isn't fully populated yet. **[TODO: CHECK if it is the same peerIDs for which the different buckets are not full]**
 
-Concerning buckets with ID `9` and above, the number of missing peers per bucket almost always matches the number of missing peers per non-full bucket, for the buckets are rarely full. Less than `0.X` **[TODO: INSERT NUMBER]** peer on average is missing for each bucket, meaning that the network is healthy. We will focus more on the 20 closest peers in the next section.
+Concerning buckets with ID `9` and above, the number of missing peers per bucket almost always matches the number of missing peers per non-full bucket, for the buckets are rarely full. Less than `0.X` **[TODO: INSERT NUMBER]** peers on average are missing for each bucket, meaning that the network is healthy. We will focus more on the 20 closest peers in the next section.
 
 **[TODO: plot ratio of missing peers for buckets 9+]**
 
@@ -150,7 +150,7 @@ The perfect routing table can be computed by filling the non-full buckets as muc
 
 ## Conclusion
 
-Our measurements show that the Kademlia DHT Routing Table appears to be healthy on all measured aspects in the IPFS network. We showed in this RFM that 94.XX% **[TODO: INSERT NUMBER]** of the peers in the IPFS network know at least 18 of their 20 closest peers, which is surprisingly good given high churn rate. We observed that the number of peers in the k-buckets follows an exponential growth from bucket `14` to `9`, and is then capped at 20 peers for bucket `8` and lower, as expected. We found that on average 0.1 peers are missing per full k-bucket, and XX.XX% **[TODO: INSERT NUMBERS]** per non-full k-bucket, which is a great performance given that the Kademlia DHT may miss some peers in the k-buckets by design.
+Our measurements show that the Kademlia DHT Routing Table appears to be healthy on all measured aspects in the IPFS network. We showed in this RFM that 94.XX% **[TODO: INSERT NUMBER]** of the peers in the IPFS network know at least 18 of their 20 closest peers, which is surprisingly good given the high churn rate observed in the IPFS network. We observed that the number of peers in the k-buckets follows an exponential growth from bucket `14` to `9`, and is then capped at 20 peers for bucket `8` and lower, as expected. We found that on average 0.1 peers are missing per full k-bucket, and XX.XX% **[TODO: INSERT NUMBERS]** per non-full k-bucket, which indicates great performance in terms of keeping routing tables up to date, given that the Kademlia DHT may miss some peers in the k-buckets by design.
 
 ## References
 
