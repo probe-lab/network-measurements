@@ -11,7 +11,7 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
-# python notebook
+# python notebook checkpoints
 .ipynb_checkpoints
 
 # Dependency directories (remove the comment below to include it)
@@ -19,3 +19,6 @@
 
 # large csv files
 *.csv
+
+!implementations/rfm19-dht-routing-table-health/data/nebula-peers-2crawls.csv
+!implementations/rfm19-dht-routing-table-health/data/nebula-peers.csv

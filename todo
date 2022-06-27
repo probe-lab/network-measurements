@@ -9,9 +9,11 @@
 - finish report
 - get feedback
 - remove useless python notebooks
+- readme in implementations/rfm19-...
 - explain how to reproduce results
 - maybe include some data from crawls to allow reproducibility
 - generate plots with more data?
 - mark RFM19 as completed in RFMs.md
+- have a work in RFMs.md about part 2 (future work)
 - move RFM19 to "completed section" in RFMs.md
 - remove this todo file

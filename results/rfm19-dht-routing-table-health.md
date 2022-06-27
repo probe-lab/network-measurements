@@ -134,12 +134,20 @@ The plot above shows the distribution of the Peer IDs over the keyspace. For a b
 
 The represented data is the average number of alive peer over **[TODO: INSERT TIME PERIOD]** crawls falling in each keyspace chunk. We can see that the Peer IDs are almost evenly distributed in the 128 keyspace chunks. **[TODO: INSERT AVG AND STD]** We would have expected such a distribution **[TODO: order chunks to show a gaussian curve]**. There is a single peek high above the average at `360`, which is only `1.5x` the average `240` **[TODO: CHECK NUMBERS]**, which is too little to perform any eclipse attack. **[TODO: FIND REFERENCE FOR ECLIPSE ATTACK]**. **[TODO: ADD ZOOM IN PLOT FOR HIGH PEAK]**
 
+**[TODO: plot of the peer ID distribution for the whole crawl duration + plot avg for the selected crawls + zoom on peak]**
+
 
 ## Future Work
 
-### Churn impact in routing tables
+### Routing tables evolution over time
 
 The current k-bucket replacement policy fosters old and stable peers over new ones. Measuring how the churn in the IPFS network impacts the routing table will help evaluating the performance of the replacement policy. It may also reveal potential weaknesses in the routing process, and provide improvement approaches for the k-bucket replacement policy.
+
+One possible experiment could be to add a new node in the network. Track in which peers' routing tables it gets added, and if it evicts any existing peers from these routing tables. Then we could track over a time period (approximately 1 week) how the routing tables entries pointing to our peer evolve. Finally, we will disconnect the node from the network, and see how much time is needed for the nodes to replace this entry that has become stale. It would be interesting to observe if nodes in a close locality would keep this entry even though it is stale.
+
+### Routing tables profile per groups
+
+Another direction could be to define groups of peers, for instance based on geolocation, user-agent, uptime, etc. and to observe if there are any unusual routing table behaviors for specific groups. 
 
 ### Perfect routing table
 
