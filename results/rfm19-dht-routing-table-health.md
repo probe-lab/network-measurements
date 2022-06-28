@@ -58,9 +58,9 @@ The Nebula Crawler provides a list of peers, and for each one of them, all of th
 
 ### Finding k-buckets missing peers
 
-With the peers list provided by the Nebula Crawler, we construct a global binary trie using the `peerID`s as keys. For each peer $p_i$ for $0 \leq i \leq n$, `n` being the number of peers in the network, we create a list of all other peers $[p_0, p_1, ..., p_n] \setminus p_i$, sorted according to the XOR distance between $p_i$'s `peerID` and the other peer's `peerID`. Having this information, it is easy to build the expected k-buckets of all other peers from these sorted lists. Comparing the expected k-buckets with the actual ones allows us to observe any peer missing from the actual routing table, and provides us information on the health of the routing table. **[FEEDBACK WELCOME]**
+With the peers list provided by the Nebula Crawler, we construct a global binary trie using the `peerID`s as keys. For each peer $p_i$ for $0 \leq i \leq n$, `n` being the number of peers in the network, we create a list of all other peers $[p_0, p_1, ..., p_n] \setminus p_i$, sorted according to the XOR distance between $p_i$'s `peerID` and the other peer's `peerID`. Having this information, it is easy to build the expected k-buckets of all other peers from these sorted lists. Comparing the expected k-buckets with the actual ones allows us to observe any peer missing from the actual routing table, and provides us information on the health of the routing table.
 
-**[TODO: alternative phrasing]**
+**[TODO: MERGE ALTERNATE PHRASING]**
 Using this trie, we sort all the peers in the network according to their XOR distance to every other peer, which produces `n` ordered lists of `n` peers, assuming there are `n` peers in the network. We can then easily build the expected k-buckets from these sorted lists of peers. Comparing the expected k-buckets with the actual ones allows us to observe any peer missing from the actual routing table.
 
 ### Reproducing the Measurements

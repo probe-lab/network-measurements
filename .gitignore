@@ -21,4 +21,4 @@
 *.csv
 
 !implementations/rfm19-dht-routing-table-health/data/nebula-peers-2crawls.csv
-!implementations/rfm19-dht-routing-table-health/data/nebula-peers.csv
+!implementations/rfm19-dht-routing-table-health/data/all-peerids.csv
