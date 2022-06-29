@@ -12,12 +12,11 @@ Date: 2022-06-22
   - [Building the k-buckets](#building-the-k-buckets)
   - [Finding k-bucket missing peers](#finding-k-buckets-missing-peers)
 - [Measurement Results](#measurement-results)
+  - [Unreachable peers](#unreachable-peers)
   - [Peers distribution in the k-buckets](#peers-distribution-in-the-k-buckets)
-  - [Offline peers](#offline-peers)
   - [Incomplete k-buckets](#incomplete-k-buckets)
   - [20 closest peers awareness](#20-closest-peers-awareness)
   - [Closest peers distribution in the k-buckets](#closest-peers-distribution-in-k-buckets)
-  - [PeerID distribution](#peer-id-distribution)
 - [Conclusion](#conclusion)
 - [Future Work](#future-work)
 - [References](#references)
@@ -36,7 +35,7 @@ These metrics will help us evaluate the state of the DHT Routing Table in practi
 
 ## Measurement Methodology
 
-Kademlia [1] routing table is composed of `k-buckets`, sorting remote peers according to the XOR distance between the peer's own 256-bits ID and the remote peer ID. Peer `P0` will have peer `P1` in its bucket `i` if `P0`'s ID and `P1`'s ID share a common `i-bit` prefix. Each bucket is capped at a maximum of `k=20` peers by design. Note that in theory, the routing table should contain 256 buckets, with most of them being totally empty. `libp2p` implementation of Kademlia only creates the necessary buckets, and the bucket with the highest ID will contain up to 20 peers with the longest CPL, even though the peer IDs would theoretically belong to different buckets. **[TODO: add reference to implementation]** We will discuss only the theoretical buckets, represented by the CPL.
+Kademlia [1] routing table is composed of `k-buckets`, sorting remote peers according to the XOR distance between the peer's own 256-bits ID and the remote peer ID. Peer `P0` will have peer `P1` in its bucket `i` if `P0`'s ID and `P1`'s ID share a common `i-bit` prefix, the Common Prefix Length (CPL). Each bucket is capped at a maximum of `k=20` peers by design. The probability for a random node to fall in bucket `i` is $2^{-(i+1)}$, thus it is expected for buckets with a low ID to be full and the ones with a high ID to be totally empty. Note that in theory, the routing table should contain 256 buckets, with most of them being totally empty. `libp2p` implementation of Kademlia contains optimizations and doesn't create the 256 buckets for the routing table, it only creates the populated ones. `libp2p` bucket with the highest ID `i` will contain at most 20 peers, that don't necessarily share the same CPL but whose CPL is $\geq i$. The logic is described in the [source code](https://github.com/libp2p/go-libp2p-kbucket/blob/f0be035294ac4f5e939af13ddc1dd24273b7d881/table.go#L192). In this report, the _k-bucket_ term is used to refer to the k-buckets as described in the Kademlia paper, represented by the CPL, and not as implemented in practice in `libp2p`. 
 
 ### Nebula Crawler
 
@@ -58,10 +57,7 @@ The Nebula Crawler provides a list of peers, and for each one of them, all of th
 
 ### Finding k-buckets missing peers
 
-With the peers list provided by the Nebula Crawler, we construct a global binary trie using the `peerID`s as keys. For each peer $p_i$ for $0 \leq i \leq n$, `n` being the number of peers in the network, we create a list of all other peers $[p_0, p_1, ..., p_n] \setminus p_i$, sorted according to the XOR distance between $p_i$'s `peerID` and the other peer's `peerID`. Having this information, it is easy to build the expected k-buckets of all other peers from these sorted lists. Comparing the expected k-buckets with the actual ones allows us to observe any peer missing from the actual routing table, and provides us information on the health of the routing table.
-
-**[TODO: MERGE ALTERNATE PHRASING]**
-Using this trie, we sort all the peers in the network according to their XOR distance to every other peer, which produces `n` ordered lists of `n` peers, assuming there are `n` peers in the network. We can then easily build the expected k-buckets from these sorted lists of peers. Comparing the expected k-buckets with the actual ones allows us to observe any peer missing from the actual routing table.
+With the peers list provided by the Nebula Crawler, we construct a global binary trie using the `peerID`s as keys. For each peer $p_i$ for $0 \leq i \leq n$, `n` being the number of peers in the network, we create a list of all other peers $[p_0, p_1, ..., p_n] \setminus p_i$, sorted according to the XOR distance between $p_i$'s `peerID` and the other peer's `peerID`. Having this information, it is easy to build the expected k-buckets of all other peers from these sorted lists. Comparing the expected k-buckets with the actual ones allows us to observe any peer missing from the actual routing table, and provides us information on the health of the routing table. In other words, we sort all the peers in the network using the trie according to their XOR distance to every other peer, which produces `n` ordered lists of `n` peers, assuming there are `n` peers in the network. We can then easily build the expected k-buckets from these sorted lists of peers. Comparing the expected k-buckets with the actual ones allows us to observe any peer missing from the actual routing table.
 
 ### Reproducing the Measurements
 
@@ -71,50 +67,48 @@ The data **[TODO: will be]** available in the `data/` subfolder if not too large
 
 ## Measurement Results
 
-For the measurements, we used data from **X** crawls of the Nebula Crawler, obtained on **[TODO: ADD DATES]**
+For the measurements, we used data from 28 crawls of the Nebula Crawler, obtained 4 times a day (`03:00`, `09:00`, `15:00`, `21:00` UTC) for 7 days from `2022-04-19` until `2022-04-26`. On average on the 28 crawls, 20'811 peers were discovered per crawl, among which 15'371 were reachable. Unreachable peers are discovered because they are present in some other reachable peer's routing table. They could be either stale entries e.g the peer has gone offline, or online and active nodes that are unreachable because they are behind a NAT.
 
-### Offline peers
+### Unreachable peers
 
-**[TODO: add dead peers plot]**
+![alt text](../implementations/rfm19-dht-routing-table-health/plots/unreachable-peers.png)
+
+This first plot shows the average ratio of unreachable peers per k-bucket. Buckets `0` to `8` usually contain 20 peers, which is the maximum. For instance, bucket `0` has on average 3.78% of unreachable peers, which corresponds to an average of 0.75 unreachable peers out of the 20. The ratio of unreachable peers rises to around 15% for non-full buckets. Such a rise is expected for non-full buckets as unreachable peers are never flushed, unless other online peers are discovered. However, 15% of unreachable peers in the non-full buckets is quite low, and it means that nodes leaving the network after a short time period aren't affecting much the routing tables. Unstable peers may not stay online long enough to make it into the routing tables, which is positive. Hence, even the buckets with a high ID aren't mostly filled by unreachable peers.
 
 ### Peers distribution in the k-buckets
 
 ![alt text](../implementations/rfm19-dht-routing-table-health/plots/kbucket-filling-distribution.png)
 
-This boxplot represents the filling status of Kademlia `k-bucket` in the IPFS network. We removed the outliers from the boxplot for the sake of readability because the high number of samples induce a high number of outliers. The yellow bar indicates the mean number of peers in each bucket. The bottom of the box represents the 25th percentile, or `Q1` and the top of the box represents the 75th percentile or `Q3`. **[TODO: outliers as Circle with various radius / whisker representing 95th percentile]**.
+These boxplots represent the filling status of Kademlia `k-bucket` in the IPFS network. We removed the outliers from the boxplots for the sake of readability because the high number of samples induces a high number of outliers. The yellow bar indicates the mean number of peers in each bucket. The bottom of the box represents the $25^{th}$ percentile, or `Q1` and the top of the box represents the $75^{th}$ percentile or `Q3`. The whiskers represent the $5^{th}$ and $95^{th}$ percentile.
 
-Statistically, bucket `i` is expected to have $\frac{N}{2+i}$ candidates with `N` being the network size. 
+Statistically, bucket `i` is expected to have $N \times 2^{-(1+i)}$ candidates with `N` being the network size. Bucket `0` to `8` are full on the plot including unreachable peers for $N \times 2^{-(1+i)}>20$ with $0 \leq i \leq 8$. Those buckets contain slightly less reachable peers on average, as they contain stale entries to unreachable peers. 
 
-**[TODO: correct plot with online peers only]**
-Buckets `0-8` are full, which is expected as $N=31'000$ **[TODO: verify numbers]** $N/10 >= 20$. Then we can see that the amount of peers in buckets `9` to `14` approximately halves at each bucket (**[TODO: add exact average]**). Buckets 15 and above contain no peers, with the exception of a few outliers.
+If we exclude unreachable peers, because stale entries might not have been flushed in all routing tables, the theoretical number of candidates for bucket `9` is $N \times 2^{-(1+9)} = 15.01$ peers, with $N=15'371$. In practice, we measured an average of 14.16 peers. For bucket `13`, we measured 0.908 peers and the theoretical value is 0.938 peers. The bucket sizes we measured for non-full bucket is always slightly lower than the theoretical value, which is expected as nodes don't have a global knowledge of the network, and thus may miss some nodes in their k-buckets. 
 
-From these numbers, we can say that the filling status of the `k-buckets` is as expected.
+From these numbers, we can say that the distribution of the peers in the k-buckets is very satisfactory.
 
 ### Incomplete k-buckets
 
 ![alt text](../implementations/rfm19-dht-routing-table-health/plots/missing-peers.png)
 
-**[TODO: check if columns reordering is needed]**
-**[TODO: shift columns to the center]**
-**[TODO: add a "-" to non-full]**
-
 A _missing_ peer is defined as a peer ID that would fit a non-full k-bucket, but is not included. We define the maximum number of missing peers per k-buckets to be $m=20-\#peers$. The plot shows the average number of missing peers per bucket, compared with the average number of missing peers per non-full k-bucket and with the average total number of peers per bucket. 
 
-The buckets that are almost always full (19.XX peers on average **[TODO: INSERT NUMBER]**), IDs `0` to `8` have a very low number of missing peers, 0.XX **[TODO: INSERT NUMBER]** on average. However, the same buckets have a quite high number of missing peers per non-full bucket, 4.XX on average **[TODO: INSERT NUMBER]**. This implies that most of these buckets 9X.XX% **[TODO: INSERT NUMBER]** are full, but the non-full buckets are missing multiple peers on average **[TODO: INCLUDE ZOOM GRAPH ON THESE NON FULL BUCKETS?]**. One possible explanation is that the peers recently joined the network, and their routing table isn't fully populated yet. **[TODO: CHECK if it is the same peerIDs for which the different buckets are not full]**
+The buckets that are almost always full (19.88 peers on average), IDs `0` to `8` have a very low number of missing peers, 0.12 on average. However, the same buckets have a quite high number of missing peers per non-full bucket, 6.82 on average. This implies that most of these buckets, 98.06% of them are full, but the non-full buckets are missing multiple peers on average. One possible explanation is that the peers recently joined the network, and their routing table isn't fully populated yet. **[TODO: CHECK distribution for the different buckets are not full]**
 
-Concerning buckets with ID `9` and above, the number of missing peers per bucket almost always matches the number of missing peers per non-full bucket, for the buckets are rarely full. Less than `0.X` **[TODO: INSERT NUMBER]** peers on average are missing for each bucket, meaning that the network is healthy. We will focus more on the 20 closest peers in the next section.
+Concerning buckets with ID `9` and above, the number of missing peers per bucket almost always matches the number of missing peers per non-full bucket, for the buckets are rarely full. On average on buckets 9 to 14, 0.53 peers are missing for each bucket, which corresponds to 19.76%.
 
-**[TODO: plot ratio of missing peers for buckets 9+]**
+![alt text](../implementations/rfm19-dht-routing-table-health/plots/missing-peers-ratio.png)
+
+The ratio of missing peers per bucket is computed as $(1-\frac{\#peers\_in\_bucket}{\#all\_peer\_with\_CPL})$. When comparing the ratio of peers that are missing from bucket with high CPL, we notice that even though these buckets are not very populated, a non negligible ratio of peers is missing. However, in comparision with buckets with lower IDs, we have much less data points to rely on. Nodes in these buckets are rare, and thus the data we obtained may not be totally representative. As we will see later, the peers in buckets 14 and above are excusively among the 4 closest peers. We will focus more on the 20 closest peers, that belong in the high CPL buckets in the next section.
 
 ### 20 Closest Peers Awareness
 
 ![alt text](../implementations/rfm19-dht-routing-table-health/plots/known-peers-among-20-closest.png)
 
-The plot displays the Probability Density Function (PDF) and Cumulative Distribution Function (CDF) of the number of peers, among the 20 closest, in a node's routing table **[FEEDBACK WELCOME: IS IT CLEAR? REFORMULATION WELCOME]**. It shows that 59.XX% **[TODO: INSERT NUMBER]** of the peers have all of their 20 closest peers in their routing table, which is expected in a network with no churn. Only 5.XX% of the nodes **[TODO: INSERT NUMBER]** know 17 or less of their 20 closest peers, which is surprisingly good given the high churn rate studied in [RFM2](./rfm2-uptime-and-churn.md). These results show how resilient is the Kademlia routing table in the IPFS network. **[TODO: ADD SOMETHING CONCRETE TO UNDERLINE THE PERFORMANCE]**
+The plot displays the Probability Density Function (PDF) and Cumulative Distribution Function (CDF) of the number of peers, among the 20 closest to a node `N`, in `N`'s routing table, for all nodes `N`. It shows that 61.09% of the peers have all of their 20 closest peers in their routing table, which is expected in a network with no churn. Only 4.79% of the nodes know less than 18 of their 20 closest peers, which is surprisingly good given the high churn rate studied in [RFM2](./rfm2-uptime-and-churn.md). 0.102% of the nodes know less than 5 of their 20 closest peers.
+These results show how resilient the Kademlia routing table is, in these sense that nodes will always be reachable from the network. Even if the Nebula Crawler cannot detect unreachable nodes, it is very unlikely that some nodes are unreachable given the distribution above. 
 
 ### Closest Peers distribution in k-buckets
-
-**[TODO: replace avg line with x's]**
 
 ![alt text](../implementations/rfm19-dht-routing-table-health/plots/kbucket-distribution-20-closest-peers.png)
 
@@ -122,32 +116,19 @@ This plot shows the k-bucket distribution for the $n^{th}$ closest peer. The sta
 
 ![alt text](../implementations/rfm19-dht-routing-table-health/plots/distribution-10-closest-peers.png)
 
-**[TODO: CHANGE GRID DIRECTION]**
-
 Distribution of the 10 closest peers in the k-buckets. Note that buckets `9` to `12` contain more peers that are not in the 10 closest ones.
-
-### `PeerID` Distribution
-
-![alt text](../implementations/rfm19-dht-routing-table-health/plots/peerid-distribution.png)
-
-The plot above shows the distribution of the Peer IDs over the keyspace. For a better visualization, the keyspace has been broken down to 128 (=$2^7$) keyspace chunks. `libp2p` uses a 256 bits keyspace $\{0, 1\}^{256}$, each chunk contains keys from $bin(i)+0^{249}$ to $bin(i) + 1^{249}$ for `i` in $[0, 127]$, $bin(i)$ being the binary representation of `i`, **[FEEDBACK WELCOME]** $X^n$ being the bitstring representation of bit `X` repeated `n` times (e.g $0^3=000$). All the keys falling in the same chunk share a common 7-bit prefix.
-
-The represented data is the average number of alive peer over **[TODO: INSERT TIME PERIOD]** crawls falling in each keyspace chunk. We can see that the Peer IDs are almost evenly distributed in the 128 keyspace chunks. **[TODO: INSERT AVG AND STD]** We would have expected such a distribution **[TODO: order chunks to show a gaussian curve]**. There is a single peek high above the average at `360`, which is only `1.5x` the average `240` **[TODO: CHECK NUMBERS]**, which is too little to perform any eclipse attack. **[TODO: FIND REFERENCE FOR ECLIPSE ATTACK]**. **[TODO: ADD ZOOM IN PLOT FOR HIGH PEAK]**
-
-**[TODO: plot of the peer ID distribution for the whole crawl duration + plot avg for the selected crawls + zoom on peak]**
-
 
 ## Future Work
 
 ### Routing tables evolution over time
 
-The current k-bucket replacement policy fosters old and stable peers over new ones. Measuring how the churn in the IPFS network impacts the routing table will help evaluating the performance of the replacement policy. It may also reveal potential weaknesses in the routing process, and provide improvement approaches for the k-bucket replacement policy.
+Kademlia's k-bucket replacement policy is least-recently seen, but live nodes are never evicted. `libp2p` follows this replacement policy and hence fosters old and stable peers over new ones. Measuring how the churn in the IPFS network impacts the routing table will help evaluating the performance of the replacement policy. It may also reveal potential weaknesses in the routing process, and provide improvement approaches for the k-bucket replacement policy.
 
 One possible experiment could be to add a new node in the network. Track in which peers' routing tables it gets added, and if it evicts any existing peers from these routing tables. Then we could track over a time period (approximately 1 week) how the routing tables entries pointing to our peer evolve. Finally, we will disconnect the node from the network, and see how much time is needed for the nodes to replace this entry that has become stale. It would be interesting to observe if nodes in a close locality would keep this entry even though it is stale.
 
 ### Routing tables profile per groups
 
-Another direction could be to define groups of peers, for instance based on geolocation, user-agent, uptime, etc. and to observe if there are any unusual routing table behaviors for specific groups. 
+Another direction could be to define groups of peers, for instance based on geolocation, user-agent, uptime, etc. and to observe if there are any unusual routing table behaviors for specific groups.
 
 ### Perfect routing table
 
@@ -158,7 +139,7 @@ The perfect routing table can be computed by filling the non-full buckets as muc
 
 ## Conclusion
 
-Our measurements show that the Kademlia DHT Routing Table appears to be healthy on all measured aspects in the IPFS network. We showed in this RFM that 94.XX% **[TODO: INSERT NUMBER]** of the peers in the IPFS network know at least 18 of their 20 closest peers, which is surprisingly good given the high churn rate observed in the IPFS network. We observed that the number of peers in the k-buckets follows an exponential growth from bucket `14` to `9`, and is then capped at 20 peers for bucket `8` and lower, as expected. We found that on average 0.1 peers are missing per full k-bucket, and XX.XX% **[TODO: INSERT NUMBERS]** per non-full k-bucket, which indicates great performance in terms of keeping routing tables up to date, given that the Kademlia DHT may miss some peers in the k-buckets by design.
+Our measurements show that the Kademlia DHT Routing Table appears to be healthy on all measured aspects in the IPFS network. We showed in this RFM that 95.21% of the peers in the IPFS network know at least 18 of their 20 closest peers, which is surprisingly good given the high churn rate observed in the IPFS network. We observed that the number of peers in the k-buckets follows an exponential growth from bucket `14` to `9`, and is then capped at 20 peers for bucket `8` and lower, as expected. We found that on average 0.12 peers are missing per full k-bucket, and 19.76% per non-full k-bucket, which indicates great performance in terms of keeping routing tables up to date, given that the Kademlia DHT may miss some peers in the k-buckets by design.
 
 ## References
 
@@ -168,7 +149,7 @@ Our measurements show that the Kademlia DHT Routing Table appears to be healthy 
 
 [3] [Binary Trie](https://github.com/guillaumemichel/py-binary-trie) from [Guillaume Michel](https://github.com/guillaumemichel)
 
-[4] [Blogpost](https://metaquestions.me/2014/08/01/shortest-distance-between-two-points-is-not-always-a-straight-line/) from [Daniel Irvine](https://metaquestions.me/author/davidofirvine/)
+[4] [Blogpost](https://metaquestions.me/2014/08/01/shortest-distance-between-two-points-is-not-always-a-straight-line/) on the XOR distance from [Daniel Irvine](https://metaquestions.me/author/davidofirvine/)
 
 [5] [DHT Routing Table Health Notion Page](https://www.notion.so/pl-strflt/DHT-Routing-Table-Health-f8e6836c4b09440baa909a4448a88fbf)
 
