@@ -22,9 +22,6 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 **[RFM 18 | TTFB through different architecture components](#rfm-18--ttfb-through-different-architecture-components)**
 
-**[ RFM 19 | DHT Routing Table Health](#rfm-19--dht-routing-table-health)**
-
-
 ## Next Priority
 
 **[RFM 1 | Lifetime of a document in the IPFS Network](#_o575jad7aotj)**
@@ -48,6 +45,8 @@ This page lists measurements that are useful to understand the dynamics and the 
 ## Completed
 
 **[RFM 2 | Uptime and churn P2P network nodes](#rfm-2--uptime-and-churn-of-ipfs-network-nodes)**
+
+**[RFM 19 | DHT Routing Table Health](#rfm-19--dht-routing-table-health)**
 
 **[Tooling/Other notes](#tooling)**
 
@@ -659,13 +658,14 @@ Intuitively, we are expecting the following order in terms of latency: RM-3 < RM
 
 ## RFM 19 | DHT Routing Table Health
 
-* _Status:_ **ongoing**
+* _Status:_ **completed**
 * _DRI/Team:_ @guillaumemichel
 * _Effort Needed:_
 * _Prerequisite(s):_ None
 * _Value:_ **HIGH**
-* _Report:_ \<insert link to report once work is complete\>
-* _Material:_ [Notion page](https://www.notion.so/pl-strflt/DHT-Routing-Table-Health-f8e6836c4b09440baa909a4448a88fbf)
+* _Report:_ 
+[`rfm19-dht-routing-table-health.md`](./results/rfm19-dht-routing-table-health.md)
+* _Material:_ [Implementation](./implementations/rfm19-dht-routing-table-health/), [Notion page](https://www.notion.so/pl-strflt/DHT-Routing-Table-Health-f8e6836c4b09440baa909a4448a88fbf)
 
 #### Proposal
 
@@ -676,15 +676,14 @@ We want to measure the health of the [Kademlia](https://www.scs.stanford.edu/~dm
 
 The [Nebula Crawler](https://github.com/dennis-tra/nebula-crawler) can be used to crawl the IPFS network to get information about all online peers and their routing table. Given a peer ID and the peers in its routing table, it is possible to reconstruct its k-buckets and to monitor them over time.
 
-We want to compute the theoretical _Perfect Routing Table_ provided the network state at a given time. The _Perfect Routing Table_ is defined as the most efficient routing table to reach any identifier in a minimal number of hops, given a set of peers. We can then compute the distance / Faccard coefficient between the actual DHT routing table and the theoretical perfect one to measure the efficiency of the DHT routing in practice.
+A [binary trie](https://github.com/guillaumemichel/py-binary-trie) implementation is necessary to compute XOR distances efficiently.
 
 #### Sucess Criteria
 
-- Verify if each node has its 20 closest neighbors in its routing table, which is expected by Kademlia
-- Check if non-full k-buckets are missing any online peer
+- Get the routing table entries ditribution in the k-buckets
+- Verify if each node has its 20 closest neighbors in its routing table
+- Check if non-full k-buckets are missing any reachable peer
 - Unresponsive nodes rate in the routing table
-- Routing Table evolution over time, and consequences of churn
-- Difference between actual DHT Routing Table and the _Perfect Routing Table_
 
 <a id="data-volume"></a>
 ## RFM 20 | Data volume stored on IPFS and file size distribution

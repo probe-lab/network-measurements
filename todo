@@ -2,11 +2,6 @@
 
 - deal with eclipse attack and bucket diversity
 
-- check report table of contents
 - read report and spell check one last time
 
-- mark RFM19 as completed in RFMs.md
-- move RFM19 to "completed section" in RFMs.md
-
-- clean gitignore
 - remove this todo file

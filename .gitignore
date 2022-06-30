@@ -18,6 +18,7 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
-# csv files too large for Github
+# RFM19:
+# csv files too large for Github (max limit 100MB)
 implementations/rfm19-dht-routing-table-health/data/nebula-peers-5crawls.csv
 implementations/rfm19-dht-routing-table-health/data/nebula-peers-1week.csv
