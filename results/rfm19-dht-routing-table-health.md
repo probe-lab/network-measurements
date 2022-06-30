@@ -63,7 +63,7 @@ With the peers list provided by the Nebula Crawler, we construct a global binary
 
 The python scripts used to produce the following plots and instructions to reproduce the results are located in the [`implementations/rfm19-dht-routing-table-health/`](https://github.com/protocol/network-measurements/tree/master/implementations/rfm19-dht-routing-table-health) folder.
 
-The data **[TODO: will be]** available in the `data/` subfolder if not too large.
+The data used for the measurements is available [here](../implementations/rfm19-dht-routing-table-health/data/).
 
 ## Measurement Results
 
@@ -93,7 +93,7 @@ From these numbers, we can say that the distribution of the peers in the k-bucke
 
 A _missing_ peer is defined as a peer ID that would fit a non-full k-bucket, but is not included. We define the maximum number of missing peers per k-buckets to be $m=20-\#peers$. The plot shows the average number of missing peers per bucket, compared with the average number of missing peers per non-full k-bucket and with the average total number of peers per bucket. 
 
-The buckets that are almost always full (19.88 peers on average), IDs `0` to `8` have a very low number of missing peers, 0.12 on average. However, the same buckets have a quite high number of missing peers per non-full bucket, 6.82 on average. This implies that most of these buckets, 98.06% of them are full, but the non-full buckets are missing multiple peers on average. One possible explanation is that the peers recently joined the network, and their routing table isn't fully populated yet. **[TODO: CHECK distribution for the different buckets are not full]**
+The buckets that are almost always full (19.88 peers on average), IDs `0` to `8` have a very low number of missing peers, 0.12 on average. However, the same buckets have a quite high number of missing peers per non-full bucket, 6.82 on average. This implies that most of these buckets, 98.06% of them are full, but the non-full buckets are missing multiple peers on average. One possible explanation is that the peers recently joined the network, and their routing table isn't fully populated yet.
 
 Concerning buckets with ID `9` and above, the number of missing peers per bucket almost always matches the number of missing peers per non-full bucket, for the buckets are rarely full. On average on buckets 9 to 14, 0.53 peers are missing for each bucket, which corresponds to 19.76%.
 

@@ -1,21 +1,12 @@
-# TODO before PR
+# TODO before Merge
 
-## report
+- deal with eclipse attack and bucket diversity
 
-- peerid distribution: change to alive peers only
-- peerid distribution: change "share" to "chunk"
-
-## others
-- finish report
-- get feedback
-- remove useless python notebooks
-- readme in implementations/rfm19-...
-- explain how to reproduce results
-- maybe include some data from crawls to allow reproducibility
-- generate plots with more data?
 - check report table of contents
+- read report and spell check one last time
+
 - mark RFM19 as completed in RFMs.md
-- have a work in RFMs.md about part 2 (future work)
 - move RFM19 to "completed section" in RFMs.md
+
 - clean gitignore
 - remove this todo file
