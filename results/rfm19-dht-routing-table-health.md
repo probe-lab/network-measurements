@@ -93,7 +93,7 @@ From these numbers, we can say that the distribution of the peers in the k-bucke
 
 ![alt text](../implementations/rfm19-dht-routing-table-health/plots/missing-peers.png)
 
-A _missing_ peer is defined as a peer whose peer ID would fit a non-full k-bucket, but is not included. We define the maximum number of missing peers per k-buckets to be $m=20-\#peers\_in\_the\_bucket$. The plot shows the average total number of peers per bucket compared with the average number of missing peers per bucket, and with the average number of missing peers per non-full k-bucket. 
+A _missing_ peer is defined as a peer whose peer ID would fit a non-full k-bucket, but is not included. We define the maximum number of missing peers per k-buckets to be $m=20-p$, with `p` being the number of peers in the bucket. The plot shows the average total number of peers per bucket compared with the average number of missing peers per bucket, and with the average number of missing peers per non-full k-bucket. 
 
 The buckets that are almost always full (19.88 peers on average), IDs `0` to `8` have a very low number of missing peers, 0.12 on average. However, the same buckets have a quite high number of missing peers per non-full bucket, 6.82 on average. This implies that most of these buckets, 98.06% of them are full, but the non-full buckets are missing multiple peers on average. One possible explanation is that the peers recently joined the network, and their routing table isn't fully populated yet.
 
@@ -101,7 +101,7 @@ Concerning buckets with ID `9` and above, the number of missing peers per bucket
 
 ![alt text](../implementations/rfm19-dht-routing-table-health/plots/missing-peers-ratio.png)
 
-The ratio of missing peers per bucket is computed as $(1-\frac{\#peers\_in\_bucket}{\#all\_peer\_with\_CPL})$. When comparing the ratio of peers that are missing from bucket with high CPL, we notice that even though these buckets are not very populated, a non negligible ratio of peers is missing. However, in comparison with buckets with lower IDs, we have much less data points to rely on. Nodes in these buckets are rare, and thus the data we obtained may not be totally representative. As we will see later, the peers in buckets 14 and above are exclusively among the 4 closest peers. We will focus more on the 20 closest peers, that belong in the high CPL buckets in the next section.
+The ratio of missing peers per bucket is computed as $(1-\frac{p}{c})$, with `p` being the number of peers in the bucket and `c` the total number of peers with this CPL. When comparing the ratio of peers that are missing from bucket with high CPL, we notice that even though these buckets are not very populated, a non negligible ratio of peers is missing. However, in comparison with buckets with lower IDs, we have much less data points to rely on. Nodes in these buckets are rare, and thus the data we obtained may not be totally representative. As we will see later, the peers in buckets 14 and above are exclusively among the 4 closest peers. We will focus more on the 20 closest peers, that belong in the high CPL buckets in the next section.
 
 ### 20 Closest Peers Awareness
 
