@@ -33,3 +33,4 @@ The following python notebook helped us analyse the data coming from the Nebula 
 
 In order to reproduce the results, you can download the data files and simply run the [dht-routing-table-health.ipynb](./dht-routing-table-health.ipynb) python notebook. You can generate new data from the Nebula Crawler and [postgres_to_csv.ipynb](./postgres_to_csv.ipynb) or from any other data source, and use the script to produce the plots associated with the data.
 
+[`py-binary-trie`](https://pypi.org/project/binary-trie/0.0.7/) package version 0.0.7 has to be installed using `pip install binary-trie==0.0.7`
