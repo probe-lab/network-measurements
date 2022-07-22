@@ -15,7 +15,7 @@ All plots from [RFM19 report](../../results/rfm19-dht-routing-table-health.md) c
 Contains the data useful to run the measurement scripts. All data was obtained from the Nebula Crawler, and only the necessary information is inculuded in `csv` files.
 
 - [`data/all-peerids.csv`](./data/all-peerids.csv) contains the mapping `nebula_id <-> peer_id` of all nodes observed by the Nebula Crawler between `2022-02-16` and `2022-05-03`
-- [`data/nebula-peers-2crawls.csv`](./data/nebula-peers-2crawls.csv) contains data from 2 successive Nebula crawls on `2022-05-03` at `06:00` and `07:00` UTC. Each row of this file follows the format `crawl_id, nebula_id, peer_id, neighbor0_nebula_id, neighbor1_nebula_id, ..., neighborN_nebula_id`. It corresponds to a row for each peer, for each crawl, the peer ID of the node and the nebula ID of all of the nodes in its routing table. Note that unreachable peers have an row, but don't have any `neighborX_nebula_id` entries. This data is enough to reconstruct the _global_ routing table.
+- [`data/nebula-peers-2crawls.csv`](./data/nebula-peers-2crawls.csv) contains data from 2 successive Nebula crawls on `2022-05-03` at `06:00` and `07:00` UTC. Each row of this file follows the format `crawl_id, nebula_id, peer_id, neighbor0_nebula_id, neighbor1_nebula_id, ..., neighborN_nebula_id`. It corresponds to a row for each peer, for each crawl, the peer ID of the node and the nebula ID of all of the nodes in its routing table. Note that unreachable peers have a row, but don't have any `neighborX_nebula_id` entries. This data is enough to reconstruct the _global_ routing table.
 
 Two additional data files were too large to upload to Github, they are accessible on [web3.storage](https://web3.storage).
 
