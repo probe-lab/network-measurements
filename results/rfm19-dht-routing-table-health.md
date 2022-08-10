@@ -1,7 +1,9 @@
 # RFM19 Report: DHT Routing Table Health
 
 Author: [Guillaume Michel](https://github.com/guillaumemichel)\
-Date: 2022-07-01
+Date: 2022-08-10\
+Talk: [DHT Routing Table Health](https://youtu.be/FU3oIZL0L5E)\
+Slides CID: bafybeigdjyzepom74haqau7ojzay7zgwula4kss6nxoyqmrrrwwzjphf5q
 
 ## Table of Contents
 
