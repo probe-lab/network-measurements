@@ -12,5 +12,13 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
+# python notebook checkpoints
+.ipynb_checkpoints
+
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+# RFM19:
+# csv files too large for Github (max limit 100MB)
+implementations/rfm19-dht-routing-table-health/data/nebula-peers-5crawls.csv
+implementations/rfm19-dht-routing-table-health/data/nebula-peers-1week.csv
