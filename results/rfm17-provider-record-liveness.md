@@ -9,12 +9,12 @@ _Talk_: [IPFS Thing - Provider Record Liveness](https://www.youtube.com/watch?v=
 ## Table of contents
 
 1. [Motivation](#1-Motivation)
-2. [Methodology](#2-Followed-Methodology)
+2. [Methodology](#2-Methodology)
     
     2.1. [Generation and publication of random CIDs](#21-Generation-and-publication-of-random-CIDs)
     
-    2.2. [The periodic dial of the CID and PR Holders](#22-Periodic-dial-of-the-CID-and-PR-Holders) 
-3. [Analysis of the Results](#Analysis-of-the-Results)
+    2.2. [The periodic dial of the CID and PR Holders](#22-the-periodic-dial-of-the-cid-and-pr-holders) 
+3. [Analysis of the Results](#3-Analysis-of-the-Results)
     
     3.1. [Actual IPFS DHT specifications, K=20](#31-Actual-IPFS-DHT-specifications-K20)
     
@@ -25,7 +25,7 @@ _Talk_: [IPFS Thing - Provider Record Liveness](https://www.youtube.com/watch?v=
     3.4. [State of _PR Holders_ over time](#34-State-of-PR-Holders-over-time)
 4. [Conclusion](#4-Conclusion)
 5. [References](#5-References)
-6. [Apendix](#6-References)
+6. [Appendix](#6-Appendix)
    
     6.1. [K=15 data](#61-K15)
    
