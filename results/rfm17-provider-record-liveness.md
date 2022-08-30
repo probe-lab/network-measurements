@@ -64,7 +64,7 @@ In such a complex project as the IPFS one, some continuous improvements and prot
 - the DHT routing table health analysis [3] 
 - the node churn analysis over time [2]
 
-As data is essential to perform those complementary studies, the community developed remarkable open-sourced tools such as [4] or [5] to provide insights about the network status. This report seeks to contribute to the healthy evolution of the IPFS network by presenting an empirical study of the Provider Records Liveness. We developed the CID Hoarder, an open-source tool [6] tha can replicate this study in the future. During our study, we configured the CID Hoarder to evaluate IPFS specifications and values. We complemented it with an in-depth comparison of the performance impact that different _K_ replication values would have in the network from a _PR_ liveness perspective. 
+As data is essential to perform those complementary studies, the community developed remarkable open-sourced tools such as [4] or [5] to provide insights about the network status. This report seeks to contribute to the healthy evolution of the IPFS network by presenting an empirical study of the Provider Records Liveness. We developed the CID Hoarder, an open-source tool [6] that can replicate this study in the future. During our study, we configured the CID Hoarder to evaluate IPFS specifications and values. We complemented it with an in-depth comparison of the performance impact that different _K_ replication values would have in the network from a _PR_ liveness perspective. 
 
 
 #### 2.1. Generation and publication of random CIDs
