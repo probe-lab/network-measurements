@@ -476,7 +476,7 @@ On the other hand, Figure 35 shows that the number of hops performed gets slight
 
 **Active PR Holders**
 
-In the following figures (36 37 and 38), we can observe the activity of the _PR Holders_ over the 36 hours of study. Figure 36 shows the aggregated activity over all the different `UserAgents` claimed by the _PR Holders_. Figure 37 shows the DHT servers that were identified as `hydras-booster`. And Figure 38 the rest of the `UserAgents` aggregated for an easier visualization.
+In the following figures (36, 37 and 38), we can observe the activity of the _PR Holders_ over the 36 hours of study. Figure 36 shows the aggregated activity over all the different `UserAgents` claimed by the _PR Holders_. Figure 37 shows the DHT servers that were identified as `hydras-booster`. And Figure 38 the rest of the `UserAgents` aggregated for an easier visualization.
 
 ![img](../implementations/rfm-17-provider-record-liveness/plots/no_hydras/active_total_quartiles.png)
 <p style="text-align: center;">Figure 36. Active number of PR Holders over the study</p>
