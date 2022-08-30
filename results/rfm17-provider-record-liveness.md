@@ -305,7 +305,7 @@ For this reason, Figure 16 showcases a slowly decreasing in-degree ratio during 
 
 The purpose of the study beyond measuring the actual PRL in the IPFS network was to replicate the same exact study for different _K_ replication values. _K_ was originally set to 20 to fight node churn in IPFS. It has proved to be a working value, although there haven't been many studies analyzing its performance and which would be the consequences in the PRL of increasing it or decreasing it. 
 
-For this study, we have decided to run several _Hoards_ with _K_ values, `K=15`, `K=25`, and `k=40` to be more precise.
+For this study, we have decided to run several _Hoards_ with _K_ values, `K=15`, `K=25`, and `K=40` to be more precise.
 
 **Distinct K replication value comparison**
 
