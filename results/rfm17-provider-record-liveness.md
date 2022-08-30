@@ -250,7 +250,7 @@ In Figure 10 we can observe the quartile distributions of the _PR Holders_ that 
 ![img](../implementations/rfm-17-provider-record-liveness/plots/k20/active_total_quartiles.png)
 <p style="text-align: center;">Figure 10. Active CID's PR Holders over the study</p>
 
-With the intention to measure the impact of Hydra-Booster peers in those resutls, the next two figures differentiates Hydra nodes from the rest and displaying them in two separate graphs (figures 11 and 12).
+With the intention to measure the impact of Hydra-Booster peers in those results, the next two figures differentiate Hydra nodes from the rest and displaying them in two separate graphs (figures 11 and 12).
 
 On one side, in Figure 11, we have the non-hydra peers of the network in the following figure. The _Hoarder_ recorded 198 different user agents for over 10 different projects, but this is something that we will discuss further in the report (see section 3.3 - User agents of PR Holders). Although non-hydra peers have a larger variance in the quartile distributions, these ones show a surprising steadiness over the entire study. The median stays at 12 active peers, with Q1 and Q3 set at ~10 and ~13 respectively. There are some minor changes over the time distribution. At the beginning, we can observe how the peers find the wider distribution at hour 4.5, where both whiskers find the bottom and upper values of 4 and 19 peers respectively. On the other hand, we can also distinguish a remarkable compression in the distribution between hours 22 and 24. We won't enter much in detail at this precise moment because itis  something that will be easier to appreciate when comparing the different _K_ values in Section 3.2 .
 
