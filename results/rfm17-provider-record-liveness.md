@@ -85,7 +85,7 @@ After the publication of the CIDs, the tool keeps the following information abou
 
 At the same time, the tool also keeps the information about the selected _PR Holders_ storing in the DB the following information:
 - `peer-id` _Peer ID_ of the _PR Holder_ 
-- `multi-addrs` Multi-address advertised by the _PR Holder_
+- `multi-addrs` Multi-addresses advertised by the _PR Holder_
 - `user-agent` _User Agent_ of the peer in the network
 - `client` Filtered client from the _User Agent_
 - `version` Filtered version from the _User Agent_
