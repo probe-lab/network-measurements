@@ -501,7 +501,7 @@ In terms of Peers keeping the PRs, we see a similar pattern. After the first 3 i
 | ![img](../implementations/rfm-17-provider-record-liveness/plots/no_hydras/keeping_hydras_quartiles.png) | ![img](../implementations/rfm-17-provider-record-liveness/plots/no_hydras/keeping_non_hydras_quartiles.png) |
 | <p style="text-align: center;">Figure 40. Number of hydra PR Holders keeping the records over the study</p> | <p style="text-align: center;">Figure 41. Number of non-hydra PR Holders keeping the records over the study</p> |
 
-When taking a closer look at the hydra distribution (in Figure 40), we can see that there are some outliers that only keep the records for the first until the first 10 hours. This phenomena remains unknown, but it could be linked to a non-yet-covered case where we contact the hydra peer to store the records.
+When taking a closer look at the hydra distribution (in Figure 40), we can see that there are some outliers that only keep the records for at most 10 hours. This phenomenon remains unknown, but it could be linked to a non-yet-covered case where we contact the hydra peer to store the records.
 
 
 **In-degree ratio**
