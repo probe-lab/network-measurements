@@ -523,7 +523,7 @@ Over this long-run study, as shown in Figure 43, the activity of the DHT servers
 
 We have already mentioned that the results presented in Section 3.1 (`Quartile distribution of PR Holders fetching time over rounds`) do not match with the ones presented in [2] and [8]. However, analyzing the peers' activity in this study is laxer than in the previously mentioned ones. 
 
-In the _CID Hoarder_, when the connection attempt to a peer in the network returns a `connection refused` or a `connection reset by peer`, we perform an additional 2 extra attempts to check their activity. This is also why we need to be generous when selecting the number of workers for the _Hoarder_. These extra retries significantly reduce the number of offline peers in the network, leading us to see a stable 17% of the peers leaving the network after ~7 hours of being contacted (check the comparison figure of the Average percentage of total active PR Holders (the one below)).
+In the _CID Hoarder_, when the connection attempt to a peer in the network returns a `connection refused` or a `connection reset by peer`, we perform 2 additional attempts to check their activity. This is also why we need to be generous when selecting the number of workers for the _Hoarder_. These extra retries significantly reduce the number of offline peers in the network, leading us to see a stable 17% of the peers leaving the network after ~7 hours of being contacted (check the comparison figure of the Average percentage of total active PR Holders (the one below)).
 
 **In-degree ratio**
 
