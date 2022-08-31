@@ -53,7 +53,7 @@ Although the network has shown a steady performance, there are still a few quest
 1. Which is the actual PRL in the IPFS network? Are PR Holders still active over the 24 hours after receiving the PRs? Do they still keep the records during that time?
 2. There have been some community reports about the content being unretrievable after a few hours of the publication. Therefore, is K=20 the proper replication value for the current IPFS network size and node churn? If not, which would be the most optimal K value?
 4. Are initial PR Holders for content still the closest ones to it after 12, 24, or 36 hours? Does the suggested republish time need to be tuned?
-5. Although Hydra-Boosters were introduced to increase the network's overall performance, they still represent a certain level of centralization in the network. What is the real impact of Hydra-Boosters in the IPFS Network? Did they become the core of the IPFS Network topology?
+5. Although Hydra-Boosters were introduced to increase the network's overall performance, they still represent a certain level of centralization in the network. What is the real impact of Hydra-Boosters in the IPFS Network? Have Hydra-Boosters become the core of the IPFS Network topology?
    
 
 With this report, we seek to provide a better understanding of the current state of the PRL, replying with a scientific study of all the questions mentioned above.
