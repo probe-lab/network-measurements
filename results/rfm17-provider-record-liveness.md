@@ -265,7 +265,7 @@ On the other hand, Figure 12 displays hydra nodes' activity. We can observe a se
 
 **Distribution of PR Holders keeping the PRs over the study**
 
-As previously mentioned, we make a difference between being active in the network, and actually keeping and sharing the _PRs_ over the default 24 hours. Figure 12 shows the quartile distribution of those _PR Holders_ that actively shared the _PRs_ with the hoarder on each ping round.
+As previously mentioned, we differentiate between being active in the network, and actually keeping and sharing the _PRs_ over the default 24 hours. Figure 12 shows the quartile distribution of those _PR Holders_ that actively shared the _PRs_ with the hoarder on each ping round.
 
 ![img](../implementations/rfm-17-provider-record-liveness/plots/k20/pr_keeping_total.png)
 <p style="text-align: center;">Figure 13. Total number of PR Holders keeping the records</p>
