@@ -491,7 +491,7 @@ Figure 38 showcases that there are barely Hydras. This consequently means that t
 
 **PR Holders keeping the records**
 
-In terms of Peers keeping the PRs, we see a similar pattern. After the first 3 initial hours, in Figure 39, we see a clear drop of the median to 13 peers keeping the PRs, which lasts until the 24 described hours. This time, we can clearly see the sharp drop of peers keeping the records defined in the specs, which match with the non-hydra peers shown in Figure 41.  
+In terms of Peers keeping the PRs, we see a similar pattern. After the first 3 initial hours, in Figure 39, we see a clear drop of the median to 13 peers keeping the PRs, which lasts until the 24 described hours. This time, we can clearly see the sharp drop of peers keeping the records defined in the specs, which matches with the non-hydra peers shown in Figure 41.  
 
 ![img](../implementations/rfm-17-provider-record-liveness/plots/no_hydras/keeping_total_quartiles.png)
 <p style="text-align: center;">Figure 39. Number of PR Holders keeping the records over the study</p>
