@@ -199,7 +199,7 @@ During the entire _CID_ publication time, the _Hoarder_ elected a total of 15380
 
 **PR Publish time for the set of CIDs**
 
-The _CID_ publication chapter gets analyzed more in-depth by tracking the time that the entire process took to finish (from the publisher's peer side). In the next Figures 4 5 and 6, we can observe the CDF, PDF and Quartile distributions of the `IpfsDHT.Provide()` method. In the Table 1, we can observe that the median of the method calls were done in under 12.64 secs, with Q1 and Q3 defined at 7.01 and 23.33 secs respectively, with the 90th percentile set at 48.98 secs.
+The _CID_ publication chapter gets analyzed more in-depth by tracking the time that the entire process took to finish (from the publisher's peer side). In the next Figures 4, 5 and 6, we can observe the CDF, PDF and Quartile distributions of the `IpfsDHT.Provide()` method. In Table 1, we can observe that the median of the method calls were done in under 12.64 secs, with Q1 and Q3 defined at 7.01 and 23.33 secs respectively, with the 90th percentile set at 48.98 secs.
 
 | <p style="text-align: center;">CDF</p> |
 | ---- |
