@@ -348,7 +348,7 @@ Table 2, on the other hand, summarizes the percentiles for the `Provide()` metho
 
 **DHT-walk looking for closest peers**
 
-Finding the closest peers in the network whenever we want to publish or retrieve content-records in/to the network is not an easy task. Kademlia DHT is one of the most popular approaches to optimize this process by making each of the nodes have the same number of peer representants for a logarithmic-scaling range of distance. Kademlia's _K Buckets_ present in each of the IPFS clients serves as an entrypoint to discover the closest peers to a given key (`hash(CID)`, `hash(PeerID)`). 
+Finding the closest peers in the network whenever we want to publish to or retrieve content-records from the network is not an easy task. Kademlia DHT is one of the most popular approaches to optimize this process by making each of the nodes have the same number of peer representants for a logarithmic-scaling range of distance. Kademlia's _K Buckets_ present in each of the IPFS clients serves as an entrypoint to discover the closest peers to a given key (`hash(CID)`, `hash(PeerID)`). 
 
 Figure 20 shows the number of hops that the `IpfsDHT` client had to perform to discover for the first time the whole set of _K_-closest peers. The graph can be read in the following way: 50% of the times the _k_-closest peers were discovered in a total of 3 hops for a whole set of _K_ value studies. With only a <5% percent of the times needing 5 hops or more.  
 
