@@ -193,7 +193,7 @@ Moving into the actual _CID_ publication process, the following Figure 3 represe
 
 In Figure 3, we can appreciate that the 5th, 50th, and 90th percentiles are placed over the 14, 18, 20 successful _PR Holders_ respectively. It showcases an overall healthy performance where 95% of the _CIDs_ have above 14 successful _PR Holders_. However, it also means that from the 20 closest peers, by the median, at least 2 of them are offline or unreachable.
 
-We have seen something similar results in previous studies like [7]. In the study, the author identifies a similar active _PR Holder_ distribution while performing the `IpfsDHT.Provide()` method, showcasing that those 2 unreachable peers (by median) suppose the biggest slice of the time to perform the `Provide()` method. In those cases where the peers are unreachable, the whole operation waits until the connections are timed out.
+We have seen similar results in previous studies like [7]. In the study, the author identifies a similar active _PR Holder_ distribution while performing the `IpfsDHT.Provide()` method, showcasing that those 2 unreachable peers (by median) suppose the biggest slice of the time to perform the `Provide()` method. In those cases where the peers are unreachable, the whole operation waits until the connections are timed out.
 
 During the entire _CID_ publication time, the _Hoarder_ elected a total of 15380 unique peers as PR Holders for the $10.000$ _CIDs_. Note that this number matches with the total daily active DHT server peers in the IPFS Network, also described in the weekly reports [8] generated from the Nebula Crawler [4], meaning that the randomness of the CIDs over the SHA256 hash space covers most of the DHT servers in the network.
 
