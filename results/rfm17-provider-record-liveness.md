@@ -516,7 +516,7 @@ As a bonus chapter in the report, we have performed a _CID Hoarder_ run with the
 
 **Active PR Holders**
 
-Over this long-run study, as shown in Figure 43, the activity of the DHT servers is relatively stable over +80 hours. With a median established at 15 active _PR Holders_, there are just a few occasions where it drops to 14.
+Over this long-run study, as shown in Figure 43, the activity of the DHT servers is relatively stable over 80+ hours. With a median established at 15 active _PR Holders_, there are just a few occasions where it drops to 14.
 
 ![img](../implementations/rfm-17-provider-record-liveness/plots/80_hours/active_total_pr_holders.png)
 <p style="text-align: center;">Figure 43. Total active PR Holders over 80 hours</p>
