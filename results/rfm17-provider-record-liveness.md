@@ -228,7 +228,7 @@ By tracking each _CID_ and its _PR Holders_ periodically, we made a clear distin
 
 We have previously mentioned that the `IpfsDHT.GetClosestPeers()` method is crucial when providing or retrieving content in the IPFS network. In that process, the DHT-walk selects the K peers whose `hash(peerID)` are the closest to `hash(CID)` in the node's routing table, and requests them the peers whose `hash(peerID)` are the closest to `hash(CID)` in their respective routing tables. The process includes several recursive calls for those peers reported by the previously contacted ones, and we will refer to each iteration as _Hop_. 
 
-In terms of Hops, the report differentiates:
+In terms of Hops, we report the following:
 - In Figure 7, the total number of hops that the DHT walk needed to know that there weren't any other closest peers to the key. We can see that the 50% of the DHT-walks are done in 4 hops, and 90% of the walks are done in 6 or fewer hops. 
 
 ![img](../implementations/rfm-17-provider-record-liveness/plots/k20/total_hops.png)
