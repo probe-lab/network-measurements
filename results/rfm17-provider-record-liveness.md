@@ -61,14 +61,14 @@ With this report, we seek to provide a better understanding of the current state
 
 ## 2. Summary of findings
 
-The report includes several findings about the current state of the Provider Record's Liveness in the IPFS network. It also introduces a set of suggestions or actions to reduce the current overheard of publishing and keeping the PR (connections, bandwidth, CPU, etc...). These are the key points that we would like to highlight from the report:
-1. 75% of the initial PR Holders stay online for +48 hours, and 70% share the PR for the first 24 hours, showing a healthy current provider record's liveness.
-2. 70% of the PR Holders stay inside the 20 closest peers over +48 hours.
+The report includes several findings about the current state of the Provider Record's Liveness in the IPFS network. It also introduces a set of suggestions or actions to reduce the current overheard of publishing and keeping the PR (connections, bandwidth, CPU, etc.). These are the key points that we would like to highlight from the report:
+1. 75% of the initial PR Holders stay online for more than 48 hours, and 70% serve the PR for the first 24 hours, showing a healthy current provider record's liveness.
+2. 70% of the PR Holders stay inside the 20 closest peers for more than 48 hours.
 3. The non-hydra part of the network performs well, showing a healthy non-hydra dependency.
-4. From the tested _K_ values:
+4. From the tested _K_ values (_K_ = 15, 20, 25, 40):
     
-    - reducing K reduces the PR-related overheard by 25%, decreases in 2 seconds the PR publication, maintains the same 70% of active PR Holders as K=20, and increases hydra-dependency.
-    - increasing K reduces the time-performance of the PR publication, adds extra PR-related overhead, and increases resilience to network fragmentation. 
+    - reducing K reduces the PR-related overheard by 25%, decreases the PR publication time by 2 seconds, maintains the same 70% of active PR Holders as K=20, and increases hydra-dependency.
+    - increasing K increases the PR publication time, adds extra PR-related overhead, but also increases resilience to network fragmentation. 
 5. We suggest increasing the PR republish time to 24 hours as the first action to reduce the PR-related overhead. 
 
 
@@ -574,7 +574,7 @@ In the _CID Hoarder_, when the connection attempt to a peer in the network retur
 
 **In-degree ratio**
 
-The same happens with the In-Degree ratio of the initial _PR Holders_ over the +80 hours of the run. The following graph shows the quartile distribution of that in-degree ratio, where we can observe that the median stays stable in the 15 peers. 
+The same happens with the In-Degree ratio of the initial _PR Holders_ over the 80+ hours of the run. The following graph shows the quartile distribution of that in-degree ratio, where we can observe that the median stays stable in the 15 peers. 
 
 ![img](../implementations/rfm-17-provider-record-liveness/plots/80_hours/in_degree_ratio.png)
 
@@ -582,7 +582,7 @@ Figure 44. In-degree ratio of PR Holders over 80 hours
  
 ## 5. Conclusion
 
-The presented report compiles a whole set of measurements that analyzes the provider records liveness in the IPFS network. The report shows a healthy PRL with the present IPFS Kademlia DHT implementation, where by the median, 15 of the _PR Holders_ stay active for +80 hours after contacting them to store the _PR_, dropping to 14 peers in some specific moments. Of those 15 active peers, 13 by median keep and share the records for the requested CIDs, which drop after the 24 hours defined by the specs.
+The presented report compiles a whole set of measurements that analyzes the provider records liveness in the IPFS network. The report shows a healthy PRL with the present IPFS Kademlia DHT implementation, where by the median, 15 of the _PR Holders_ stay active for 80+ hours after contacting them to store the _PR_, dropping to 14 peers in some specific moments. Of those 15 active peers, 13 by median keep and share the records for the requested CIDs, which drop after the 24 hours defined by the specs.
 
 Over the whole study, none of the published CIDs was found unreachable during the ~36 hours of study. This study showcases that 20 remains a suitable value for the _K_ replication value. However, there are some discussions opened after going through the comparison between the different _K_ values.
 
@@ -590,7 +590,7 @@ From one side, reducing _K_ to 15 would reduce by 25% the PR-related overhead in
 
 On the other hand, increasing _K_ to 25 would give us a higher margin of safety. Its major drawback is that it would increase the network's overhead by 25%, while adding extra seconds to the whole `Provide()` method. There have already been a few [reports](https://github.com/ipfs/kubo/issues/9045#issuecomment-1196293473) about the current high overhead in the IPFS network for IPFS DHT Servers. Therefore, increasing the _K_ value is not a option we would recommend. It does 
 
-The steady in-degree ratio measured for k=20 over +80 hours showed that 15 of the initial closest peers keep being the closest ones for more than 48 hours. This measurement dismisses any existing doubt about the healthiness of any existing _PR_, and it opens the possibility of decreasing the overhead of the network by increasing the _PR republish interval_.
+The steady in-degree ratio measured for k=20 over 80+ hours showed that 15 of the initial closest peers keep being the closest ones for more than 48 hours. This measurement dismisses any existing doubt about the healthiness of any existing _PR_, and it opens the possibility of decreasing the overhead of the network by increasing the _PR republish interval_.
 
 In a currently over-saturated network, where running a DHT Server is way more CPU and bandwidth consuming than a single DHT Client, any window of improvement has to be taken. Although reducing the _K_ value to 15 would imply a 25% overhead reduction (e.g. in CPU, bandwidth, and PR related storage), it implies a performance risk that should be considered more carefully. However, increasing the _PR republish interval_ seems a far more reasonable action to reduce the overhead without interfering with the performance and reliability.
 
