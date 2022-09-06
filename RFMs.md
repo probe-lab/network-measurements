@@ -576,12 +576,12 @@ We carry out a sensitivity analysis based on the success rate we have observed t
 
 ## RFM 17 | Provider Record Liveness
 
-* _Status:_ **ready**
-* _DRI/Team:_
-* _Effort Needed:_
-* _Prerequisite(s):_
+* _Status:_ **complete**
+* _DRI/Team:_ [`@cortze`](https://github.com/cortze)
+* _Effort Needed:_ 
+* _Prerequisite(s):_ **NONE**
 * _Value:_ **HIGH**
-* _Report:_ \<insert link to report once work is complete\>
+* _Report:_ [`rfm17-provider-record-liveness.md`](./results/rfm17-provider-record-liveness.md)
 
 
 #### Proposal
