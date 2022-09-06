@@ -185,7 +185,7 @@ Like the first step in the _CID Hoarder_, the analysis starts with a closer look
 
 As previously mentioned, the _CID Hoarder_ generates _CIDs_ from 1KB random content in order to cover the entire _SHA256_ space. In the following figures, we can observe the cumulative distribution function (CDF) and probability density function (PDF) of the generated CIDs in the normalized _SHA256_ space. 
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/k20/cid_sha256_distribution_cdf.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/k20/cid_sha256_distribution_cdf.png)
 
 Figure 1. Normalized CDF of the CID set in the SHA256 hash space
 
@@ -193,7 +193,7 @@ In Figure 1, we can observe that the CDF follows a linear pattern, with an avera
 
 Despite the randomness of the bytes used to generate the _CIDs_ and the homogeneousness that the _SHA256_ encoding function provides might be affected by the relatively short size of the _CID_ dataset (10.000 CIDs). 
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/k20/cid_sha256_distribution_pdf.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/k20/cid_sha256_distribution_pdf.png)
 
 Figure 2. Normalized PDF of the CID set in the SHA256 hash space
 
@@ -203,7 +203,7 @@ Figure 2. Normalized PDF of the CID set in the SHA256 hash space
 
 Moving into the actual _CID_ publication process, the following Figure 3 represents the CDF of the _PR Holders_ successfully contacted to store the PRs for the whole set of _CIDs_.
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/k20/success_pr_holders_cdf.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/k20/success_pr_holders_cdf.png)
 
 Figure 3. CDF of the successful PR Holders at the `Provide()` method
 
@@ -220,12 +220,12 @@ The _CID_ publication chapter gets analyzed more in-depth by tracking the time t
 
 | CDF |
 | ---- |
-| ![img](../implementations/rfm-17-provider-record-liveness/plots/k20/provide_method_cdf.png) |
+| ![img](../implementations/rfm17-provider-record-liveness/plots/k20/provide_method_cdf.png) |
 | Figure 4. `Provide()` method's duration CDF for the CID set |
 
 | PDF | QUARTILE DIST | 
 |----|----|
-| ![img](../implementations/rfm-17-provider-record-liveness/plots/k20/provide_method_pdf.png) | ![img](../implementations/rfm-17-provider-record-liveness/plots/k20/provide_method_quartile.png) |
+| ![img](../implementations/rfm17-provider-record-liveness/plots/k20/provide_method_pdf.png) | ![img](../implementations/rfm17-provider-record-liveness/plots/k20/provide_method_quartile.png) |
 | Figure 5. `Provide()` method's duration PDF for the CID set | Figure 6. `Provide()` method's duration quartiles for the CID set |
 
 
@@ -249,13 +249,13 @@ We have previously mentioned that the `IpfsDHT.GetClosestPeers()` method is cruc
 In terms of Hops, we report the following:
 - In Figure 7, the total number of hops that the DHT walk needed to know that there weren't any other closest peers to the key. We can see that the 50% of the DHT-walks are done in 4 hops, and 90% of the walks are done in 6 or fewer hops. 
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/k20/total_hops.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/k20/total_hops.png)
 
 Firgure 7. Total number of hops to get the closest peers to a key
 
 - In Figure 8, the minimum hops the DHT-walk needed to discover for first the time the _K_-closest peers. In the figure, we can observe that the 95% of the closest peers were discovered in 4 hops or less, which means that almost 40% of the time, we need 2 extra hops to determine which are the closest peers. 
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/k20/hops_for_closest.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/k20/hops_for_closest.png)
 
 Figure 8. Minimum number of hops to discover the closest peers
 
@@ -267,7 +267,7 @@ To analyze the retrievability of the _PR_, we took a closer look at the individu
 
 In Figure 10 we can observe the quartile distributions of the _PR Holders_ that were active/online in the network at those specific ping rounds. For a clearer representation, the figure is expressed in hours since the publication of the _CIDs_, and it shows that the Q1, Q2 and Q3 quartiles remain stable over the 40 hours of study between 16 and 13 active holders. There are some outliers beyond the bottom whiskers sometimes reaching a minimum of only 5 active holders. Although, we don't see any outlier with 0 active peers until hours 35-36. 
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/k20/active_total_quartiles.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/k20/active_total_quartiles.png)
 
 Figure 10. Active CID's PR Holders over the study
 
@@ -275,13 +275,13 @@ With the intention to measure the impact of Hydra-Booster peers in those results
 
 On one side, in Figure 11, we have the non-hydra peers of the network in the following figure. The _Hoarder_ recorded 198 different user agents for over 10 different projects, but this is something that we will discuss further in the report (see section 3.3 - User agents of PR Holders). Although non-hydra peers have a larger variance in the quartile distributions, these ones show a surprising steadiness over the entire study. The median stays at 12 active peers, with Q1 and Q3 set at ~10 and ~13 respectively. There are some minor changes over the time distribution. At the beginning, we can observe how the peers find the wider distribution at hour 4.5, where both whiskers find the bottom and upper values of 4 and 19 peers respectively. On the other hand, we can also distinguish a remarkable compression in the distribution between hours 22 and 24. We won't enter much in detail at this precise moment because it is something that will be easier to appreciate when comparing the different _K_ values in Section 3.2 .
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/k20/active_non_hydras_quartiles.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/k20/active_non_hydras_quartiles.png)
 
 Figure 11. Active non-hydra PR Holders over the study
 
 On the other hand, Figure 12 displays hydra nodes' activity. We can observe a severe steadiness of the nodes over the entire run. With a median of 3 active nodes for the entire run, we can see that they barely go offline over daily shifts as we saw in the rest of the peers.
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/k20/active_hydras_quartiles.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/k20/active_hydras_quartiles.png)
 
 Figure 12. Active hydra PR Holders over the study
 
@@ -290,7 +290,7 @@ Figure 12. Active hydra PR Holders over the study
 
 As previously mentioned, we differentiate between being active in the network, and actually keeping and sharing the _PRs_ over the default 24 hours. Figure 12 shows the quartile distribution of those _PR Holders_ that actively shared the _PRs_ with the hoarder on each ping round.
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/k20/pr_keeping_total.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/k20/pr_keeping_total.png)
 
 Figure 13. Total number of PR Holders keeping the records
 
@@ -302,13 +302,13 @@ As seen in the retrievability graph (Figure 9), the _PRs_, which weren't suppose
 
 In order to make the exact same division as the one presented on the _PR Holders_' activity, we split the set of _PR Holders_ between non-Hydra peers, and the Hydra ones. In the following Figure 14, we can appreciate the same level of stability marked by a lower Q1 of ~9 peers sharing the _PRs_. To this stability period follows a sudden drop of _PR_ sharing at hour 24.
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/k20/pr_keeping_non_hydras.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/k20/pr_keeping_non_hydras.png)
 
 Figure 14. Total number of non-hydra PR Holders keeping the records
 
 On the other hand, while measuring the Hydra peers (see Figure 15), we can see the same steadiness that slowly vanishes after hour 24, reaching the expected result at the 33rd hour. Let's remember how Hydra-Booster peers work in the network. Hydra nodes represent a centralized set of IPFS servers that share a common pool or database of _PR_. This way, Hydra nodes can speed up the process of finding the content provider of a specific CID. In its nature of a shared _PR_ pool, Hydras host a wider set of _PR_ if we compare them with a single `kubo` instance, for example. For this reason, the periodical iteration to check the status of each _PR_, delayed the process of pruning the _PR_ from the internal database.
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/k20/pr_keeping_hydras.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/k20/pr_keeping_hydras.png)
 
 Figure 15. Total number of hydra PR Holders keeping the records
 
@@ -321,7 +321,7 @@ These measurements can demonstrate that the value of the _K_ replication constan
 **In-Degree ratio of initial PR Holders inside K closest peers over time**
 In the previous chapter, we focused on analyzing the stability and commitment of the original elected _PR Holders_ for each _CID_. Although the results show a positive performance for the overall PRL, we don't have the certainty of whether those _K_ initial closest peers are still the _K_ closest peers over the next 12 or 24 hours. 
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/k20/in_degree_ratio.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/k20/in_degree_ratio.png)
 
 Figure 16. Total number of PR Holders keeping the records
 
@@ -352,14 +352,14 @@ The comparison starts by analyzing the total number of successful _PR Holders_ f
 
 | Total Successful PR Holders | Percentage of Successful PR Holders |
 |----|----|
-|  ![img](../implementations/rfm-17-provider-record-liveness/plots/kcomparison/success_pr_holders.png) |  ![img](../implementations/rfm-17-provider-record-liveness/plots/kcomparison/success_pr_holders_percentage.png)  | 
+|  ![img](../implementations/rfm17-provider-record-liveness/plots/kcomparison/success_pr_holders.png) |  ![img](../implementations/rfm17-provider-record-liveness/plots/kcomparison/success_pr_holders_percentage.png)  | 
 |  Figure 17. Successful PR Holders comparison at `Provide()` method | Figure 18. Percentage comparison of successful of PR Holders at `Provide()` method   |
 
 **Provide method times**
 
 As previously introduced, the entire `Provide()` method is one of the most time-consuming operations when interacting with the IPFS Network. Figure 19 shows the `Provide()` method time quartile distributions for the different tested _K_ values. We can observe how lower _K_ values achieve lower _Provide_ times. While the different values of K=15, K=20, and K=25 result in a gradual increase, almost 2 seconds for the median, we see a huge difference with the K=40 test, which registers a _PR provide_ time of two times longer in the best cases in comparison with K=15.
 
- ![img](../implementations/rfm-17-provider-record-liveness/plots/kcomparison/provide_method_time_quartiles.png)
+ ![img](../implementations/rfm17-provider-record-liveness/plots/kcomparison/provide_method_time_quartiles.png)
 
  Figure 19. Quartile comparison of the `Provide()` method for different K values
 
@@ -381,14 +381,14 @@ Finding the closest peers in the network whenever we want to publish to or retri
 
 Figure 20 shows the number of hops that the `IpfsDHT` client had to perform to discover for the first time the whole set of _K_-closest peers. The graph can be read in the following way: 50% of the times the _k_-closest peers were discovered in a total of 3 hops for a whole set of _K_ value studies. With only a <5% percent of the times needing 5 hops or more.  
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/kcomparison/total_hops.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/kcomparison/total_hops.png)
 
 Figure 20. Total number of hops performed to get the closest peers
 
 
 However, this metric doesn't include the number of extra hops the DHT performed to reach the conclusion that there weren't closest peers to the given key. The following graphs shows the number of max hops performed to finalize the DHT walk. In Figure 21 we can observe that only around 50% of the time, the client performed 4 hops or less. We can see a shift towards 1 extra hop from the previous figure showing that most of the time it only needs one extra hop to conclude which are the closest peers. 
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/kcomparison/hops_for_closest.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/kcomparison/hops_for_closest.png)
 
 Figure 21. Minimum number of hops performed to discover for the first time the closest peers
 
@@ -403,13 +403,13 @@ When comparing the active _PR Holders_ for the different K values, in the next f
 
 Figure 22 shows the median and average of the active nodes for each of the _K_ value datasets. We can observe that they follow a similar pattern where the median achieves a slight decrease over the first 10 hours after the PR publication and an upturn after 20 and 25 hours of the publication.  
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/kcomparison/active_total_pr_holders.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/kcomparison/active_total_pr_holders.png)
 
 Figure 22. Comparison of the active PR Holders' for the different K values (median on the left, average on the right)
 
 This pattern gets even more evident when displaying the percentage of the active _PR Holders_ (see Figure 23). Here we can clearly see that the difference between K=15 and K=40 's median is in order of a 5% of more active peers when we increase the _K_ value to 40 peers. In the graph displaying the averages, we can distinguish with a higher resolution the initial drop (first 10 hours) and the following catch-up (hours 20 to 25) previously mentioned. The spotted pattern has been observed over all the different K values and we address it to a specific set of users in the same time zone that disconnect over a set of hours in a daily period (it could be users shutting down their PCs during the night).
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/kcomparison/active_total_pr_holders_percentage.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/kcomparison/active_total_pr_holders_percentage.png)
 
 Figure 23. Comparison of the active PR Holders' percentages for the different K values (median on the left, average on the right)
 
@@ -418,13 +418,13 @@ Figure 23. Comparison of the active PR Holders' percentages for the different K 
 
 Results are slightly different when talking about _PR Holders_ keeping the records. The median and average distributions among the _K_ values (see Figure 24) suffer from the same initial drop during the first 10 hours. After that, the distribution stays stable over the expected 24 hours.
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/kcomparison/pr_keeping_total.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/kcomparison/pr_keeping_total.png)
 
 Figure 24. Comparison of the PR Holders keeping the records for the different K values (median on the left, average on the right)
 
 The percentages displayed in Figure 25 also match the ~5% difference between k=15 and K=40, with the clearer no-difference between K=15, K=20, and K=25.
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/kcomparison/pr_keeping_total_percentage.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/kcomparison/pr_keeping_total_percentage.png)
 
 Figure 25. Comparison of the PR Holders keeping the records' percentages for the different K values (median on the left, average on the right)
 
@@ -435,13 +435,13 @@ For some reason, the initial _PR Holders_ are no longer the closest peers to the
 
 Figure 26 shows the sharp drop of the in-degree ratio after the first hour, which stabilizes over the following 23 hours. 
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/kcomparison/in_degree.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/kcomparison/in_degree.png)
 
 Figure 26. In-degree ratio comparison (median on the left, average on the right)
 
 Taking a closer look at that initial drop, in Figure 27, we can see how the ratio decreases by 25% uniformly for most of the K values (clear exception of K=40 which drops to ~65%). Furthermore, we can also appreciate that the ~75% in-degree ratio remains over the following hours.
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/kcomparison/in_degree_percentage.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/kcomparison/in_degree_percentage.png)
 
 Figure 27. In-degree ratio's percentage comparison (median on the left, average on the right)
 
@@ -459,7 +459,7 @@ The following graphs show the client diversity achieved in the initial _PR Holde
 
 | Hydra-Filter OFF | Hydra-Filter ON | 
 |----|----|
-| ![img](../implementations/rfm-17-provider-record-liveness/plots/k20/total_client_dist.png) | ![img](../implementations/rfm-17-provider-record-liveness/plots/no_hydras/total_client_type_dist.png) | 
+| ![img](../implementations/rfm17-provider-record-liveness/plots/k20/total_client_dist.png) | ![img](../implementations/rfm17-provider-record-liveness/plots/no_hydras/total_client_type_dist.png) | 
 | Figure 28. Total client distribution of the contacted peers (without hydra filter) | Figure 29. Total client distribution of the contacted peers (with hydra filter) |
 
 The initial light-crawler takes 5 to 7 mins to crawl the network, and finds around 1950 of the ~2000 hydra peers in the network. The remaining 0.07% of the elected hydras as _PR Holders_, are just the outliers that managed to skip the process of getting blacklisted while getting the closest peers to a key. 
@@ -468,7 +468,7 @@ Following the discussion, in Figure 31 we can observe the quartile distribution 
 
 | Hydra-Filter OFF | Hydra-Filter ON | 
 |----|----|
-| ![img](../implementations/rfm-17-provider-record-liveness/plots/k20/pr_holders_client_types_quartiles.png) | ![img](../implementations/rfm-17-provider-record-liveness/plots/no_hydras/pr_holder_client_type_dist.png) |
+| ![img](../implementations/rfm17-provider-record-liveness/plots/k20/pr_holders_client_types_quartiles.png) | ![img](../implementations/rfm17-provider-record-liveness/plots/no_hydras/pr_holder_client_type_dist.png) |
 | Figure 30. PR Holders' client type (without hydra filter) | Figure 31. PR Holders' client type (with hydra filter) |
 
 
@@ -476,14 +476,14 @@ Following the discussion, in Figure 31 we can observe the quartile distribution 
 
 In terms of successful initial _PR Holders_, the measurements displayed in Figure 32 don't show any difference. The 95% of the time, the tool achieves more than 14 successful provides, with a median of 18 successful _PR Holders_.
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/no_hydras/success_pr_holders_cdf.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/no_hydras/success_pr_holders_cdf.png)
 Figure 32. CDF of successful PR Holders during the `Provide()` method
 
 **PR publish time for the set of CIDs**
 
 When it comes to compare the total duration of the`Provide()` method (see Figure 33), things also don't change much. The DHT client could Provide the PRs in 13.91 seconds by the median. 
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/no_hydras/provide_time_comparison.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/no_hydras/provide_time_comparison.png)
 
 Figure 33. Quartile distribution of the `Provide()` method's duration
 
@@ -506,13 +506,13 @@ Hydra nodes were introduced to the network with the idea of covering the entire 
 
 Looking at Figure 34, the number of hops it is needed to discover for the first time the closest peers doesn't differ much between both data sets, `3.278` and `3.503` average hops for the `with-hydras` and the `without-hydras` studies, respectively. In both cases, 90% of the lookups stay at or under 4 hops.
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/no_hydras/hops_to_closest_comparison.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/no_hydras/hops_to_closest_comparison.png)
 
 Figure 34. Minimum number of hops to discover the closest peers
 
 On the other hand, Figure 35 shows that the number of hops performed gets slightly increased, accumulating 5% more cases that needed 6 hops to be sure of the closest peers.
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/no_hydras/total_hops_comparison.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/no_hydras/total_hops_comparison.png)
 
 Figure 35. Total number of hops to get the closest peers to a key
 
@@ -521,13 +521,13 @@ Figure 35. Total number of hops to get the closest peers to a key
 
 In the following figures (36, 37 and 38), we can observe the activity of the _PR Holders_ over the 36 hours of study. Figure 36 shows the aggregated activity over all the different `UserAgents` claimed by the _PR Holders_. Figure 37 shows the DHT servers that were identified as `hydras-booster`. And Figure 38 the rest of the `UserAgents` aggregated for an easier visualization.
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/no_hydras/active_total_quartiles.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/no_hydras/active_total_quartiles.png)
 
 Figure 36. Active number of PR Holders over the study
 
 | Hydras | Non-Hydras | 
 |----|----|
-| ![img](../implementations/rfm-17-provider-record-liveness/plots/no_hydras/active_hydras_quartiles.png) | ![img](../implementations/rfm-17-provider-record-liveness/plots/no_hydras/active_non_hydras_quartiles.png) |
+| ![img](../implementations/rfm17-provider-record-liveness/plots/no_hydras/active_hydras_quartiles.png) | ![img](../implementations/rfm17-provider-record-liveness/plots/no_hydras/active_non_hydras_quartiles.png) |
 | Figure 37. Number of hydra PR Holders over the study | Figure 38. Number of non-hydra PR Holders over the study |
 
 Figure 38 showcases that there are barely Hydras. This consequently means that the filter works! On the non hydra nodes graph, we can't see much difference when comparing it with the "including Hydras" version (see Figure 10). The median stabilizes at 15 active peers after ~3 hours, showing steadiness over the 36 hours of study.
@@ -537,13 +537,13 @@ Figure 38 showcases that there are barely Hydras. This consequently means that t
 
 In terms of Peers keeping the PRs, we see a similar pattern. After the first 3 initial hours, in Figure 39, we see a clear drop of the median to 13 peers keeping the PRs, which lasts until the 24 described hours. This time, we can clearly see the sharp drop of peers keeping the records defined in the specs, which matches with the non-hydra peers shown in Figure 41.  
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/no_hydras/keeping_total_quartiles.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/no_hydras/keeping_total_quartiles.png)
 
 Figure 39. Number of PR Holders keeping the records over the study
 
 | Hydras | Non-Hydras | 
 |----|----|
-| ![img](../implementations/rfm-17-provider-record-liveness/plots/no_hydras/keeping_hydras_quartiles.png) | ![img](../implementations/rfm-17-provider-record-liveness/plots/no_hydras/keeping_non_hydras_quartiles.png) |
+| ![img](../implementations/rfm17-provider-record-liveness/plots/no_hydras/keeping_hydras_quartiles.png) | ![img](../implementations/rfm17-provider-record-liveness/plots/no_hydras/keeping_non_hydras_quartiles.png) |
 | Figure 40. Number of hydra PR Holders keeping the records over the study | Figure 41. Number of non-hydra PR Holders keeping the records over the study |
 
 When taking a closer look at the hydra distribution (in Figure 40), we can see that there are some outliers that only keep the records for at most 10 hours. This phenomenon remains unknown, but it could be linked to a non-yet-covered case where we contact the hydra peer to store the records.
@@ -553,7 +553,7 @@ When taking a closer look at the hydra distribution (in Figure 40), we can see t
 
 Following the same track of the comparison between K=20 with hydras and the current k=20 without hydras, Figure 42 shows the comparison between the in-degree ratio's percentage of the _PR Holders_ when the hydra filter is on and off. In the figure, we can appreciate that both participations follow a similar distribution. However, by the median, we can distinguish a 5% higher in-degree ratio for the dataset that didn't blacklist hydras nodes. In both cases, the median never drops below 70%, which is achieved later on by the "with-hydras" dataset after ~32 hours.
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/no_hydras/in_degree_ratio_comparison.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/no_hydras/in_degree_ratio_comparison.png)
 
 Figure 42. In-degree ratio of PR Holders over the study
 
@@ -564,7 +564,7 @@ As a bonus chapter in the report, we have performed a _CID Hoarder_ run with the
 
 Over this long-run study, as shown in Figure 43, the activity of the DHT servers is relatively stable over 80+ hours. With a median established at 15 active _PR Holders_, there are just a few occasions where it drops to 14.
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/80_hours/active_total_pr_holders.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/80_hours/active_total_pr_holders.png)
 
 Figure 43. Total active PR Holders over 80 hours
 
@@ -576,7 +576,7 @@ In the _CID Hoarder_, when the connection attempt to a peer in the network retur
 
 The same happens with the In-Degree ratio of the initial _PR Holders_ over the 80+ hours of the run. The following graph shows the quartile distribution of that in-degree ratio, where we can observe that the median stays stable in the 15 peers. 
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/80_hours/in_degree_ratio.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/80_hours/in_degree_ratio.png)
 
 Figure 44. In-degree ratio of PR Holders over 80 hours
  
@@ -620,19 +620,19 @@ The appendix of this report includes some more-detailed graphs of the Active _PR
 
 | Total | Non-Hydras | Hydras |
 |----|----|----|
-| ![img](../implementations/rfm-17-provider-record-liveness/plots/k15/active_total_quartiles.png) | ![img](../implementations/rfm-17-provider-record-liveness/plots/k15/active_non_hydras_quartiles.png) | ![img](../implementations/rfm-17-provider-record-liveness/plots/k15/active_hydras_quartiles.png) |
+| ![img](../implementations/rfm17-provider-record-liveness/plots/k15/active_total_quartiles.png) | ![img](../implementations/rfm17-provider-record-liveness/plots/k15/active_non_hydras_quartiles.png) | ![img](../implementations/rfm17-provider-record-liveness/plots/k15/active_hydras_quartiles.png) |
 |  Figure 45. Active PR Holders over the study | Figure 46. Active non-hydra PR Holders over the study | Figure 47. Active hydra PR Holders over the study |
 
 **PR Holders keeping the records**
 
 | Total | Non-Hydras | Hydras |
 |----|----|----|
-| ![img](../implementations/rfm-17-provider-record-liveness/plots/k15/pr_keeping_total_quartiles.png)  | ![img](../implementations/rfm-17-provider-record-liveness/plots/k15/pr_keeping_non_hydras_quartiles.png) | ![img](../implementations/rfm-17-provider-record-liveness/plots/k15/pr_keeping_hydras_quartiles.png) |
+| ![img](../implementations/rfm17-provider-record-liveness/plots/k15/pr_keeping_total_quartiles.png)  | ![img](../implementations/rfm17-provider-record-liveness/plots/k15/pr_keeping_non_hydras_quartiles.png) | ![img](../implementations/rfm17-provider-record-liveness/plots/k15/pr_keeping_hydras_quartiles.png) |
 |  Figure 48. Total number of PR Holders keeping the records | Figure 49. Number of non-hydra PR Holders keeping the records | Figure 50. Number of hydra PR Holders keeping the records |
 
 **In-degree**
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/k15/in_degree_ratio.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/k15/in_degree_ratio.png)
 
 Figure 51. In-degree ratio of PR Holders over the study
 
@@ -644,19 +644,19 @@ Figure 51. In-degree ratio of PR Holders over the study
 
 | Total | Non-Hydras | Hydras | 
 |----|----|----|
-| ![img](../implementations/rfm-17-provider-record-liveness/plots/k25/active_total_quartiles.png) | ![img](../implementations/rfm-17-provider-record-liveness/plots/k25/active_non_hydras_quartiles.png) | ![img](../implementations/rfm-17-provider-record-liveness/plots/k25/active_hydras_quartiles.png) |
+| ![img](../implementations/rfm17-provider-record-liveness/plots/k25/active_total_quartiles.png) | ![img](../implementations/rfm17-provider-record-liveness/plots/k25/active_non_hydras_quartiles.png) | ![img](../implementations/rfm17-provider-record-liveness/plots/k25/active_hydras_quartiles.png) |
 |  Figure 52. Active PR Holders over the study | Figure 53. Active non-hydra PR Holders over the study  | Figure 54. Active hydra PR Holders over the study |
 
 **PR Holders keeping the records**
 
 | Total | Non-Hydras | Hydras |
 |----|----|----|
-| ![img](../implementations/rfm-17-provider-record-liveness/plots/k25/pr_keeping_total_quartiles.png)  | ![img](../implementations/rfm-17-provider-record-liveness/plots/k25/pr_keeping_non_hydras_quartiles.png) | ![img](../implementations/rfm-17-provider-record-liveness/plots/k25/pr_keeping_hydras_quartiles.png) |
+| ![img](../implementations/rfm17-provider-record-liveness/plots/k25/pr_keeping_total_quartiles.png)  | ![img](../implementations/rfm17-provider-record-liveness/plots/k25/pr_keeping_non_hydras_quartiles.png) | ![img](../implementations/rfm17-provider-record-liveness/plots/k25/pr_keeping_hydras_quartiles.png) |
 |  Figure 55. Total number of PR Holders keeping the records | Figure 56. Number of non-hydra PR Holders keeping the records | Figure 57. Number of hydra PR Holders keeping the records |
 
 **In-degree**
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/k25/in_degree_ratio.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/k25/in_degree_ratio.png)
 
 Figure 58. In-degree ratio of PR Holders over the study
 
@@ -666,18 +666,18 @@ Figure 58. In-degree ratio of PR Holders over the study
 
 | Total | Non-Hydras | Hydras | 
 |----|----|----|
-| ![img](../implementations/rfm-17-provider-record-liveness/plots/k40/active_total_quartiles.png) | ![img](../implementations/rfm-17-provider-record-liveness/plots/k40/active_non_hydras_quartiles.png) | ![img](../implementations/rfm-17-provider-record-liveness/plots/k40/active_hydras_quartiles.png) |
+| ![img](../implementations/rfm17-provider-record-liveness/plots/k40/active_total_quartiles.png) | ![img](../implementations/rfm17-provider-record-liveness/plots/k40/active_non_hydras_quartiles.png) | ![img](../implementations/rfm17-provider-record-liveness/plots/k40/active_hydras_quartiles.png) |
 |  Figure 59. Active PR Holders over the study | Figure 60. Active non-hydra PR Holders over the study  | Figure 61. Active hydra PR Holders over the study |
 
 **PR Holders keeping the records**
 
 | Total | Non-Hydras | Hydras | 
 |----|----|----|
-| ![img](../implementations/rfm-17-provider-record-liveness/plots/k40/pr_keeping_total_quartiles.png)  | ![img](../implementations/rfm-17-provider-record-liveness/plots/k40/pr_keeping_non_hydras_quartiles.png) | ![img](../implementations/rfm-17-provider-record-liveness/plots/k40/pr_keeping_hydras_quartiles.png) |
+| ![img](../implementations/rfm17-provider-record-liveness/plots/k40/pr_keeping_total_quartiles.png)  | ![img](../implementations/rfm17-provider-record-liveness/plots/k40/pr_keeping_non_hydras_quartiles.png) | ![img](../implementations/rfm17-provider-record-liveness/plots/k40/pr_keeping_hydras_quartiles.png) |
 |  Figure 62. Total number of PR Holders keeping the records | Figure 63. Number of non-hydra PR Holders keeping the records | Figure 64. Number of hydra PR Holders keeping the records |
 
 **In-degree**
 
-![img](../implementations/rfm-17-provider-record-liveness/plots/k40/in_degree_ratio.png)
+![img](../implementations/rfm17-provider-record-liveness/plots/k40/in_degree_ratio.png)
 
 Figure 65. In-degree ratio of PR Holders over the study
