@@ -2,23 +2,31 @@
 
 This page lists measurements that are useful to understand the dynamics and the current state of the live IPFS network. RFMs are categorized in priority order (i.e., **Current Priority** and **Next Priority**), according to current needs and funding opportunities.
 
-## Current Priority - Batch 1
+## Completed
+
+**[RFM 2 | Uptime and churn P2P network nodes](#rfm-2--uptime-and-churn-of-ipfs-network-nodes)**
+
+**[RFM 19 | DHT Routing Table Health](#rfm-19--dht-routing-table-health)**
+
+**[RFM 17 | Provider Record Liveness](#rfm-17--provider-record-liveness)**
+
+## Ongoing 
 
 **[RFM 3 | Location of IPFS end users and requested content](#_rd50td3ym8dy)**
+
+**[RFM 7 | Distribution of DHT lookup times and Breakdown of Content Routing Latency](#_mjvqjcvas5uh)**
+
+**[RFM 16 | Effectiveness of Bitswap Discovery Process](#rfm-16--effectiveness-of-bitswap-discovery-process)**
+
+**[RFM 15 | Decentralized NAT Hole-Punching Performance](#rfm-15--decentralized-nat-hole-punching-performance)**
+
+## Current Priority - Batch 1
 
 **[RFM 4 | IP address Churn (Roaming) & PeerID distribution for nodes in the IPFS Network](#_1mu1tfaw8au3)**
 
 **[RFM 6 | Mapping the AS-level topology of P2P networks](#_1xjatm7vfujn)**
 
-**[RFM 7 | Distribution of DHT lookup times and Breakdown of Content Routing Latency](#_mjvqjcvas5uh)**
-
 **[RFM 11 | Compare how distributed is IPFS compared to Web2](#_5jccmpwaow0)**
-
-**[RFM 15 | Decentralized NAT Hole-Punching Performance](#rfm-15--decentralized-nat-hole-punching-performance)**
-
-**[RFM 16 | Effectiveness of Bitswap Discovery Process](#rfm-16--effectiveness-of-bitswap-discovery-process)**
-
-**[RFM 17 | Provider Record Liveness](#rfm-17--provider-record-liveness)**
 
 **[RFM 18 | TTFB through different architecture components](#rfm-18--ttfb-through-different-architecture-components)**
 
@@ -42,11 +50,7 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 **[RFM 20 | Data volume stored on IPFS and file size distribution](#data-volume)**
 
-## Completed
-
-**[RFM 2 | Uptime and churn P2P network nodes](#rfm-2--uptime-and-churn-of-ipfs-network-nodes)**
-
-**[RFM 19 | DHT Routing Table Health](#rfm-19--dht-routing-table-health)**
+## Other
 
 **[Tooling/Other notes](#tooling)**
 
