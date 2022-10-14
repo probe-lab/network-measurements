@@ -6,9 +6,9 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 **[RFM 2 | Uptime and churn P2P network nodes](#rfm-2--uptime-and-churn-of-ipfs-network-nodes)**
 
-**[RFM 19 | DHT Routing Table Health](#rfm-19--dht-routing-table-health)**
-
 **[RFM 17 | Provider Record Liveness](#rfm-17--provider-record-liveness)**
+
+**[RFM 19 | DHT Routing Table Health](#rfm-19--dht-routing-table-health)**
 
 ## Ongoing 
 
@@ -16,9 +16,9 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 **[RFM 7 | Distribution of DHT lookup times and Breakdown of Content Routing Latency](#_mjvqjcvas5uh)**
 
-**[RFM 16 | Effectiveness of Bitswap Discovery Process](#rfm-16--effectiveness-of-bitswap-discovery-process)**
-
 **[RFM 15 | Decentralized NAT Hole-Punching Performance](#rfm-15--decentralized-nat-hole-punching-performance)**
+
+**[RFM 16 | Effectiveness of Bitswap Discovery Process](#rfm-16--effectiveness-of-bitswap-discovery-process)**
 
 ## Current Priority - Batch 1
 
