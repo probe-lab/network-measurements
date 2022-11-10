@@ -615,6 +615,34 @@ Additional context can be found [here](https://pl-strflt.notion.site/Provider-Re
 
 We have numbers to justify how often do provider records expire and have carried out experiments with alternative replication settings to justify new proposed settings.
 
+## RFM 17.1 | Sharing Porvider Records with Multiaddress
+
+* _Status:_ **complete**
+* _DRI/Team:_ [`@cortze`](https://github.com/cortze)
+* _Prerequisite(s):_ **NONE**
+* _Value:_ **Medium**
+* _Report:_ [`rfm17.1-.md`](./results/rfm17.1-.md)
+
+#### Proposal
+Achieving an appropriate content retrieval time for content in IPFS is key milestone to place Web3 as a real competition to centralized services. At the moment, in the process of retrieving content from the IPFS network, the user willing to retrieve some content first needs to find the content provider that hosts it. To do so with the `kubo` implementation, the interested client will try to retrieve the content itself using the Bitswap protocol to ask its immediate connected peers if they have the content of that CID. If this process fails, `kubo` falls back into the public DHT lookup process to find the Provider Records for the CID (the timeout for the Bitswap discovery is set to 1s). 
+
+However, If this process of walking the DHT looking for the PR succeeds, the `kubo` client will get the link between the CID and the PeerID that host the content. Thus, the user still has to make a second DHT lookup to find the latest public multiaddress of that specific peer. 
+
+Each of the public multiaddress for any peer in the network has assigned a Time To Live (TTL) duration, which can vary between `go-ipfs` or  `kubo` versions. It was originally set to 10 mins, but was incremented to 30 mins in the `go-libp2p@v0.22.0` update on August 18, 2022. In some occasions, if the user fetching the PRs inside the time window where the multiaddress of the provider didn't provide, the multiaddress of the provider will be share among the PRs so that the client can fetch directly the content from it.
+
+This RFM, which is an extension of the RFM17 for its close relation to the PR retrievability aspect, aims to measure whether the shared PRs for a given CID actually contain the multiaddress of the provider and for how long are they actually shared. The final intention of the RFM is to discuss whether we can avoid this second DHT lookup by increasing the TTL of the multiaddress linked to the PR to 24h (same as the expiration of the PRs). 
+
+#### Measurement Plan
+
+- Spin up a node that generates random CIDs and publishes provider records.
+- Periodically attempt to fetch the PR from the DHT, tracking whether they are retrievable and whether they are shared among the multiaddresses.
+
+#### Success Criteria
+
+- The measurements should show that the PRs are shared together with the PRs for the 10-30 mins after the publication of the CIDs (depending of the go-version the remote peers use)
+- If so, we could consider increasing the expiration-time of the PeerID-Multiaddress records matching the PR expiration time. 
+
+
 ## RFM 18 | TTFB through different architecture components
 
 * _Status:_ **ready**
