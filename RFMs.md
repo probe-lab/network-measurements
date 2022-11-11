@@ -621,10 +621,10 @@ We have numbers to justify how often do provider records expire and have carried
 * _DRI/Team:_ [`@cortze`](https://github.com/cortze)
 * _Prerequisite(s):_ **NONE**
 * _Value:_ **Medium**
-* _Report:_ [`rfm17.1-.md`](./results/rfm17.1-sharing-prs-with-multiaddresses.md)
+* _Report:_ [`rfm17.1-sharing-prs-with-multiaddresses.md`](./results/rfm17.1-sharing-prs-with-multiaddresses.md)
 
 #### Proposal
-Achieving an appropriate content retrieval time for content in IPFS is key milestone to place Web3 as a real competition to centralized services. At the moment, in the process of retrieving content from the IPFS network, the user willing to retrieve some content first needs to find the content provider that hosts it. To do so with the `kubo` implementation, the interested client will try to retrieve the content using the Bitswap protocol to ask its immediate connected peers if they have the content of that CID. If this process fails, `kubo` falls back into the public DHT lookup process to find the Provider Records for the CID (the timeout for the Bitswap discovery is set to 1s). 
+Achieving a fast content retrieval time for content in IPFS is a key milestone to place the platform as a face to face competitor to centralized services. At the moment, in the process of retrieving content from the IPFS network, the user willing to retrieve some content first needs to find the content provider that hosts it. To do so with the `kubo` implementation, the interested client will try to retrieve the content using the Bitswap protocol to ask its immediate connected peers if they have the content of that CID. If this process fails, `kubo` falls back into the public DHT lookup process to find the Provider Records for the CID (the timeout for the Bitswap discovery is currently set to [1s](https://github.com/protocol/network-measurements/blob/master/RFMs.md#rfm-16--effectiveness-of-bitswap-discovery-process)). 
 
 However, If this process of walking the DHT looking for the PR succeeds, the `kubo` client will get the link between the CID and the PeerID that host the content. Thus, the user still has to make a second DHT lookup to find the latest public multiaddress of that specific peer. 
 
