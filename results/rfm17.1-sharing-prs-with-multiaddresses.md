@@ -2,7 +2,7 @@
 # RFM 17.1 | Sharing Provider Records with Multiaddresses
 
 _DRI/Team_: [`Mikel Cortes-Goicoechea`](https://github.com/cortze) & [`Leonardo Bautista-Gomez`](https://github.com/leobago) ([`Barcelona Supercomputing Center`](https://bsc.es/))
-_Date_: 04/11/2022
+_Date_: 11/11/2022
 
 ## Table of contents
 
@@ -106,7 +106,7 @@ _Figure 4: Number or remote peers replying with the `PeerID` + `Multiaddress` co
 
 It is essential to notice that despite being able to show empirically what we already knew, the combo of `PeerID` + `Multiaddress` gets shared only over the TTL of the `Multiaddress` records, the result that we got from the DHT lookup process doesn't fully match the previous results. 
 
-We would expect to retrieve the combo over the current TTL of the multiaddress records. However, the fragmentation between IPFS nodes in the network makes some of the nodes only reply with the `PeerID` of the content's provider, and in the current [`libp2p/go-libp2p-kad-dht`](https://github.com/libp2p/go-libp2p-kad-dht) implementation, the reply of the lookup only gets the `AddrInfo` of the first PR that we get from that provider (code [here](https://github.com/libp2p/go-libp2p-kad-dht/blob/e33a4be6e9a3a8fb603d21126e2d8a42c5e37d1b/routing.go#L490)). This means that if at the 20 mins of publishing a content, some client wants to retrieve it through a DHT lookup, and the first peer that replies with only the `PeerID` of the provider, that client will have to perform a second DHT lookup to map the `PeerID` with the `Multiaddress`, independently of receiving a second reply with the entire combo 20ms later. Figure [5] displays the final result of the `dht.FindProviders()` method, distinguishing the content of the received PR.
+We would expect to retrieve the combo over the current TTL of the multiaddress records. However, the fragmentation between IPFS nodes in the network makes some of the nodes only reply with the `PeerID` of the content's provider, and in the current [`libp2p/go-libp2p-kad-dht`](https://github.com/libp2p/go-libp2p-kad-dht) implementation, the reply of the lookup only gets the `AddrInfo` of the first PR that we get from that provider (code [here](https://github.com/libp2p/go-libp2p-kad-dht/blob/e33a4be6e9a3a8fb603d21126e2d8a42c5e37d1b/routing.go#L490)). This means that if at the 20 mins of publishing a content, some client wants to retrieve it through a DHT lookup, and the first peer that replies with only the `PeerID` of the provider, that client will have to perform a second DHT lookup to map the `PeerID` with ntly of receiving a second reply with the entire combo 20ms later. Figure [5] displays the final result of the `dht.FindProviders()` method, distinguishing the content of the received PR.
 
 ![img](./../implementations/rmf17.1-sharing-prs-with-multiaddresses/plots/lookup_result.png)
 
