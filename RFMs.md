@@ -8,6 +8,8 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 **[RFM 17 | Provider Record Liveness](#rfm-17--provider-record-liveness)**
 
+**[RFM 17.1 | Sharing Provider Records with Multiaddress](#rfm-171--sharing-provider-records-with-multiaddress)**
+
 **[RFM 19 | DHT Routing Table Health](#rfm-19--dht-routing-table-health)**
 
 ## Ongoing 
