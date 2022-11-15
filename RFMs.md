@@ -626,11 +626,11 @@ We have numbers to justify how often do provider records expire and have carried
 * _Report:_ [`rfm17.1-sharing-prs-with-multiaddresses.md`](./results/rfm17.1-sharing-prs-with-multiaddresses.md)
 
 #### Proposal
-Achieving a fast content retrieval time for content in IPFS is a key milestone to place the platform as a face to face competitor to centralized services. At the moment, in the process of retrieving content from the IPFS network, the user willing to retrieve some content first needs to find the content provider that hosts it. To do so with the `kubo` implementation, the interested client will try to retrieve the content using the Bitswap protocol to ask its immediate connected peers if they have the content of that CID. If this process fails, `kubo` falls back into the public DHT lookup process to find the Provider Records for the CID (the timeout for the Bitswap discovery is currently set to [1s](https://github.com/protocol/network-measurements/blob/master/RFMs.md#rfm-16--effectiveness-of-bitswap-discovery-process)). 
+Achieving fast content retrieval time in IPFS is a key milestone in order to place the platform as a face to face competitor to centralized services. At the moment, in the process of retrieving content from the IPFS network, the user first needs to find the content provider that hosts it. To do so with the `kubo` implementation, the interested client will try to retrieve the content using the Bitswap protocol and ask its immediately connected peers if they have the content of that CID. If this process fails, `kubo` falls back to the public DHT lookup process to find the Provider Records for the CID (the timeout for the Bitswap discovery is currently set to [1s](https://github.com/protocol/network-measurements/blob/master/RFMs.md#rfm-16--effectiveness-of-bitswap-discovery-process)). 
 
 However, If this process of walking the DHT looking for the PR succeeds, the `kubo` client will get the link between the CID and the PeerID that host the content. Thus, the user still has to make a second DHT lookup to find the latest public multiaddress of that specific peer. 
 
-Each public multiaddress for any peer in the network has assigned a Time To Live (TTL) duration, which can vary between `go-ipfs` or  `kubo` versions. It was initially set to 10 mins but was incremented to 30 mins in the `go-libp2p@v0.22.0` update on August 18, 2022. In some occasions, if the user fetches the PRs inside the time window where the multiaddress of the provider didn't expire, the provider's multiaddress will be shared among the PRs so that the client can fetch the content directly from it.
+Each public multiaddress for any peer in the network has an allocated Time To Live (TTL) duration, which can vary between `go-ipfs` or `kubo` versions. It was initially set to 10 mins but was incremented to 30 mins in the `go-libp2p@v0.22.0` update on August 18, 2022. In some occasions, if the user fetches the PRs inside the time window where the multiaddress of the provider hasn't yet expired, the provider's multiaddress will be shared among the PRs so that the client can fetch the content directly from it.
 
 This RFM, which is an extension of the RFM17 for its close relation to the PR retrievability aspect, aims to measure whether the shared PRs for a given CID actually contain the multiaddress of the provider and for how long they are shared. The final intention of the RFM is to discuss whether we can avoid this second DHT lookup by increasing the TTL of the multiaddress linked to the PR to 24h (same as the expiration of the PRs). 
 
@@ -642,7 +642,7 @@ This RFM, which is an extension of the RFM17 for its close relation to the PR re
 #### Success Criteria
 
 - The measurements should show that the PRs are shared together with the PRs for 10-30 mins after the publication of the CIDs (depending on the go-version the remote peers use)
-- If so, consider increasing the expiration time of the PeerID-Multiaddress records matching the PR expiration time. 
+- If so, consider increasing the expiration time of the PeerID-Multiaddress records to match the PR expiration time. 
 
 ## RFM 18 | TTFB through different architecture components
 
