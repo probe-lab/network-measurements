@@ -632,7 +632,7 @@ However, If this process of walking the DHT looking for the PR succeeds, the `ku
 
 Each public multiaddress for any peer in the network has an allocated Time To Live (TTL) duration, which can vary between `go-ipfs` or `kubo` versions. It was initially set to 10 mins but was incremented to 30 mins in the `go-libp2p@v0.22.0` update on August 18, 2022. In some occasions, if the user fetches the PRs inside the time window where the multiaddress of the provider hasn't yet expired, the provider's multiaddress will be shared among the PRs so that the client can fetch the content directly from it.
 
-This RFM, which is an extension of the RFM17 for its close relation to the PR retrievability aspect, aims to measure whether the shared PRs for a given CID actually contain the multiaddress of the provider and for how long they are shared. The final intention of the RFM is to discuss whether we can avoid this second DHT lookup by increasing the TTL of the multiaddress linked to the PR to 24h (same as the expiration of the PRs). 
+This RFM, which is an extension of the RFM17 for its close relation to the PR retrievability aspect, aims to measure whether the shared PRs for a given CID actually contain the multiaddress of the provider and for how long they are shared. The final intention of the RFM is to discuss whether we can avoid this second DHT lookup by increasing the TTL of the multiaddress to match the [expiration time](https://github.com/libp2p/specs/blob/9464d50f4e08337d0be4dc15a72761b92215747c/kad-dht/README.md#content-provider-advertisement-and-discoveryhttps://github.com/libp2p/specs/tree/master/kad-dht#content-provider-advertisement-and-discovery) of the PRs. 
 
 #### Measurement Plan
 
@@ -641,7 +641,7 @@ This RFM, which is an extension of the RFM17 for its close relation to the PR re
 
 #### Success Criteria
 
-- The measurements should show that the PRs are shared together with the PRs for 10-30 mins after the publication of the CIDs (depending on the go-version the remote peers use)
+- The measurements should show that the multiaddresses are shared together with the PRs for 10-30 mins after the publication of the CIDs (depending on the go-version the remote peers use)
 - If so, consider increasing the expiration time of the PeerID-Multiaddress records to match the PR expiration time. 
 
 ## RFM 18 | TTFB through different architecture components
