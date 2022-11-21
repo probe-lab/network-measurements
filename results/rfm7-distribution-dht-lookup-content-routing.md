@@ -429,7 +429,7 @@ There is also an uneven distribution of first providers for all regions (althoug
 
 5.  Percent hydras as first referrers is also not a strong differentiator of performance in the `GETTING_CLOSEST_PEERS` phase for each region.
 
-![Percent hydras first referers by region](../implementations/rfm7-distribution-dht-lookup-content-routing/plots/percent_hydras_first_referrer_by_region.png)
+![Percent hydras first referers by region](../implementations/rfm7-distribution-dht-lookup-content-routing/plots/percent_hydras_first_referer_by_region.png)
 
 6.  Multi provider retrievals tend to perform the same as single provider retrievals during the `GETTING_CLOSEST_PEERS` phase.
 
