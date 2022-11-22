@@ -637,7 +637,7 @@ This RFM, which is an extension of the RFM17 for its close relation to the PR re
 #### Measurement Plan
 
 - Spin up a node that generates random CIDs and publishes provider records.
-- Periodically attempt to fetch the PR from the DHT, tracking whether they are retrievable and whether they are shared among the multiaddresses.
+- Periodically attempt to fetch the PR from the DHT, tracking whether they are retrievable and whether the multiaddresses of all content providers are included in the PR.
 
 #### Success Criteria
 
