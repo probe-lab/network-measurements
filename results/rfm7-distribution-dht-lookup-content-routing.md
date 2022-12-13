@@ -112,6 +112,8 @@ Runs with a main player type of both `PUBLISHER` and `RETRIEVER` were invoked fo
 
 #### Publish Age
 
+Publish age for each retrieval was calculated as the time that elapsed from first publish finish to the start of retrieval.
+
 To gain a diverse set of publish age times, the experimental run was split up into two different parts.
 
 The first part involved the publisher(s) sharing content to the network.
@@ -119,6 +121,10 @@ The first part involved the publisher(s) sharing content to the network.
 The second part involved retrievers subsequently downloading the content from the first part.
 
 Since only a single run should be performed at any given time, the second part was delayed by allowing other runs to occur first.
+
+In the figure below, TOTAL retrieval durations (the time it took for the `CAT` to complete) were plotted against publish age.
+
+The publish age runs were executed against a unique file size (51.21 KB) so that other comparisons could be made while excluding retrievals with a large publish delay.
 
 As seen in the figure below, the results used with publish age had an immediate spike followed by an uneven distribution between 2000-12000 seconds.
 
@@ -138,11 +144,25 @@ As a result of this, each fresh install of 'Kubo' can be thought of as a new (ne
 
 As in prior work, Kubo (with patches for more logging) logs were parsed for events related to benchmarking.
 
+Since the main interest was in finding bottlenecks, each retrieval and publish event was broken down into discrete phases where each phase occured before the following phase begun.
+
+The following is a description of all phases during the retrieval process.
+
+| Phase Name            | Description                                                       |
+|-----------------------|-------------------------------------------------------------------|
+| TOTAL                 | The total time it takes for the 'CAT' request to complete.        |
+| INITIATED             | Asking known neighbors if they have the content over bitswap.     |
+| GETTING CLOSEST PEERS | Walk the DHT until at least one content provider is found.        |
+| DIALING               | Start opening a connection with at least one content provider.    |
+| FETCHING              | Start downloading the content from at least one content provider. |
+
+The mechanism behind each phase could still be happening concurrently to workers in the new phase being kicked off.
+
+For example, the client might still be walking the DHT looking for other content providers after the `GETTING CLOSEST PEERS` phase is considered complete and the `DIALING` phase has begun.
+
 The following provides more details on phase calculations for [retrieval](https://github.com/gitaaron/ipfs-lookup-measurement/blob/main/analysis/retrieval-events.md) and [publication](https://github.com/gitaaron/ipfs-lookup-measurement/blob/main/analysis/publish-events.md) events.
 
-The lifetime of phases can be overlapping.  As in prior work, durations of phases were calculated based on when the next phase was kicked off.  For example, the `GETTING_CLOSEST_PEERS` duration was calculated based on when the phase started to when the `DIALING` phase started (not when the DHT walk ended).
-
-Each run contains a unique CID so that publish and retrieval events could be combined to generate a publish age metric (based on time from first publish finish to time of the start of retrieval).
+Each run contains a unique CID so that publish and retrieval events could be combined to generate a publish age metric.
 
 In addition to the Kubo logs, agent logs were also parsed for getting agent health, uptime and retrieval end times.
 
@@ -198,7 +218,7 @@ In order to normalise the metrics over different file sizes, "average duration" 
 
 Certain graphs also filter on "fast" durations.  Since the standard deviation for certain phases could be greater than the mean, "fast" was considered to be anything under the mean.
 
-The following tables include what would be considered "slow" for each phase and file size.
+The following tables include what would be considered "slow" for each phase and file size averaged over all regions.
 
 **File Size: 52429 B**
 
@@ -281,13 +301,15 @@ Further, file sizes can still be used to see if other trends occur more dramatic
 
 There are many reasons a retrieval may end in a failure to resolve.
 
-A failure could have occurred because there was a bug in the client or protocol during the retrieval process, because of agent or network load, or because there was an error in the experimental setup.
+The most probable cause for the error was in experimental setup (eg/ missing logs for events that occured).
 
-For this reason, failures were ignored for all calculations in this study.
+However (although unlikely), errors could have also been a result of a bug in the client or protocol, agent load, or network instabilities.
+
+Since the cause of failure is unknown, failures were ignored for all calculations in this study.
 
 Filtering out failures could have skewed results (if, for example, the failure occurred due to a timeout that would have succeeded if waiting a little longer) and also had a fairly large impact on sample size.
 
-Failure rates are included in this report since they could provide some insight.
+Failure rates are, however, included in this report for completeness purposes since they could provide some insight.
 
 ## Results
 
@@ -349,7 +371,7 @@ You can open the link above in an IPFS compatible browser or using a gateway (su
 ![Fail success rate by region](../implementations/rfm7-distribution-dht-lookup-content-routing/plots/fail_success_rate_by_region.png)
 
 
-5.  The average number of hops to the first provider[HTFP] over every region is 1.74.  HTFP is not a strong differentiator of performance in the `GETTING_CLOSEST_PEERS` phase for each region.
+5.  The average number of hops to the first provider[HTFP] over every region is 1.74.  HTFP is not a strong differentiator of performance in the `GETTING_CLOSEST_PEERS` phase for each region.  For example, the `eu_central_1` region has the highest number of average hops and is the best performing in the `GETTING_CLOSEST_PEERS` phase.
 
 ![Average hops to first provider by region](../implementations/rfm7-distribution-dht-lookup-content-routing/plots/avg_hops_to_fp_by_region.png)
 
@@ -435,8 +457,6 @@ Lastly, there are most likely several different causes for poor performance and 
 
 The fact that performance degrades with agent uptime points towards locality, however, if causes in poor performance were only local then there would be a strong connection in duration between each phase.
 
-Also, if causes in poor performance were only local then it would be expected that the larger AWS instances (af-south-1 and me-south-1) would also consistently be the best performing (which is not the case).
-
 ## Next Steps
 
 A lot of environmental variants were explored in this study.
@@ -464,6 +484,8 @@ Nonetheless, there are still many simple independent improvements that could be 
     * investigate if there is a correlation between agent cpu/memory usage and agent uptime
 
     * profile memory usage (perhaps using an instrumentation tool like prometheus) for both the IPFS and agent tasks
+
+    * include metrics from the resource manager to see if any connections can be made between limits in open connections and performance
 
   * investigate failures to see if they are happening due to error in experiment or some common problems in the retrieval process
 
