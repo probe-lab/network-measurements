@@ -15,7 +15,7 @@ Date: 2022-12-13
     - [Running measurements](#running-measurements)
     - [Technical Limitations](#technical-limitations)
 3. [Results and Analysis](#results-and-analysis)
-4. [Future Work](#future-work)
+4. [Improvement suggestions](#improvement-suggestions)
 5. [Conclusion](#conclusion)
 
 ## Motivation
@@ -163,7 +163,7 @@ The observed success rate over time appears to be roughly constant. We could hav
 
 ![connected-peers.png](../implementations/rfm16-bitswap-discovery-effectiveness/plots/connected-peers.png)
 
-The number of open connections over time seems roughly constant too, which is expected as libp2p is configured to keep around 1000 open connections.
+The number of open connections over time seems roughly constant too, which is expected as libp2p is configured to keep around 1000 open connections. Note that the number of open connections has been exported using the libp2p `host.Network().Peers()` method. 
 
 ### Success rate vs number of open connection
 
@@ -177,7 +177,7 @@ The following plot displays the time distribution of successful bitswap requests
 
 ![success-rate-15s.png](../implementations/rfm16-bitswap-discovery-effectiveness/plots/success-rate-15s.png)
 
-We see that an overwhelming majority of requests succeed within the first second. The following plot zooms in the first second of the bitswap requests time distribution
+We see that an overwhelming majority of requests succeed within the first second. The following plot zooms in the first second of the bitswap requests time distribution.
 
 ![success-rate-1s.png](../implementations/rfm16-bitswap-discovery-effectiveness/plots/success-rate-1s.png)
 
@@ -202,6 +202,33 @@ Again, we observe that the curve is very steep before 215 milliseconds.
 | < 1 s | 95.20% |
 | < 5 s | 98.54% |
 | < 15s | 100.0% |
+
+### Messages count
+
+The following statistics are the average numbers over all successful Bitswap requests.
+
+| | Count of messages per Bitswap request |
+|---|---|
+| Total | 1719.98 |
+| Sent | 1714.11 |
+| Received | 5.87 |
+
+| | Number of solicited peers per Bitswap request |
+|---|---|
+| Count | 853.32 |
+
+| | Number of exchange messages per message type per Bitswap request |
+|---|---|
+| WANT_HAVE | 856.07 |
+| WANT_BLOCK | 8.30 |
+| CANCEL | 849.74 |
+| HAVE | 3.95 |
+| DONT_HAVE | 0.18 |
+| BLOCK | 1.74 |
+
+We can clearly see that Bitswap has a large content discovery success rate because it simply broadcast its requests to its directly connected peers. Each Bitswap request first broadcast a `WANT_HAVE` message to more than 800 directly connected peers. Once the block is fetched, the node must send `CANCEL_WANT_BLOCK` messages to all peers it sent the `WANT_HAVE` request, which makes a total of more than 1700 messages per Bitswap request.
+
+In comparison, the DHT roughly find content in 3-5 hops and has a concurrency parameter set to 3, meaning that it is expected to send at most ~15 messages. However, the average latency of finding content through the DHT is much higher than using a Bitswap broadcast.
 
 ### Gateway CIDs comparison
 
@@ -237,6 +264,6 @@ We observe a similar distribution for the Bitswap discovery time. Confirming tha
 | < 15s | 100.0% |
 
 
-## Future work
+## Improvement suggestions
 
 ## Conclusion
