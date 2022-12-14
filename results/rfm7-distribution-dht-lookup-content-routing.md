@@ -396,7 +396,7 @@ You can open the link above in an IPFS compatible browser or using a gateway (su
 
 ![Single multi provider fetching durations by file size](../implementations/rfm7-distribution-dht-lookup-content-routing/plots/single_multi_provider_FETCHING_durations_by_file_size.png)
 
-10.  File size did not effect performance in the `GETTING_CLOSEST_PEERS` phase between 0.05 and 0.5 Mb.  However, there was a noteworthy decrease in success rate between 0.5 and 5.0 MB size files.
+10.  File size did not affect performance in the `GETTING_CLOSEST_PEERS` phase between 0.05 and 0.5 Mb.  However, there was a noteworthy decrease in success rate between 0.5 and 5.0 MB size files.
 
 ![Percent slow for each phase by file size](../implementations/rfm7-distribution-dht-lookup-content-routing/plots/file_size_phase_percent_slow.png)
 
