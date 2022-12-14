@@ -312,13 +312,6 @@ Another possibility is to use Contexts in Content Routing. A CID could be bundle
 
 ## Conclusion
 
-- Bitswap has shown itself as very efficient (low latency, but high network load).
-- CIDs bias
-- Success rate explanation with beefy content providers
-- Improvement suggestions (packet numbers, DHT etc.)
+This study showed Bitswap to be a fast and accurate mean of finding content in the IPFS network, with an discovery success rate of 98%, and 75% of the content was fetched within 200 ms. However, we measured that Bitswap litterally floods the network by solicitating 853 peers per request on average, sending a total of 1714 messages. The high success rate can be explained by the fact that most content is served by a very small number of peers. 10 peers roughly serve 60% of the content requested in our study. Over time nodes will eventually discover these super providers, and hence requesting content to these peers is likely to result in a successful fetch. We cannot be certain that the list of CIDs we used for our measurements is totally representative of the IPFS traffic, but we double checked by taking 2 different sources of CIDs, and the results were similar.
 
-@yiannisbot suggestion:
-Some things we might want to consider adding as conclusions, given the very high success rate observed:
-- how confident are we that our sample CIDs used for these experiments are not biased towards a few content providers. I’m not saying our sample is biased, I’m just saying that we should add a note.
-- explain why the success rate is so high. I guess a good explanation is to talk about big content providers and the fact that most clients end up being connected to them. Therefore, they always ask them and because most content is served by them, the success rate is so high.
-
+In order to accelerate Bitswap, we suggest to remove the `ProviderSearchDelay` and start the DHT lookup concurrently to the Bitswap broadcast. The network overhead is minimal (~0.258%), and the tail latency deacreases from 1 second. If removing the `ProviderSearchDelay` isn't an option, decreasing its value would help. Limiting the query broadcasts from Bitswap would help reduce the traffic in the network. A significant improvement would be to carefully select the peers from which we request content, rather than flooding the network with a broadcast.
