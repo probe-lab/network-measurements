@@ -213,7 +213,7 @@ The Bitswap discovery and fetch under 1 second success rate is 93.65%.
 
 ### Gateway CIDs comparison
 
-In order to compare double check whether the CIDs obtained by sniffing Bitswap traffic are representative to the traffic in the IPFS network, we have done the same measurements with a list of CIDs originating from the IPFS Gateways logs. The experiment started on 2022-12-05 at 15:23:43 GMT and ran for 1 hour and 45 minutes. We will only include relevant results.
+In order to double check whether the CIDs obtained by sniffing Bitswap traffic are representative to the traffic in the IPFS network, we have done the same measurements with a list of CIDs originating from the IPFS Gateways logs. The experiment started on 2022-12-05 at 15:23:43 GMT and ran for 1 hour and 45 minutes. We will only include relevant results.
 
 | Statistics | |
 | --- | --- |
