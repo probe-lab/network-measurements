@@ -71,7 +71,7 @@ If the Bitswap client isn’t able to discover the content associated with the C
 
 ### Logs
 
-Our measurement tool generates two distinct log files. The first log files logs the following information for each IPFS request:
+Our measurement tool generates two distinct log files. The first log file logs the following information for each IPFS request:
 - The timestamp corresponding to the time the request was made.
 - The requested CID.
 - The number of directly connected peers at the time the request returns.
