@@ -119,7 +119,7 @@ As described in [DHT lookup](#dht-lookup), each Bitswap request is given a categ
 
 The overall success rate is defined as the number of queried CIDs found by Bitswap within 15 seconds divided by the number of queried CIDs available in the network. This value was measured at 98.37% for 50893 requests of available CIDs, which is a lot larger than we expected. We will explain this number later in the report using additional data and plots. 
 
-It is also notable that the available content rate, defined as the number of available requested CIDs in the network divided by the total number of requests, is relatively low. This means that roughly 30% of the CIDs we requested weren't found by Bitswap nor the DHT. This number can be explained because the Bitswap traffic used to generate the list of requested CIDs was sniffed back in August 2022, and the measurements were run in November 2022. This shows content churn over time.
+It is also notable that the available content rate, defined as the number of available requested CIDs in the network divided by the total number of requests, is relatively low. This means that roughly 30% of the CIDs we requested were found neither by Bitswap nor by the DHT. This number can be explained because the Bitswap traffic used to generate the list of requested CIDs was sniffed back in August 2022, and the measurements were run in November 2022. This shows content churn over time, i.e., the fact that CIDs were published in November, but were not republished later.
 
 ### Top 10 block providers
 
