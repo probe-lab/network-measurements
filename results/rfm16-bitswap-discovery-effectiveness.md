@@ -7,10 +7,11 @@ Date: 2022-12-15
 ## Table of contents
 
 1. [Motivation](#motivation)
-2. [Measurement Methodology](#measurement-methodology)
-3. [Results and Analysis](#results-and-analysis)
-4. [Improvement suggestions](#improvement-suggestions)
-5. [Conclusion](#conclusion)
+2. [Summary of Results](#summary-of-results)
+3. [Measurement Methodology](#measurement-methodology)
+4. [Results and Analysis](#results-and-analysis)
+5. [Improvement suggestions](#improvement-suggestions)
+6. [Conclusion](#conclusion)
 
 <!---
 2. [Measurement Methodology](#measurement-methodology)
@@ -33,6 +34,10 @@ This study aims at measuring the effectiveness of the Bitswap discovery process,
 
 Assuming that content in the IPFS network is uniformly distributed among the ~20’000 peers participating in the DHT, and given that each node broadcasts requests to its ~1’000 directly connected peers, we would expect a success rate of approximately $\frac{1'000}{20'000} = 5\\%$.
 
+## Summary of Results
+
+We measured that 98% of all requested content was successfully discovered by Bitswap without the help of the DHT. Among the successful requests, 75% of them have a discovery and fetching latency below 200 milliseconds. It is important noting that the content of 50'062 requests was provided by 723 distinct peers, and the top 10 providers served roughly 60% of all requests. On average 1714 messages were sent to 856 distinct remote peers for every Bitswap request.
+
 ## Measurement Methodology
 
 The Bitswap measurements mainly consist in requesting various CIDs to `kubo` and to monitor whether the Bitswap requests succeed without a DHT walk, recording the time distribution of successful Bitswap requests, and log incoming and outgoing Bitswap packets. In order to get this information, we had to modify both `kubo` and `go-bitswap` implementations.
@@ -49,7 +54,7 @@ The second source of CIDs is the logs from the IPFS Gateways gathered using [Thu
 
 Normally, the `ipfs get <CID>` command will first resolve the provided CID, and in the case where this CID has children, the children CIDs will be resolved too before returning. We want to avoid this behavior, as it will give a bias to the measurements. For instance, in the case where the root CID of a large file is requested, if all blocks of the file are requested through Bitswap we would certainly measure a very good performance, as all blocks are most likely stored on the same content provider. Hence, finding the first block can be considered to be content discovery, but fetching all the blocks from the content providers don’t provide a good metric on content discovery.
 
-As there is no easy way to identify which CIDs from our sample are root CIDs and which are not, we slightly modified `kubo` to prevent it to follow up after a root CID request. The implementation can be found TODO:
+As there is no easy way to identify which CIDs from our sample are root CIDs and which are not, we slightly modified `kubo` to prevent it to follow up after a root CID request. The implementation can be found in this [folder](../implementations/rfm16-bitswap-discovery-effectiveness/).
 
 ### go-bitswap
 
@@ -63,9 +68,9 @@ After a timeout value, set to `15` seconds, we interrupt the Bitswap request, si
 
 #### DHT lookup
 
-Once the timeout is reached and the Bitswap request is cancelled, we need to try to fetch the file. If the file wasn’t found by Bitswap and isn’t discoverable by the DHT, then it is probably not available anymore in the network. This case shouldn’t be considered as a failure from Bitswap. A Bitswap request is considered to be a failure only if Bitswap didn’t manage to discover the content in 15 seconds, and at the same time the DHT walk returned at least one provider from which the content could actually be fetched.
+Once the timeout is reached and the Bitswap request is cancelled, we need to try to fetch the file. A DHT walk will start after the timeout. All providers returned by the DHT lookup will be queried by the [Selfish Bitswap Client](https://github.com/guillaumemichel/go-selfish-bitswap-client). If the file wasn’t found by Bitswap and isn’t discoverable by the DHT, then it is probably not available anymore in the network. This case shouldn’t be considered as a failure from Bitswap. A Bitswap request is considered to be a failure only if Bitswap didn’t manage to discover the content in 15 seconds, and at the same time the DHT walk returned at least one provider from which the content could actually be fetched.
 
-Therefore, a DHT walk will start after the timeout. All providers returned by the DHT lookup will be queried by the [Selfish Bitswap Client](https://github.com/guillaumemichel/go-selfish-bitswap-client). The Selfish Bitswap Client is a simple Bitswap client that will request a CID to a specific PeerID using the Bitswap protocol. It doesn't implement Bitswap sessions nor peer manager, like the standard Bitswap client. It doesn't contain a Bitswap server, and thus won't serve blocks.
+The Selfish Bitswap Client is a simple Bitswap client that will request a CID to a specific PeerID using the Bitswap protocol. It doesn't implement Bitswap sessions nor peer manager, like the standard Bitswap client. It doesn't contain a Bitswap server, and thus won't serve blocks. The only purpose of the Selfish Bitswap Client is to validate that the content is indeed available at the host indicated by the DHT lookup.
 
 If the Bitswap client isn’t able to discover the content associated with the CID within 15 seconds, and the content was later fetched by the selfish Bitswap client after the DHT walk, the request is considered as a `FAILURE`. If the DHT walk doesn’t yield any providers for the content, the request is considered as `NO_PROVS`, and if a provider record is found but the file couldn’t be fetched by the selfish Bitswap client, the request is categorized as `FETCH_FAILED`.
 
@@ -77,7 +82,7 @@ Our measurement tool generates two distinct log files. The first log file logs t
 - The number of directly connected peers at the time the request returns.
 - `NO_PROV` OR `FETCH_FAILED` to notify that the file wasn't fetched OR the duration of the successful request in milliseconds and the block provider OR only the block provider if the block was discovered using the DHT.
 
-The second log file contains one entry for each outgoing and incoming messages:
+The second log file contains one entry for each outgoing and incoming message:
 - The timestamp of the message
 - Message type, among the following: `WANT_HAVE`, `HAVE`, `DONT_HAVE`, `WANT_BLOCK`, `BLOCK`, `CANCEL_WANT_BLOCK`.
 - The CID associated with the message.
@@ -107,7 +112,7 @@ As described in [DHT lookup](#dht-lookup), each Bitswap request is given a categ
 | Statistics | |
 | --- | --- |
 | Overall success rate | 98.37% (within 15 seconds) |
-| Available content rate | 70.91% |
+| Content availability rate | 70.91% |
 
 | Request Categorization | Count |
 |---|---|
@@ -119,7 +124,7 @@ As described in [DHT lookup](#dht-lookup), each Bitswap request is given a categ
 
 The overall success rate is defined as the number of queried CIDs found by Bitswap within 15 seconds divided by the number of queried CIDs available in the network. This value was measured at 98.37% for 50893 requests of available CIDs, which is a lot larger than we expected. We will explain this number later in the report using additional data and plots. 
 
-It is also notable that the available content rate, defined as the number of available requested CIDs in the network divided by the total number of requests, is relatively low. This means that roughly 30% of the CIDs we requested were found neither by Bitswap nor by the DHT. This number can be explained because the Bitswap traffic used to generate the list of requested CIDs was sniffed back in August 2022, and the measurements were run in November 2022. This shows content churn over time, i.e., the fact that CIDs were published in November, but were not republished later.
+It is also notable that the content availability rate, defined as the number of available requested CIDs in the network divided by the total number of requests, is relatively low. This means that roughly 30% of the CIDs we requested were found neither by Bitswap nor by the DHT. This number can be explained because the Bitswap traffic used to generate the list of requested CIDs was sniffed back in August 2022, and the measurements were run in November 2022. This shows content churn over time, i.e., the fact that CIDs were published in November, but were not republished later.
 
 ### Top 10 block providers
 
@@ -162,7 +167,7 @@ Given that the public DHT contains approximately 15'000 hosts at the time of wri
 
 ![success-rate-over-time-experiment_20221205.png](../implementations/rfm16-bitswap-discovery-effectiveness/plots/success-rate-over-time-experiment_20221205.png)
 
-The observed success rate over time appears to be roughly constant. We would expect to see an increase in the success rate over time, as the IPFS node would have failed some requests, made DHT lookups, learned about new providers and kept them in its directly connected peers.
+The observed success rate over time appears to be roughly constant. We would expect to see an increase in the success rate over time. As the IPFS node fails some requests, it uses DHT lookups to discover new peers, until it knows all major content providers. This convergence probably happens in the first minutes or even seconds after the node joins the network.
 
 ### Number of open connections over time
 
@@ -218,7 +223,7 @@ In order to double check whether the CIDs obtained by sniffing Bitswap traffic a
 | Statistics | |
 | --- | --- |
 | Overall success rate | 99.83% (within 15 seconds) |
-| Available content rate | 95.64% |
+| Content availability rate | 95.64% |
 
 | Request Categorization | Count |
 |---|---|
@@ -228,7 +233,7 @@ In order to double check whether the CIDs obtained by sniffing Bitswap traffic a
 | NO_PROV | 1134 |
 | FETCH_FAILED | 280 |
 
-We observed a larger overall success rate (99.83% vs 98.37% for the first experiment). We also observe that the ratio of `FETCH_FAILED` is more important in the second experiment, which could explain why the success rate is higher. Maybe the content was available, but the Selfish Bitswap Client failed to retrieve it, which boosted the success rate. The available content rate is also much higher (95.64% vs 70.91% for the first experiment). This can be explained because the CIDs for the Gateway experiment were collected a few days before the experiments. The CIDs collected by sniffing Bitswap were collected multiple months before running the experiment.
+We observed a larger overall success rate (99.83% vs 98.37% for the first experiment). We also observe that the ratio of `FETCH_FAILED` is more important in the second experiment, which could explain why the success rate is higher. Maybe the content was available, but the Selfish Bitswap Client failed to retrieve it, which boosted the success rate. The content availability rate is also much higher (95.64% vs 70.91% for the first experiment). This can be explained because the CIDs for the Gateway experiment were collected a few days before the experiments. The CIDs collected by sniffing Bitswap were collected multiple months before running the experiment.
 
 ![success-rate-1s-gatewaycids_10_20221206.png](../implementations/rfm16-bitswap-discovery-effectiveness/plots/success-rate-1s-gatewaycids_10_20221206.png)
 
@@ -280,21 +285,43 @@ Modifying the value of `ProviderSearchDelay` seems to have a limited global impa
 ### Removing the `ProviderSearchDelay`
 From our measurements, we observed that Bitswap content discovery is very efficient, however, every Bitswap request on average generates more than 1700 messages, which is substential. For specific content that isn't found by Bitswap discovery 1%-2% of the observed traffic, the DHT lookup for this content is currently delayed for 1 second, a significant overhead. From the results of this study, we propose to set the `ProviderSearchDelay` to `0` for standard `kubo` nodes, or in other words, to start the DHT lookup concurrently with the Bitswap discovery process.
 
-Starting the DHT walk concurrently to the Bitswap request would imply initially sending $\\alpha=3$ additional messages. If we get the block from Bitswap before we hear back from the DHT, the DHT walk is aborted, so the overhead is limited to 3 messages. In the case we hear back from the DHT before getting a block from Bitswap, the DHT walk continues, one additional message is sent to the DHT for each response we get from the DHT. Note that the number of inflight DHT requests is limited to 3. Therefore, we expect between 3 and 6 additional messages, in the case the Bitswap request is successful, which represents an overhead of $\frac{4.5}{1720}=0.262\\%$. In the case the Bitswap request doesn't succeed in the first second, no additional messages are sent and the node doesn't wait one full second in vain.
+Starting the DHT walk concurrently to the Bitswap request would imply initially sending $\\alpha=3$ additional messages. If we get the block from Bitswap before we hear back from the DHT, the DHT walk is aborted, so the overhead is limited to 3 messages. In the case we hear back from the DHT before getting a block from Bitswap, the DHT walk continues, a new connection to a DHT server peer is openend and a DHT request is sent for each response we get from the DHT. Note that the number of inflight DHT requests is limited to 3. In the case the Bitswap request doesn't succeed in the first second, no additional messages are sent and the node doesn't wait one full second in vain.
 
-We expect to gain 1 second on 1%-2% of the requests, which corresponds to an average gain of 10-20 ms for each request, at the cost of a network overhead of $0.262\\%\times98.5\\%=0.258\\%$, equal to ~4.5 additional messages. The tail latency is expected to be lowered from one second.
+The network overhead depends on how quickly Bitswap resolves the request. Assuming that the average RTT between the requester and DHT server nodes is 100 ms.
+
+The normalized column contains an upperbound of the number of additional DHT messages multiplied by the probability that the Bitswap fetch latency is the one from the first column for a Bitswap request.
+
+| Bitswap fetch latency | Number of additional messages | Normalized |
+|---|---|---|
+| 100 ms | 3 | 1.15 |
+| 200 ms | 6 | 2.19 |
+| 500 ms | 15 | 1.86 |
+| 1 s | 30 | 1.92 |
+| Total | | 7.12 |
+
+The upperbound of additional messages generated by starting the DHT at the same time as the Bitswap request is 7.12, which corresponds to an overhead of $\frac{7.12}{1714}=0.415\\%$
+
+The tail latency is expected to be lowered from one second. We expect to gain 1 second on 1%-2% of the requests, which corresponds to an average gain of 10-20 ms for each request.
 
 This technique allows us to get rid of the `ProviderSearchDelay` magic number.
 
-### Reducing the `ProviderSearchDelay`
-If setting the `ProviderSearchDelay` to `0` isn't an option, decreasing it to 500 ms, or even 200 ms would make sense based on the experiment findings. From the measurements, we know that roughly 89% of the successful Bitswap requests finish in less than 500 ms, and roughly 76% of them finish in less than 200 ms. However, the `ProviderSearchDelay` shouldn't be a static value. As the Bitswap requests latency depend on the RTT between the requester and the content providers, the `ProviderSearchDelay` should reflect the network topology of the requester. Hence, we suggest the `ProviderSearchDelay` to be the average latency of the `p50`, `p75` or `p90` of the Bitswap requests latency of the target node.
+### Reducing the `ProviderSearchDelay` to a static value
+If setting the `ProviderSearchDelay` to `0` isn't an option, decreasing it to 500 ms, or even 200 ms would make sense based on the experiment findings. From the measurements, we know that roughly 89% of the successful Bitswap requests finish in less than 500 ms, and roughly 76% of them finish in less than 200 ms.
+
+The ideal `ProviderSearchDelay` value for each node depends on its ping distance to the content providers. A remote node will require a higher `ProviderSearchDelay`, than a node running in a well-connected data center. Therefore, there is no global perfect static `ProviderSearchDelay` value. Given our results, we argue that 500 ms would be a better value than 1 second, and 200 ms would be even better for nodes in a similar network setting as our experiment node.
+
+### Reducing the `ProviderSearchDelay` to a dynamic value
+
+The `ProviderSearchDelay` shouldn't be a hardcoded value. As the Bitswap requests latency depends on the RTT between the requester and the content providers, the `ProviderSearchDelay` should reflect the network topology of the requester. Hence, we suggest the `ProviderSearchDelay` to be the average latency of the `p50`, `p75` or `p90` of the Bitswap requests latency of the target node.
 
 A default value has to be provided to `kubo` for the initial configuration, suggested value: 500 ms. Once started, the IPFS node will keep track of all Bitswap requests latency for a specific time window e.g 2 hours. It will periodically compute the `p75` of the Bitswap requests latency of the past time window, and update its `ProviderSearchDelay` to this value. Ideally, on node shutdown, the `ProviderSearchDelay` can be stored on disk in order keep the current value when the node is restarted.
 
-This technique allows us to get rid of the `ProviderSearchDelay` magic number.
+This technique allows us to get rid of the `ProviderSearchDelay` magic number. However, a complementary study is required to define the time window length, to avoid introducing a new magic number.
 
 ### Smarter broadcast
 Broadcasting every request to all directly connected peers is efficient to discover content fast, but is disastrous from a resources usage perspective. Our measurements showed that roughly 60% of the content is served by 10 peers only, and roughly 85% of the content is served by 50 peers. The tradeoff here is reducing the number of solicited peers vs keeping a fast and accurate content discovery with Bitswap.
+
+Content discovery by broadcast doesn't scale with the network growth. In order for Bitswap to keep the same success rate as the number of peers in the network grows, the number of open connection for each peers needs to grow linearly with the size of the network. This option isn't viable and we must find alternatives to limit the number of sent messages.
 
 #### Limited broadcast
 IPFS nodes could keep track of which other nodes provided them content within a specific time window e.g 2h, and only broadcast the request to peers that served content within that time period. On node shutdown, the list of providers can be stored on disk, so that when the node restarts it already remembers some providers. New providers would be discovered through the DHT. During the first run of the IPFS node, it can either 1) start with no peers to broadcast to, and discover them all through the DHT, or 2) flood the network like it does now, and limit broadcasting after 2 hours.
@@ -314,6 +341,6 @@ Another possibility is to use Contexts in Content Routing. A CID could be bundle
 
 This study showed Bitswap to be a fast and accurate means of finding content in the IPFS network, with an discovery success rate of 98%, and 75% of the content being fetched within 200 ms. However, we measured that Bitswap literally floods the network by soliciting 853 peers per request on average, sending a total of 1714 messages. The high success rate can be explained by the fact that most content is served by a very small number of peers. 10 peers roughly serve 60% of the content requested in our study. Over time, nodes will eventually discover these super providers, and hence requesting content to these peers only is likely to result in a successful fetch, making Bitswap discovery smarter and reducing overhead significantly at the same time. We cannot be certain that the list of CIDs we used for our measurements is totally representative of the IPFS traffic, but we double checked by taking 2 different sources of CIDs, and the results were very similar.
 
-BITSWAP DOESN'T SCALE!!
+In order to accelerate Bitswap, we suggest to remove the `ProviderSearchDelay` and start the DHT lookup concurrently to the Bitswap broadcast. The network overhead is minimal (~0.415%), and the tail latency decreases from 1 second. If removing the `ProviderSearchDelay` isn't an option, decreasing its value would help. 
 
-In order to accelerate Bitswap, we suggest to remove the `ProviderSearchDelay` and start the DHT lookup concurrently to the Bitswap broadcast. The network overhead is minimal (~0.258%), and the tail latency decreases from 1 second. If removing the `ProviderSearchDelay` isn't an option, decreasing its value would help. Limiting the query broadcasts from Bitswap would help reduce the traffic in the network. A significant improvement would be to carefully select the peers from which we request content, rather than flooding the network with a broadcast.
+Using broadcast to discover content in the network doesn't scale. When the number of peers in the network will grow to 10x or 100x, all peers have to scale the number of open connection to 10x or 100x, which isn't an option. Limiting the query broadcasts from Bitswap would help reduce the traffic in the network. A significant improvement would be to carefully select the peers from which we request content, rather than flooding the network with a broadcast.
