@@ -59,7 +59,7 @@ As there is no easy way to identify which CIDs from our sample are root CIDs and
 
 #### Timeout
 
-After a timeout value, set to `15` seconds, we interrupt the Bitswap request, simply because we have to stop the request after some time. We selected 15 seconds, as this delay seems more than enough for Bitswap to find content without the help of the DHT, and more than 15 seconds would slow down the measurements too much.
+After a timeout value, set to `15` seconds, we interrupt the Bitswap request, simply because we have to stop the request after some time. We selected 15 seconds, as this delay seems more than enough for Bitswap to find content without the help of the DHT, and more than 15 seconds would slow down our measurement experiments too much.
 
 #### DHT lookup
 
