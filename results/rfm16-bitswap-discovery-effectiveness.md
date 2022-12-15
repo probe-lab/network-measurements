@@ -156,7 +156,7 @@ We measured the share of the content being served by the top blocks providers.
 | Top 361 | 98.49% |
 | Top 723 | 100.0% |
 
-Given that the public DHT contains approximately 15'000 hosts at the time of writing, it is surprising to observe that only 10 peers serve almost 60% of all our 50893 requests. This means that if all peers sent Bitswap requests to the top 20 blocks providers only, they would still get a success rate of $98.37\% \times 75.41\% = 74.18\%$. Also note that there were only 723 distinct providers for the 50893 requested CIDs. Hence, it would be possible to be connected to all of them at once, to get a success rate of 100%, as an IPFS node usually has around 1000 open direct connections.
+Given that the public DHT contains approximately 15'000 hosts at the time of writing, it is surprising to observe that only 10 peers serve almost 60% of all our 50893 requests. This means that if all peers sent Bitswap requests to the top 20 blocks providers only, they would still get a success rate of $98.37\\% \times 75.41\\% = 74.18\\%$. Also note that there were only 723 distinct providers for the 50893 requested CIDs. Hence, it would be possible to be connected to all of them at once, to get a success rate of 100%, as an IPFS node usually has around 1000 open direct connections.
 
 ### Success rate over time
 
@@ -270,7 +270,7 @@ The following statistics are the average numbers over all successful Bitswap req
 
 We can clearly see that Bitswap has a large content discovery success rate because it simply broadcast its requests to its directly connected peers. Each Bitswap request first broadcast a `WANT_HAVE` message to more than 800 directly connected peers. Once the block is fetched, the node must send `CANCEL_WANT_BLOCK` messages to all peers it sent the `WANT_HAVE` request, which makes a total of more than 1700 messages per Bitswap request.
 
-In comparison, the DHT roughly find content in 3-5 hops and has a concurrency parameter [$\alpha$](https://github.com/libp2p/specs/tree/master/kad-dht#alpha-concurrency-parameter-%CE%B1) set to 3, meaning that it is expected to send at most ~15 messages. However, the average latency of finding content through the DHT is much higher than using a Bitswap broadcast.
+In comparison, the DHT roughly find content in 3-5 hops and has a concurrency parameter [$\\alpha$](https://github.com/libp2p/specs/tree/master/kad-dht#alpha-concurrency-parameter-%CE%B1) set to 3, meaning that it is expected to send at most ~15 messages. However, the average latency of finding content through the DHT is much higher than using a Bitswap broadcast.
 
 
 ## Improvement recommendations
@@ -280,9 +280,9 @@ Modifying the value of `ProviderSearchDelay` seems to have a limited global impa
 ### Removing the `ProviderSearchDelay`
 From our measurements, we observed that Bitswap content discovery is very efficient, however, every Bitswap request on average generates more than 1700 messages, which is substential. For specific content that isn't found by Bitswap discovery 1%-2% of the observed traffic, the DHT lookup for this content is currently delayed for 1 second, a significant overhead. From the results of this study, we propose to set the `ProviderSearchDelay` to `0` for standard `kubo` nodes, or in other words, to start the DHT lookup concurrently with the Bitswap discovery process.
 
-Starting the DHT walk concurrently to the Bitswap request would imply initially sending [$\alpha=3$](https://github.com/libp2p/specs/tree/master/kad-dht#alpha-concurrency-parameter-%CE%B1) additional messages. If we get the block from Bitswap before we hear back from the DHT, the DHT walk is aborted, so the overhead is limited to 3 messages. In the case we hear back from the DHT before getting a block from Bitswap, the DHT walk continues, one additional message is sent to the DHT for each response we get from the DHT. Note that the number of inflight DHT requests is limited to 3. Therefore, we expect between 3 and 6 additional messages, in the case the Bitswap request is successful, which represents an overhead of $\frac{4.5}{1720}=0.262\%$. In the case the Bitswap request doesn't succeed in the first second, no additional messages are sent and the node doesn't wait one full second in vain.
+Starting the DHT walk concurrently to the Bitswap request would imply initially sending [$\\alpha=3$](https://github.com/libp2p/specs/tree/master/kad-dht#alpha-concurrency-parameter-%CE%B1) additional messages. If we get the block from Bitswap before we hear back from the DHT, the DHT walk is aborted, so the overhead is limited to 3 messages. In the case we hear back from the DHT before getting a block from Bitswap, the DHT walk continues, one additional message is sent to the DHT for each response we get from the DHT. Note that the number of inflight DHT requests is limited to 3. Therefore, we expect between 3 and 6 additional messages, in the case the Bitswap request is successful, which represents an overhead of $\frac{4.5}{1720}=0.262\\%$. In the case the Bitswap request doesn't succeed in the first second, no additional messages are sent and the node doesn't wait one full second in vain.
 
-We expect to gain 1 second on 1%-2% of the requests, which corresponds to an average gain of 10-20 ms for each request, at the cost of a network overhead of $0.262\%\times98.5\%=0.258\%$, equal to ~4.5 additional messages. The tail latency is expected to be lowered from one second.
+We expect to gain 1 second on 1%-2% of the requests, which corresponds to an average gain of 10-20 ms for each request, at the cost of a network overhead of $0.262\\%\times98.5\\%=0.258\\%$, equal to ~4.5 additional messages. The tail latency is expected to be lowered from one second.
 
 This technique allows us to get rid of the `ProviderSearchDelay` magic number.
 
