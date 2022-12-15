@@ -273,7 +273,7 @@ We can clearly see that Bitswap has a large content discovery success rate becau
 In comparison, the DHT roughly find content in 3-5 hops and has a concurrency parameter [$\alpha$](https://github.com/libp2p/specs/tree/master/kad-dht#alpha-concurrency-parameter-%CE%B1) set to 3, meaning that it is expected to send at most ~15 messages. However, the average latency of finding content through the DHT is much higher than using a Bitswap broadcast.
 
 
-## Improvement suggestions
+## Improvement recommendations
 
 Modifying the value of `ProviderSearchDelay` seems to have a limited global impact, as it concerns only 1%-2% of all Bitswap requests. However, we believe that it is worth improving the current setting to accelerate content fetching, even if only for when the IPFS network gains wider user and application adoption. Another obvious avenue for improvement, is to reduce the overhead caused by Bitswap flooding.
 
