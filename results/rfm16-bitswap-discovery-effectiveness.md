@@ -275,7 +275,7 @@ In comparison, the DHT roughly find content in 3-5 hops and has a concurrency pa
 
 ## Improvement suggestions
 
-Modifying the value of `ProviderSearchDelay` seems to have a limited global impact, as it concerns only 1%-2% of all Bitswap requests. However, we believe that it is worth it to accelerate these requests. Another obvious improvement, is reducing Bitswap flooding, as it causes a lot of, sometimes unnecessary, overhead in the network.
+Modifying the value of `ProviderSearchDelay` seems to have a limited global impact, as it concerns only 1%-2% of all Bitswap requests. However, we believe that it is worth improving the current setting to accelerate content fetching, even if only for when the IPFS network gains wider user and application adoption. Another obvious avenue for improvement, is to reduce the overhead caused by Bitswap flooding.
 
 ### Removing the `ProviderSearchDelay`
 From our measurements, we observed that Bitswap content discovery is very efficient, however, every Bitswap request on average generates more than 1700 messages, which is substential. For specific content that isn't found by Bitswap discovery 1%-2% of the observed traffic, the DHT lookup for this content is currently delayed for 1 second, a significant overhead. From the results of this study, we propose to set the `ProviderSearchDelay` to `0` for standard `kubo` nodes, or in other words, to start the DHT lookup concurrently with the Bitswap discovery process.
