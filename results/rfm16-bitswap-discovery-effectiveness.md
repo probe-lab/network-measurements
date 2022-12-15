@@ -75,7 +75,7 @@ Our measurement tool generates two distinct log files. The first log file logs t
 - The timestamp corresponding to the time the request was made.
 - The requested CID.
 - The number of directly connected peers at the time the request returns.
-- `NO_PROV` OR `FETCH_FAILED` to notify that the file wasn't fetched OR duration of the successful request in milliseconds and the block provider OR only the block provider if the block was discovered using the DHT.
+- `NO_PROV` OR `FETCH_FAILED` to notify that the file wasn't fetched OR the duration of the successful request in milliseconds and the block provider OR only the block provider if the block was discovered using the DHT.
 
 The second log file contains one entry for each outgoing and incoming messages:
 - The timestamp of the message
