@@ -174,7 +174,7 @@ The number of open connections over time seems roughly constant too, which is ex
 
 ![success-rate-vs-npeers.png](../implementations/rfm16-bitswap-discovery-effectiveness/plots/success-rate-vs-npeers.png)
 
-We can see no evident correlation between the success rate and the number of directly connected peers. The success rate on this plot will be more accurate between 900 and 1000 open connections that in the extreme low and high values, because there are much more samples of requests with 900-1000 open connections than request with less than 700 or more than 1200 connections.
+We can see no evident correlation between the success rate and the number of directly connected peers. The success rate on this plot is more accurate for data points between 900 and 1000 open connections (i.e., the extreme low and high values), because there are much more samples of requests with 900-1000 open connections than request with less than 700 or more than 1200 connections.
 
 ### Bitswap latency
 
