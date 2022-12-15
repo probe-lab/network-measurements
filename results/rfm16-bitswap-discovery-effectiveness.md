@@ -2,7 +2,7 @@
 
 Author: [Guillaume Michel](https://github.com/guillaumemichel)
 
-Date: 2022-12-13
+Date: 2022-12-15
 
 ## Table of contents
 
@@ -31,7 +31,7 @@ At the time of writing, Bitswap has a `ProviderSearchDelay` variable set to [1 s
 
 This study aims at measuring the effectiveness of the Bitswap discovery process, or in other words how efficient is Bitswap as a content discovery protocol. The performance of Bitswap discovery is the ratio of requests succeeding before the DHT walk starts. We also measure the time distribution of the successful Bitswap requests, and the number of packets sent by Bitswap for each requested CID. 
 
-Assuming that content in the IPFS network is uniformly distributed among the ~20’000 peers participating in the DHT, and given that each node broadcasts requests to its ~1’000 directly connected peers, we would expect a success rate of approximately $\frac{1'000}{20'000} = 5\%$.
+Assuming that content in the IPFS network is uniformly distributed among the ~20’000 peers participating in the DHT, and given that each node broadcasts requests to its ~1’000 directly connected peers, we would expect a success rate of approximately $\frac{1'000}{20'000} = 5\\%$.
 
 ## Measurement Methodology
 
@@ -43,7 +43,7 @@ We want the requests to be a realistic set of CIDs that is actually being reques
 
 The first source of CIDs is passive Bitswap sniffing. [Leo Balduf](https://github.com/mrd0ll4r) from the Weizenbaum Institute has been running a `kubo` node, recording all Bitswap requests. Out of the list of all requests, we only kept the CIDs, removed duplicates and randomized the list, in order to avoid any correlation between successive CIDs in the list (i.e., CIDs belonging to the same DAG/file). The Bitswap sniffing logs were captured on 2022-08-16.
 
-The second source of CIDs is the logs from the IPFS Gateways gathered using [Thunderdome](https://github.com/ipfs-shipyard/thunderdome/tree/main/cmd/logtool). The logs contain all CIDs that were requested to the IPFS Gateways over HTTP(S). The list of CIDs is also randomized in order to avoid any correlation between successive requests, and invalid CIDs were filtered out from the logs. The Gateways logs were captured on 2022-12-05.
+The second source of CIDs is the logs from the IPFS Gateways gathered using [Thunderdome](https://github.com/ipfs-shipyard/thunderdome/tree/main/cmd/logtool). The logs contain all CIDs that were requested to the IPFS Gateways over HTTP(S). The list of CIDs is also randomized in order to avoid any correlation between successive requests, and malformed CIDs were filtered out from the logs. The Gateways logs were captured on 2022-12-05.
 
 ### Kubo
 
@@ -313,5 +313,7 @@ Another possibility is to use Contexts in Content Routing. A CID could be bundle
 ## Conclusion
 
 This study showed Bitswap to be a fast and accurate means of finding content in the IPFS network, with an discovery success rate of 98%, and 75% of the content being fetched within 200 ms. However, we measured that Bitswap literally floods the network by soliciting 853 peers per request on average, sending a total of 1714 messages. The high success rate can be explained by the fact that most content is served by a very small number of peers. 10 peers roughly serve 60% of the content requested in our study. Over time, nodes will eventually discover these super providers, and hence requesting content to these peers only is likely to result in a successful fetch, making Bitswap discovery smarter and reducing overhead significantly at the same time. We cannot be certain that the list of CIDs we used for our measurements is totally representative of the IPFS traffic, but we double checked by taking 2 different sources of CIDs, and the results were very similar.
+
+BITSWAP DOESN'T SCALE!!
 
 In order to accelerate Bitswap, we suggest to remove the `ProviderSearchDelay` and start the DHT lookup concurrently to the Bitswap broadcast. The network overhead is minimal (~0.258%), and the tail latency decreases from 1 second. If removing the `ProviderSearchDelay` isn't an option, decreasing its value would help. Limiting the query broadcasts from Bitswap would help reduce the traffic in the network. A significant improvement would be to carefully select the peers from which we request content, rather than flooding the network with a broadcast.
