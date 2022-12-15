@@ -162,7 +162,7 @@ Given that the public DHT contains approximately 15'000 hosts at the time of wri
 
 ![success-rate-over-time-experiment_20221205.png](../implementations/rfm16-bitswap-discovery-effectiveness/plots/success-rate-over-time-experiment_20221205.png)
 
-The observed success rate over time appears to be roughly constant. We could have expected to see an increase in the success rate over time, as the IPFS node would have failed some requests, made DHT lookups, learned about new providers and kept them in its directly connected peers.
+The observed success rate over time appears to be roughly constant. We would expect to see an increase in the success rate over time, as the IPFS node would have failed some requests, made DHT lookups, learned about new providers and kept them in its directly connected peers.
 
 ### Number of open connections over time
 
