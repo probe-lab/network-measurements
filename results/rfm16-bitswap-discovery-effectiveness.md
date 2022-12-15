@@ -97,7 +97,7 @@ The duration we measure for successful Bitswap content discoveries is the Time T
 
 ## Results and Analysis
 
-The experiment we present the results was started on Monday 2022-11-28 at 11:37:44 GMT and has been running for 50 hours. The list of CIDs provides from Bitswap sniffing as described in [CIDs selections](#cids-selection).
+Our experiment started on Monday 2022-11-28 at 11:37:44 GMT and ran for 50 hours. The list of CIDs used for this experiment was provided from Bitswap sniffing as described in [CIDs selections](#cids-selection).
 
 
 ### Request categorization
