@@ -156,7 +156,7 @@ We measured the share of the content being served by the top blocks providers.
 | Top 361 | 98.49% |
 | Top 723 | 100.0% |
 
-Given that the public DHT contains approximately 15'000 host at the time of writing, it is surprising to observe that only 10 peers serve almost 60% of all 50893 IPFS requests. It means that if all peers would send Bitswap requests to the top 20 blocks providers only, they would still get a success rate of $98.37\% \times 75.41\% = 74.18\%$. Also note that there were only 723 distinct providers for the 50893 requested CIDs. Hence, it would be possible to be connected to all of them at once, to get a success rate of 100%, as an IPFS node usually has around 1000 open direct connections.
+Given that the public DHT contains approximately 15'000 hosts at the time of writing, it is surprising to observe that only 10 peers serve almost 60% of all our 50893 requests. This means that if all peers sent Bitswap requests to the top 20 blocks providers only, they would still get a success rate of $98.37\% \times 75.41\% = 74.18\%$. Also note that there were only 723 distinct providers for the 50893 requested CIDs. Hence, it would be possible to be connected to all of them at once, to get a success rate of 100%, as an IPFS node usually has around 1000 open direct connections.
 
 ### Success rate over time
 
