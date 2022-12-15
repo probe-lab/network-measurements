@@ -93,7 +93,7 @@ The experiments were run on a `e2-custom-6-16384` Debian 11 Virtual Machine from
 
 ### Technical limitations
 
-The duration we measure for successful Bitswap content discoveries is the Time To First Block, and not the Time To First Byte (TTFB). Ideally, it would be better to measure the TTFB, as the size of the block doesn’t matter when measuring content discovery. However, as only one block is fetched, we can assume that all fetched blocks almost have the same size. We also measure the Time To First HAVE, hence we have the knowledge of when the content was discovered.
+The duration we measure for successful Bitswap content discoveries is the Time To First Block, and not the Time To First Byte (TTFB). Ideally, it would be better to measure the TTFB, as the size of the block doesn’t matter when measuring content discovery. However, as only one block is fetched, we can assume that all fetched blocks have the same size. We also measure the Time To First HAVE, so that we have the knowledge of when the content was discovered.
 
 ## Results and Analysis
 
