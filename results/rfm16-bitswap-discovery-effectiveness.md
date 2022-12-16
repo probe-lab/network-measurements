@@ -30,7 +30,7 @@ Bitswap is the data exchange protocol for IPFS. Whenever a new CID is requested 
 
 At the time of writing, Bitswap has a `ProviderSearchDelay` variable set to [1 second by default](https://github.com/ipfs/go-bitswap/blob/82ac8b359cb0960e1c190e944bfecf354493d7f1/internal/defaults/defaults.go#L10). This means that, unless the node is already directly connected to the content provider, the request to discover and fetch the content will be delayed by a second, which is far from ideal as IPFS targets sub-second data delivery. We would like to provide a better value for the `ProviderSearchDelay` whose value has been arbitrarily selected until now.
 
-This study aims at measuring the effectiveness of the Bitswap discovery process, or in other words how efficient is Bitswap as a content discovery protocol. The performance of Bitswap discovery is the ratio of requests succeeding before the DHT walk starts. We also measure the time distribution of the successful Bitswap requests, and the number of packets sent by Bitswap for each requested CID. 
+This study aims at measuring the effectiveness of the Bitswap discovery process, or in other words how efficient is Bitswap as a content discovery protocol. The performance of Bitswap discovery is the ratio of requests succeeding before the DHT walk starts. We also measure the block discovery and fetch latency distribution of the successful Bitswap requests, and the number of packets sent by Bitswap for each requested CID. 
 
 Assuming that content in the IPFS network is uniformly distributed among the ~20’000 peers participating in the DHT, and given that each node broadcasts requests to its ~1’000 directly connected peers, we would expect a success rate of approximately $\frac{1'000}{20'000} = 5\\%$.
 
@@ -40,7 +40,7 @@ We measured that 98% of all requested content was successfully discovered by Bit
 
 ## Measurement Methodology
 
-The Bitswap measurements mainly consist in requesting various CIDs to `kubo` and to monitor whether the Bitswap requests succeed without a DHT walk, recording the time distribution of successful Bitswap requests, and log incoming and outgoing Bitswap packets. In order to get this information, we had to modify both `kubo` and `go-bitswap` implementations.
+The Bitswap measurements mainly consist in requesting various CIDs to `kubo` and to monitor whether the Bitswap requests succeed without a DHT walk, recording the discovery and fetch latency distribution of successful Bitswap requests, and log incoming and outgoing Bitswap packets. In order to get this information, we had to modify both `kubo` and `go-bitswap` implementations.
 
 ### CIDs selection
 
@@ -60,7 +60,7 @@ As there is no easy way to identify which CIDs from our sample are root CIDs and
 
 #### Blocking `FindProvidersAsync`
 
-[`FindProvidersAsync`](https://github.com/ipfs/go-bitswap/blob/82ac8b359cb0960e1c190e944bfecf354493d7f1/network/ipfs_impl.go#L377) is the function that is called by Bitswap client `sessions` after the `ProviderSearchDelay` in order to discover content providers for a CID from the DHT. We want to give Bitswap more time than `ProviderSearchDelay = 1 second` to discover the content, so that we can have a better analysis of the successful content discovery time distribution, even if that’s not a realistic delay to wait for. In other words, we want to have an overall picture of the Bitswap discovery latency for all successful requests (not only those that respond within 1s). Hence, all calls to `FindProvidersAsync` have been blocked from the Bitswap client code. If the Bitswap client is able to find the content associated with the CID, the request will be considered as `SUCCESS`.
+[`FindProvidersAsync`](https://github.com/ipfs/go-bitswap/blob/82ac8b359cb0960e1c190e944bfecf354493d7f1/network/ipfs_impl.go#L377) is the function that is called by Bitswap client `sessions` after the `ProviderSearchDelay` in order to discover content providers for a CID from the DHT. We want to give Bitswap more time than `ProviderSearchDelay = 1 second` to discover the content, so that we can have a better analysis of the successful content discovery latency distribution, even if that’s not a realistic delay to wait for. In other words, we want to have an overall picture of the Bitswap discovery latency for all successful requests (not only those that respond within 1s). Hence, all calls to `FindProvidersAsync` have been blocked from the Bitswap client code. If the Bitswap client is able to find the content associated with the CID, the request will be considered as `SUCCESS`.
 
 #### Timeout
 
@@ -185,11 +185,11 @@ We can see no evident correlation between the success rate and the number of dir
 
 ### Bitswap latency
 
-The following plot displays the time distribution of successful bitswap requests. 
+The following plot displays the block discovery and fetch latency distribution of successful bitswap requests. 
 
 ![success-rate-15s.png](../implementations/rfm16-bitswap-discovery-effectiveness/plots/success-rate-15s.png)
 
-We see that an overwhelming majority of requests succeed within the first second. The following plot zooms in the first second of the bitswap requests time distribution.
+We see that an overwhelming majority of requests succeed within the first second. The following plot zooms in the first second of the bitswap discovery and fetch latency distribution.
 
 ![success-rate-1s.png](../implementations/rfm16-bitswap-discovery-effectiveness/plots/success-rate-1s.png)
 
