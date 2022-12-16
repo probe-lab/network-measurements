@@ -20,7 +20,7 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 **[RFM 16 | Effectiveness of Bitswap Discovery Process](#rfm-16--effectiveness-of-bitswap-discovery-process)**
 
-**[RFM 21 | Quantify Hydra’s Performance Contribution](#rfm-21--quantify-hydra-contribution)**
+**[RFM 21 | Quantify Hydra’s Performance Contribution](#quantify-hydra-contribution)**
 
 ## Current Priority - Batch 1
 
