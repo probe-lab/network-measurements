@@ -20,6 +20,8 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 **[RFM 16 | Effectiveness of Bitswap Discovery Process](#rfm-16--effectiveness-of-bitswap-discovery-process)**
 
+**[RFM 21 | Quantify Hydra’s Performance Contribution](#rfm-21--quantify-hydra-contribution)**
+
 ## Current Priority - Batch 1
 
 **[RFM 4 | IP address Churn (Roaming) & PeerID distribution for nodes in the IPFS Network](#_1mu1tfaw8au3)**
@@ -716,6 +718,36 @@ The idea is to get a view of the amount of data currently stored on IPFS as well
 
 - Get a statistically robust view of the file size distribution over time
 - Get a good estimate of the data volume stored on IPFS
+
+<a id="quantify-hydra-contribution"></a>
+## RFM 21 | Quantify Hydra’s Performance Contribution
+
+* _Status:_ **ready**
+* _DRI/Team:_ @dennis-tra
+* _Effort Needed:_
+* _Prerequisite(s):_ None
+* _Value:_ **HIGH**
+* _Report:_ \<insert link to report once work is complete\>
+* _Material:_ [Notion page](https://pl-strflt.notion.site/Hydras-Reliability-and-Effectiveness-7aa5088070794bd795780b74533bd6b2)
+
+#### Proposal
+
+Although not a core component of the IPFS architecture, Hydra peers play a central role in content discovery with several users and applications (see Indexer nodes) depending on them. However, there hasn’t been a thorough (or at least not documented) investigation of the Hydras’ performance with regard to: their effectiveness in providing records (i.e., do they cover the entire hash space in order to be effective?), their performance (i.e., how quick is the process of hitting a Hydra node to get the  record back, what percentage of requests do they satisfy?), or their reliability (i.e., do they constantly cover 100% of the hash space, are there more Hydras needed?). Based on these findings, we need to answer questions, such as what space for optimization exists with regard to the Hydra deployment and ultimately, how useful are they to the IPFS network in terms of the performance improvement they bring.
+
+#### Measurement Plan
+
+We run the IPFS lookup measurement that we did for the SigCOMM paper again. Once without any modification, so that we have fresh data for the current state of the network and once with slightly modified IPFS instances. Those instances either:
+
+1. Discard responses from Hydra-Boosters (in the publication and retrieval process) **OR**
+2. Get fed a list Hydra-Booster head PeerIDs and ignore those peers
+    - This would have the inaccuracy that other (non-PL) parties may run Hydra-Boosters and we wouldn’t discard those.
+
+Ideally, we should combine both.
+
+#### Sucess Criteria
+
+- We have an accurate view of the performance of the network (primarily in terms of DHT Lookup) when Hydras are not contributing.
+- We have a view of how DHT Lookups are affected in a Hydra-less world in different regions.
 
 
 <a id="tooling"></a>
