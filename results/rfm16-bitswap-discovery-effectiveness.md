@@ -92,7 +92,7 @@ All the results that are presented below are derived from these log files.
 
 ### Running measurements
 
-A shell script is [available](../implementations/rfm16-bitswap-discovery-effectiveness/) to start the measurements. It basically starts a modified `kubo` daemon, and calls a python script. The [python script](../implementations/rfm16-bitswap-discovery-effectiveness/requests.py) reads a list of CIDs and concurrently requests CIDs (10 threads by default) by calling `ipfs get <CID>`. All results are logged to files as the experiment goes.
+A shell script is [available](../implementations/rfm16-bitswap-discovery-effectiveness/measurements) to start the measurements. It basically starts a modified `kubo` daemon, and calls a python script. The [python script](../implementations/rfm16-bitswap-discovery-effectiveness/measurements/requests.py) reads a list of CIDs and concurrently requests CIDs (10 threads by default) by calling `ipfs get <CID>`. All results are logged to files as the experiment goes.
 
 The experiments were run on a `e2-custom-6-16384` Debian 11 Virtual Machine from Google Cloud, located in `europe-west-b`.
 

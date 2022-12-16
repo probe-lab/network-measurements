@@ -27,5 +27,5 @@ implementations/rfm19-dht-routing-table-health/data/nebula-peers-1week.csv
 # ignore log files
 implementations/rfm16-bitswap-discovery-effectiveness/measurements/data/**/*.log
 implementations/rfm16-bitswap-discovery-effectiveness/measurements/data/**/*.txt
-
+implementations/rfm16-bitswap-discovery-effectiveness/measurements/cids/all-cids.txt
 
