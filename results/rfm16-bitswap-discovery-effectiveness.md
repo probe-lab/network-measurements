@@ -163,6 +163,8 @@ We measured the share of the content being served by the top blocks providers.
 
 Given that the public DHT contains approximately 15'000 hosts at the time of writing, it is surprising to observe that only 10 peers serve almost 60% of all our 50893 requests. This means that if all peers sent Bitswap requests to the top 20 blocks providers only, they would still get a success rate of $98.37\\% \times 75.41\\% = 74.18\\%$. Also note that there were only 723 distinct providers for the 50893 requested CIDs. Hence, it would be possible to be connected to all of them at once, to get a success rate of 100%, as an IPFS node usually has around 1000 open direct connections.
 
+The [_Hydra Reliability and Effectiveness_](https://pl-strflt.notion.site/Final-Report-Hydra-Reliability-and-Effectiveness-af96be1449f949ef953c81d2bec10c1a#5dc9ee14e1394b49b5c811742614d118) report draws similar conclusions on the content providers distribution.
+
 ### Success rate over time
 
 ![success-rate-over-time-experiment_20221205.png](../implementations/rfm16-bitswap-discovery-effectiveness/plots/success-rate-over-time-experiment_20221205.png)
