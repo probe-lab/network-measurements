@@ -26,7 +26,11 @@ Status: Completed
 
 # Summary of Results
 
-TODO
+- The Hydra Boosters operated by PL cover almost the entire hash space (>97%)
+- Majority of CIDs have only a single provider (~80%)
+- Majority of content resides in the US (~55%)
+- Only ten peers provide over 50% of all CIDs
+- Controlled performance measurements allowed us to make an informed decision of unplugging the common database
 
 # Introduction
 
@@ -322,6 +326,6 @@ nodes-list-wo-100pct-node-5.log,bafybeierm5lusex4stqmtj5zx4jbwws6safenv23mjoeo4s
 
 # Conclusions
 
-Our Hydra-Booster study uncovered insights not known before. The unique position in which Hydras are allow us to get a comprehensive view of the content and peers in the network. We found that the majority of content has only one providing peer and likely resides in the US. Further, only a few big content providers dominate the network. Over 50% of all CIDs are provided by only ten peers.
+Our Hydra-Booster study uncovered insights not known before. The unique position in which Hydras are allow us to get a comprehensive view of the content and peers in the network. We found that the majority of content has only one providing peer and likely resides in the US. Further, only a few big content providers dominate the network. Over 50% of all CIDs are provided by only ten peers. We also proved that they indeed cover alomst the entire hash space which underpins all results.
 
-Controlled experiments estimated the performance impact of removing Hydras completely from the network. These estimates were slightly too optimistic because 
+Controlled experiments estimated the performance impact of removing Hydras from the network. These estimates were slightly too optimistic because nodes that ignore Hydras (as we used for our estimation) effectively don’t contact peers that won’t reply with relevant answers anyways and therefore operate smarter than the nodes that still ask Hydras for provider records. Nevertheless, the measurements allowed us to make an informed decision of unplugging the common database.
