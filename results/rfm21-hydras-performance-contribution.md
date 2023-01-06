@@ -179,7 +179,7 @@ In this section, we investigate the impact of Hydras on the DHT content routing 
 
 1. We have updated the `go-ipfs`/ `kubo` version to `0.16.0` 
 2. Added a PeerID filter to prevent certain PeerIDs from being queried
-3. Used stronger VM’s because correctly configuring the [resource manager](https://github.com/libp2p/go-libp2p/tree/master/p2p/host/resource-manager) was a challenge
+3. Used stronger VMs because correctly configuring the [resource manager](https://github.com/libp2p/go-libp2p/tree/master/p2p/host/resource-manager) was a challenge
 
 The AWS regions in which we had deployed the nodes stayed the same. Namely: `eu_central_1`, `us_west_1`, `me_south_1`, `ap_southeast_1`, `sa_east_1`, `af_south_1`.
 
