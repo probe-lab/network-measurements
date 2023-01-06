@@ -39,7 +39,7 @@ Status: Completed
 Hydra Booster nodes strive to enhance the network in five different ways:
 
 1. Reduce the number of hops to be performed by any other node’s `FIND_NODES` query
-2. Reduce the number of hops to be performed by any other node `GET_PROVIDERS` query (result of a)) and additionally, keep a replica (passively and proactively) of all existing fresh (i.e. not expired) records alive in the network, so that these don’t disappear due to network churn.
+2. Reduce the number of hops to be performed by any other node's `GET_PROVIDERS` query (result of a)) and additionally, keep a replica (passively and proactively) of all existing fresh (i.e. not expired) records alive in the network, so that these don’t disappear due to network churn.
 3. Accelerate the speed in which one-to-many `ADD_PROVIDER` queries are executed in the network. This is done both by reducing the number of hops that are needed to find the provider record but also by placing sybils in right locations to harvest and store the records rapidly.
 4. Provides stability to the DHT service by injecting beefy nodes that take active participation in storing record segments from the whole unidimensional content addressing space.
 5. Bridge DHT `GET_PROVIDERS` queries to indexer nodes - making large amounts of data available via the DHT that were otherwise not.
