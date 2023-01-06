@@ -48,7 +48,7 @@ Hydra Booster nodes strive to enhance the network in five different ways:
 
 In the following discussion we distinguish between Hydras, which are the VMs/containers running the Hydra functionality, and their heads. Each Hydra can have many heads where each head has their own unique PeerID and everything that comes along with it (e.g., routing table, peer store, etc.). Protocol Labs has had 135 Hydras deployed on ECS in `us-east-1`. Each Hydra had between 10 and 15 heads leading to a total 2,015 Hydra heads. One of the Hydras is a “master” Hydra that [coordinates the PeerID generation](https://github.com/libp2p/hydra-booster/blob/8be14bf61bff477319273e5757da95c382c01a73/idgen/idgen.go#L38). 
 
-If that condition holds true that every peer in the DHT has at least one Hydra head in their immediate XOR proximity of 20 peers, all provider records that are being stored in the DHT end up in at least one Hydra head. This provider record is then stored in a common database that **every** head has access to. If a future request hits a completely different head it will query that same database and be able to reply with the record immediately. This has been expected drastically shorten the DHT walk.
+If that condition holds true that every peer in the DHT has at least one Hydra head in their immediate XOR proximity of 20 peers, all provider records that are being stored in the DHT end up in at least one Hydra head. This provider record is then stored in a common database that **every** head has access to. If a future request hits a completely different head it will query that same database and be able to reply with the record immediately. This has been expected to drastically shorten the DHT walk.
 
 ## Keyspace Coverage
 
