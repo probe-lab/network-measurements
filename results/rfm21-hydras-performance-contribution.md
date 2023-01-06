@@ -262,7 +262,7 @@ We uploaded all node logs to [web3.storage](http://web3.storage). The following 
 
 > **Note**
 >
-> We were running the following experiment with VM’s that were not powerful enough and therefore threw a significant amount of resource manager `limit exceeded` errors. Thus, it’s hard to conclude the root cause of performance degradations - is it because we ignored hydras or because we have run into the `limit exceeded` errors.
+> We were running the following experiment with VMs that were not powerful enough and therefore threw a significant amount of resource manager `limit exceeded` errors. Thus, it’s hard to conclude the root cause of performance degradations - is it because we ignored hydras or because we have run into the `limit exceeded` errors?
 
 Prior to the dial down of the common Hydra database we have run an experiment where we only ignored a subset of Hydra nodes. To ignore x% of Hydra nodes it is not sufficient to just take a random sample of all Hydra head PeerIDs because the ID generation is more sophisticated than just random. If a new Hydra head wants a new PeerID, the “master” Hydra Node generates two PeerIDs and selects the one that yields a lower depth in the XOR trie of the complete set of already existing Hydra head peer IDs. See [this code snippet](https://github.com/libp2p/hydra-booster/blob/8be14bf61bff477319273e5757da95c382c01a73/idgen/idgen.go#L87).
 
