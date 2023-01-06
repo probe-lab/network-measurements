@@ -27,7 +27,7 @@ Status: Completed
 - The Hydra Boosters operated by PL cover almost the entire hash space (>97%)
 - Majority of CIDs have only a single provider (~80%)
 - Majority of content resides in the US (~55%)
-- Only ten peers provide over 50% of all CIDs
+- Only ten peers provide over 50% of all CIDs advertised to the DHT
 - Controlled performance measurements allowed us to make an informed decision about unplugging the common database
   - Predicted performance hit for the time to first provider record ~14.8% (p50), ~14.7% (p90), and ~10.4% (p95)
   - Actual performance hit for the time to first provider record ~27.8% (p50), ~16.5% (p90), and ~12.5% (p95)
@@ -90,9 +90,9 @@ The number of total unique CIDs in this graph is less than in the previous one b
 
 The associated churn graph looks as follows.
 
-![ochurn-cdf.png](../implementations/rfm21-hydras-performance-contribution/plots/churn-cdf.png)
+![churn-cdf.png](../implementations/rfm21-hydras-performance-contribution/plots/churn-cdf.png)
 
-Note that this graph does not account for reappearing CIDs.
+Note that this graph does not account for reappearing CIDs and that we stopped after six days. CIDs could stay longer in the network.
 
 ## Provider Distribution
 
@@ -100,7 +100,7 @@ In this section, we’ll take a look at the locality of content - meaning, at wh
 
 ![provider-distribution.png](../implementations/rfm21-hydras-performance-contribution/plots/provider-distribution.png)
 
-The above graph shows the number of distinct provider PeerIDs that are associated with a single CID as a fraction of the total number of CIDs. One can see that ~85% of all CIDs in the DHT network only have a single provider, ~10% two, and so on. Interestingly, the distribution has a long tail with [a few CIDs that have *tons* of providers](https://www.notion.so/2022-09-20-Hydras-Analysis-5db53b6af3e04a46aaf7a776e65ae97d). There are eight CIDs with over 30k distinct providers. Sampling these CIDs revealed that they belong to the auto-generated content when you run `ipfs init`. Here’s an excerpt:
+The above graph shows the number of distinct provider PeerIDs that are associated with a single CID as a fraction of the total number of CIDs. One can see that ~85% of all CIDs in the DHT network only have a single provider, ~10% two, and so on. Interestingly, the distribution has a long tail with [a few CIDs that have *tons* of providers (see "CID Distribution")](https://pl-strflt.notion.site/2022-09-20-Hydras-Analysis-5db53b6af3e04a46aaf7a776e65ae97d). There are eight CIDs with over 30k distinct providers. Sampling these CIDs revealed that they belong to the auto-generated content when you run `ipfs init`. Here’s an excerpt:
 
 ```
 QmRGXm9gpLBkUsz7SBDNgeR45vMK3w99R5Ep6JGAYjuwqy
@@ -123,7 +123,7 @@ If we look at this relationship the other way around we can check which provider
 > **Note:** The percentages can add up to over 100% because single CIDs can be provided by multiple peers. Imagine there’s only one CID in the whole network and two peers providing it. This means both provide 100% of all CIDs which would add up to 200% in total.
 > 
 
-The graph shows that over 50% of all CIDs are provided by just 10 peers. The exact numbers can be found [here](https://www.notion.so/45c6e62247e64468a4a01a293e494eb2).
+The graph shows that over 50% of all CIDs that are advertised to the DHT are provided by just 10 peers. The exact numbers can be found [here](https://www.notion.so/45c6e62247e64468a4a01a293e494eb2).
 
 | PeerID | Countries | CIDs | % of Total Unique CIDs |
 | :--- | :--- | ---: | ---: |
@@ -138,7 +138,7 @@ The graph shows that over 50% of all CIDs are provided by just 10 peers. The exa
 | 12D3KooWQE3CWA3MJ1YhrYNP8EE3JErGbrCtpKRkFrWgi45nYAMn | [NL] | 30393967 | 3.5 |
 | 12D3KooWQYBPcvxFnnWzPGEx6JuBnrbF1FZq4jTahczuG2teEk1m | [NL] | 29295357 | 3.4 |
 
-Some top-providing peers can be traced back and associated with the [web3.storage](http://web3.storage) service while others are unknown to us.
+Some top-providing peers can be traced back and associated with the [web3.storage](http://web3.storage) service while others are unknown to us. Known content providers can be found [here](https://docs.ipfs.tech/how-to/peering-with-content-providers/#content-provider-list).
 
 ## Geographic Locality
 
@@ -327,6 +327,6 @@ nodes-list-wo-100pct-node-5.log,bafybeierm5lusex4stqmtj5zx4jbwws6safenv23mjoeo4s
 
 # Conclusions
 
-Our Hydra-Booster study uncovered insights not known before. The unique position which Hydras occupy in the network allows us to get a comprehensive view of the content and peers in the network. We found that the majority of content has only one providing peer and likely resides in the US. Further, only a few big content providers dominate the network. Over 50% of all CIDs are provided by only ten peers. We also proved that they indeed cover almost the entire hash space.
+Our Hydra-Booster study uncovered insights not known before. The unique position which Hydras occupy in the network allows us to get a comprehensive view of the content and peers in the network. We found that the majority of content has only one providing peer and likely resides in the US. Further, only a few big content providers dominate the network. Over 50% of all CIDs advertised to the DHT are provided by only ten peers. We also proved that they indeed cover almost the entire hash space.
 
 Controlled experiments estimated the performance impact of removing Hydras from the network. We predicted the performance impact to be ~14.8%, ~14.7%, and ~10.4% slower time to first provider record for the 50th, 90th, and 95th percentiles. However, we observed a ~27.8%, ~16.5%, and ~12.5% increase respectively. Our predictions were slightly too optimistic because nodes that ignore Hydras (as we used them for our estimation) effectively don’t contact peers that won’t reply with relevant answers anyways and therefore operate smarter than the nodes that still ask Hydras for provider records. Nevertheless, the measurements allowed us to make an informed decision about unplugging the common database.
