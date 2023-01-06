@@ -30,7 +30,10 @@ Status: Completed
 - Majority of CIDs have only a single provider (~80%)
 - Majority of content resides in the US (~55%)
 - Only ten peers provide over 50% of all CIDs
-- Controlled performance measurements allowed us to make an informed decision of unplugging the common database
+- Controlled performance measurements allowed us to make an informed decision about unplugging the common database
+  - Predicted performance hit for the time to first provider record ~14.8% (p50), ~14.7% (p90), and ~10.4% (p95)
+  - Actual performance hit for the time to first provider record ~27.8% (p50), ~16.5% (p90), and ~12.5% (p95)
+  - Reason for discrapancies: the nodes we used for our predictions operate smarter as they ignore nodes (Hydras) that don't respond with provider records anyways.
 
 # Introduction
 
@@ -218,7 +221,7 @@ The performance hit across all regions from before and after the DB dial down is
 
 ![ttfpr-predicted-actual.png](../implementations/rfm21-hydras-performance-contribution/plots/ttfpr-predicted-actual.png)
 
-This graph shows that the predicted performance hit underestimated the observed one. While we predicted a latency increase for the 50th percentile (left-most red bar), we observe a slightly higher one (left-most black bar). While we were running the above experiment, we were also running a fleet of nodes in the same geographic locations that ignored the Hydras - equal to the first measurement. The following graph shows both results:
+This graph shows that the predicted performance hit underestimated the observed one. While we predicted a latency increase for the 50th percentile (left-most red bar), we observe a slightly higher one (left-most black bar). The "Increase" values are all relative to the "Before" bars. While we were running the above experiment, we were also running a fleet of nodes in the same geographic locations that ignored the Hydras - equal to the first measurement. The following graph shows both results:
 
 ![ttfpr-over-time-comparison.png](../implementations/rfm21-hydras-performance-contribution/plots/ttfpr-over-time-comparison.png)
 
@@ -228,7 +231,7 @@ The nodes that ignore Hydras effectively don’t contact peers that won’t repl
 
 ### Dataset
 
-We uploaded all node logs to [web3.storage](http://web3.storage). The following table lists all log files, their CID, and region in which the logs were gathered. To analyse these logs we were using commit `6cda10c` from `https://github.com/dennis-tra/ipfs-lookup-measurement`
+We uploaded all node logs to [web3.storage](http://web3.storage). The following table lists all log files, their CID, and region in which the logs were gathered. To analyse these logs we were using commit `6cda10c` from `https://github.com/dennis-tra/ipfs-lookup-measurement`. Put all files inside the folder `data/2022-12-08_hydra_dial_down`
 
 | Log File                            | Region         | CID                                                         |
 | ----------------------------------- | -------------- | ----------------------------------------------------------- |
@@ -326,6 +329,6 @@ nodes-list-wo-100pct-node-5.log,bafybeierm5lusex4stqmtj5zx4jbwws6safenv23mjoeo4s
 
 # Conclusions
 
-Our Hydra-Booster study uncovered insights not known before. The unique position which Hydras occupy in the network allow us to get a comprehensive view of the content and peers in the network. We found that the majority of content has only one providing peer and likely resides in the US. Further, only a few big content providers dominate the network. Over 50% of all CIDs are provided by only ten peers. We also proved that they indeed cover almost the entire hash space.
+Our Hydra-Booster study uncovered insights not known before. The unique position which Hydras occupy in the network allows us to get a comprehensive view of the content and peers in the network. We found that the majority of content has only one providing peer and likely resides in the US. Further, only a few big content providers dominate the network. Over 50% of all CIDs are provided by only ten peers. We also proved that they indeed cover almost the entire hash space.
 
-Controlled experiments estimated the performance impact of removing Hydras from the network. These estimates were slightly too optimistic because nodes that ignore Hydras (as we used for our estimation) effectively don’t contact peers that won’t reply with relevant answers anyways and therefore operate smarter than the nodes that still ask Hydras for provider records. Nevertheless, the measurements allowed us to make an informed decision of unplugging the common database.
+Controlled experiments estimated the performance impact of removing Hydras from the network. We predicted the performance impact to be ~14.8%, ~14.7%, and ~10.4% slower time to first provider record for the 50th, 90th, and 95th percentiles. However, we observed a ~27.8%, ~16.5%, and ~12.5% increase respectively. Our predictions were slightly too optimistic because nodes that ignore Hydras (as we used them for our estimation) effectively don’t contact peers that won’t reply with relevant answers anyways and therefore operate smarter than the nodes that still ask Hydras for provider records. Nevertheless, the measurements allowed us to make an informed decision about unplugging the common database.
