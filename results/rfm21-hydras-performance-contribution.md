@@ -19,8 +19,6 @@ Status: Completed
 - [DHT Performance](#dht-performance)
   - [Database Shut-Down Monitoring](#database-shut-down-monitoring)
     - [Dataset](#dataset)
-  - [Ignoring a Fraction of Hydra Nodes](#ignoring-a-fraction-of-hydra-nodes)
-    - [Dataset](#dataset-1)
 - [Conclusions](#conclusions)
 
 
@@ -260,7 +258,7 @@ We uploaded all node logs to [web3.storage](http://web3.storage). The following 
 | nodes-list-ignore-hydras-node-6.log | hetzner_eu_nbg | bafybeibegjgg7ztxceaut3kb7eytnqeaco6wlqwntnlqy7ns3lmtr6f3na |
 | nodes-list-ignore-hydras-node-7.log | hetzner_us_ash | bafybeidf5ues5gldc6nidrsgqxfcd3z54cq4ypj4vnfag775r4q6rgy6by |
 
-## Ignoring a Fraction of Hydra Nodes
+<!-- ## Ignoring a Fraction of Hydra Nodes
 
 
 > **Note**
@@ -325,7 +323,7 @@ nodes-list-wo-100pct-node-2.log,bafybeidmcebgkikreosgzzywh4anfkjr3bb2pcezqojdj3r
 nodes-list-wo-100pct-node-3.log,bafybeieqcc2v3k2l7h2yyyyfyatybmboh4fmpjfxfgyb44cfqgw6yhyjlm
 nodes-list-wo-100pct-node-4.log,bafybeibjg2ievigbcn4zr5hc4ajk4sz3ntnz33tq7gmtk5dot5etzp7g44
 nodes-list-wo-100pct-node-5.log,bafybeierm5lusex4stqmtj5zx4jbwws6safenv23mjoeo4sbk5lzqmnoja
-```
+``` -->
 
 # Conclusions
 
