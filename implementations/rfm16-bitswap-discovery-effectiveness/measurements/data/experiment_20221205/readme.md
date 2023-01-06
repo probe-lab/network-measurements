@@ -1,2 +1,2 @@
 CIDs for data:
-bitswap.log - TBD
+bitswap.log - bafybeicvkqzxo25vortbyrjqdgglfzmpeet5lo7qh4od7aiwrspnwpqtwe
