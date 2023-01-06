@@ -199,7 +199,7 @@ Also the DHT walk path length has increased. Exemplarily, the `us_west_1` DHT wa
 
 ![ttfpr-path-length](../implementations/rfm21-hydras-performance-contribution/plots/ttfpr-path-length.png)
 
-This graph shows how many DHT hops a request needs to make when we take into account vs ignore Hydra responses.  E.g., if we utilize Hydra responses ~40% of DHT queries resolve within 3 DHT hops and ~48% within 4 DHT hops. If we ignore hydra responses only ~8% of DHT queries resolve within 3 DHT hops ~73% within 4 DHT hops. In both cases the majority of requests need 4 DHT hops, but ignoring Hydras yields a higher percentage of 4-hop DHT walks. This graph basically summarises the contribution of Hydras in the IPFS network and explains the slight performance boost of about 10% (see first plot in this subsection) when using Hydras.
+This graph shows how many DHT hops a request needs to make when we take into account vs ignore Hydra responses.  E.g., if we utilize Hydra responses, ~40% of DHT queries resolve within 3 DHT hops and ~48% within 4 DHT hops. If we ignore hydra responses, only ~8% of DHT queries resolve within 3 DHT hops ~73% within 4 DHT hops. In both cases the majority of requests need 4 DHT hops, but ignoring Hydras yields a higher percentage of 4-hop DHT walks. This graph basically summarises the contribution of Hydras in the IPFS network and explains the slight performance boost of about 10% (see first plot in this subsection) when using Hydras.
 
 ## Database Shut-Down Monitoring
 
