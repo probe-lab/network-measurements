@@ -11,6 +11,7 @@ Status: Completed
 - [Summary of Results](#summary-of-results)
 - [Introduction](#introduction)
   - [Keyspace Coverage](#keyspace-coverage)
+    - [Dataset](#dataset)
 - [DHT Content](#dht-content)
   - [Churn](#churn)
   - [Provider Distribution](#provider-distribution)
@@ -18,13 +19,13 @@ Status: Completed
   - [PeerID Locality](#peerid-locality)
 - [DHT Performance](#dht-performance)
   - [Database Shut-Down Monitoring](#database-shut-down-monitoring)
-    - [Dataset](#dataset)
+    - [Dataset](#dataset-1)
 - [Conclusions](#conclusions)
 
 
 # Summary of Results
 
-- The Hydra Boosters operated by PL cover almost the entire hash space (>97%)
+- The Hydra Boosters operated by PL cover almost the entire hash space (>96%)
 - Majority of CIDs have only a single provider (~80%)
 - Majority of content resides in the US (~55%)
 - Only ten peers provide over 50% of all CIDs advertised to the DHT
@@ -61,12 +62,19 @@ The following graph illustrates that the Hydra heads follow a uniform distributi
 
 > This graph shows the CDF of normalized Hydra head PeerIDs to the range `[0,1)`. If this wasn’t a straight line the distribution wouldn’t be uniform.
 
-However, the linear relationship above is at best a necessary condition and not sufficient. To determine the fraction of the network that the Hydra heads cover we constructed a [binary trie](https://github.com/guillaumemichel/py-binary-trie) of all peers in the DHT network. We used a [Nebula](https://github.com/dennis-tra/nebula) DHT snapshot to get a list of all peers. Then we calculated the 20 closest neighbors to each peer and checked if one of these neighbors is indeed a Hydra head. We found the following numbers:
+However, the linear relationship above is at best a necessary condition and not sufficient. To determine the fraction of the network that the Hydra heads cover we constructed a [binary trie](https://github.com/guillaumemichel/py-binary-trie) of all peers in the DHT network. We used a [Nebula](https://github.com/dennis-tra/nebula) DHT snapshot to get a list of all peers. Then we calculated the 19 closest neighbors to each peer and checked if one of these neighbors is indeed a Hydra head. We found the following numbers:
 
 - Total number of peers in the network: `16,208`
-- Peers with at least one Hydra head in the proximity of 20 peers: `15,732`
+- Peers with at least one Hydra head in the proximity of 19 peers: `15,669`
 
-This makes a keyspace coverage of `97.1%` and proves that the Hydras indeed cover *almost* the entire DHT. This result underpins all the following conclusions and should be kept in mind.
+This makes a keyspace coverage of `96.6%` and proves that the Hydras indeed cover *almost* the entire DHT. This result underpins all the following conclusions and should be kept in mind.
+
+_Why only the 19 closest peers?_ When peers attempt to store a provider record in the DHT the CID will fall in between two peer IDs (in terms of XOR distance). This means that if we check if a hydra is in the immediate proximity of a specific peer, that peer is already one of those 20 peers. Hence, we only check for the 19 closest peers.
+
+### Dataset
+
+1. Peer multihashes: `bafybeiaq4uuelzmyi7ovathp3hwixcqu3k52klqqys5xd74cfl7t6nvkdu`
+2. Hydra Head IDs: `bafybeicdmqob54fd2lngx62stay6gy2bznwsfxsrfrk7wmvzubfuci4nnu`
 
 # DHT Content
 
