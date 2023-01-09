@@ -90,7 +90,7 @@ To calculate the CID churn rate we took daily database dumps of all stored provi
 
 ![churn-bars](../implementations/rfm21-hydras-performance-contribution/plots/churn-bars.png)
 
-> Data and query can be found [here](https://www.notion.so/2022-09-20-Hydras-Analysis-5db53b6af3e04a46aaf7a776e65ae97d)
+> Data and query can be found [here](https://pl-strflt.notion.site/2022-09-20-Hydras-Analysis-5db53b6af3e04a46aaf7a776e65ae97d)
 
 The above graph shows the total number of unique CIDs in the common Hydra database (blue bars). The orange bars show the intersection with the previous day and the green bar shows the intersection with the day before that (i.e., two days in the past). There is on average 50% churn rate of CIDs within 24h. Assuming that each CID corresponds to a 256kB chunk (default chunk size in kubo) we see that ~120TB of data churn but also that an equal volume join each day. However, as can be seen from the first graph. The total number of provider records (and indirectly the total number of unique CIDs) varies quite a bit over time.
 
