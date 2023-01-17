@@ -36,7 +36,7 @@ Assuming that content in the IPFS network is uniformly distributed among the ~20
 
 ## Summary of Results
 
-We measured that 98% of all requested content was successfully discovered by Bitswap without the help of the DHT. Among the successful requests, 75% of them have a discovery and fetching latency below 200 milliseconds. It is important noting that the content of 50'062 requests was provided by 723 distinct peers, and the top 10 providers served roughly 60% of all requests. On average 1714 messages were sent to 856 distinct remote peers for every Bitswap request.
+Contrary to our intuition, we found that 98% of all requested content was successfully discovered by Bitswap without the help of the DHT. Among the successful requests, 75% of them have a discovery and fetching latency below 200 milliseconds. It is important to note that the content of 50'062 requests was provided by 723 distinct peers, and the top 10 providers served roughly 60% of all requests. On average 1714 messages were sent to 856 distinct remote peers for every Bitswap request.
 
 ## Measurement Methodology
 
