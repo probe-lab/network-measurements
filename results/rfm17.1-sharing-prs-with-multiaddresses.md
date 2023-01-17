@@ -73,7 +73,7 @@ The experiment was done for a total of 100 CIDs for over 50 minutes on the 23rd 
 
 ### 4.1-PR holder's direct reply
 
-Looking closely at the ratio of PR holders that reply the PR from Figure [1], we see that continuously 16 to 17 PR holders are sharing them over the entire study. Please keep in mind that there is a delay of 3 mins between ping rounds. 
+Looking closely at the ratio of PR holders that reply with the PR from Figure [1], we see that continuously 16 to 17 PR holders are sharing them over the entire study. Please keep in mind that there is a delay of 3 mins between ping rounds. 
 
 ![img](./../implementations/rmf17.1-sharing-prs-with-multiaddresses/plots/pr_from_prholders_pings.png)
 
