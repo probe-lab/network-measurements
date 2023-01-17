@@ -8,6 +8,8 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 **[RFM 17 | Provider Record Liveness](#rfm-17--provider-record-liveness)**
 
+**[RFM 16 | Effectiveness of Bitswap Discovery Process](#rfm-16--effectiveness-of-bitswap-discovery-process)**
+
 **[RFM 19 | DHT Routing Table Health](#rfm-19--dht-routing-table-health)**
 
 **[RFM 21 | Quantify Hydra’s Performance Contribution](#rfm-21--quantify-hydras-performance-contribution)**
@@ -19,8 +21,6 @@ This page lists measurements that are useful to understand the dynamics and the 
 **[RFM 7 | Distribution of DHT lookup times and Breakdown of Content Routing Latency](#rfm-7---distribution-of-dht-lookup-times-and-breakdown-of-content-routing-latency)**
 
 **[RFM 15 | Decentralized NAT Hole-Punching Performance](#rfm-15--decentralized-nat-hole-punching-performance)**
-
-**[RFM 16 | Effectiveness of Bitswap Discovery Process](#rfm-16--effectiveness-of-bitswap-discovery-process)**
 
 ## Current Priority - Batch 1
 
@@ -532,12 +532,12 @@ All three components need to be build.
 
 ## RFM 16 | Effectiveness of Bitswap Discovery Process
 
-* _Status:_ **ready**
-* _DRI/Team:_
+* _Status:_ **complete**
+* _DRI/Team:_ [`@guillaumemichel`](https://github.com/guillaumemichel)
 * _Effort Needed:_
 * _Prerequisite(s):_
 * _Value:_ **HIGH**
-* _Report:_ \<insert link to report once work is complete\>
+* _Report:_ [`rfm16-bitswap-discovery-effectiveness.md`](./results/rfm16-bitswap-discovery-effectiveness.md)
 
 
 #### Proposal
@@ -651,8 +651,8 @@ Intuitively, we are expecting the following order in terms of latency: RM-3 < RM
 
 ## RFM 19 | DHT Routing Table Health
 
-* _Status:_ **completed**
-* _DRI/Team:_ @guillaumemichel
+* _Status:_ **complete**
+* _DRI/Team:_ [`@guillaumemichel`](https://github.com/guillaumemichel)
 * _Effort Needed:_
 * _Prerequisite(s):_ None
 * _Value:_ **HIGH**
