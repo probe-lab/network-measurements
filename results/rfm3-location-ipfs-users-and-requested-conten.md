@@ -71,7 +71,7 @@ The geo-location data is provided by the [MaxMind GeoLite2 database](https://dev
 
 #### Results
 
-The total gateway logs dataset had 123,959,912 total HTTP requests that spanned over the course of 2 weeks. 2,165 (0.001%) of these were out of format and thus discarded. 24,298,396 (19.602%) were HTTP operations other than GET operations that did not represent a request to the IPFS network. This left 82,439,744 (80.396%) HTTP requests that were GET operations. Out of these, only 58,869,788 were considered valid (had an HTTP status of 200 or 300, and had a CID). This represents 47.5% of the total gateway dataset. In these HTTP requests, 4,009,575 different CIDs were requested, which we used in the next step of our study. The following table summarises the data just discussed.
+The total gateway logs dataset had 123,959,912 total HTTP requests that spanned over the course of 2 weeks. The following table summarises the breakdown of the dataset. 2,165 (0.001%) of these were out of format and thus discarded. 24,298,396 (19.602%) were HTTP operations other than GET operations that did not represent a request to the IPFS network (illustrated as "Not GETs" in the table). This left 82,439,744 (80.396%) HTTP requests that were GET operations (illustrated as "All GETs"). Out of these, only 58,869,788 were considered Valid GETs (had an HTTP status of 200 or 300, and had a CID). This represents 47.5% of the total gateway dataset. In these HTTP requests, 4,009,575 different CIDs were requested, which we used in the next step of our study.
 
 |  | Number of entries | Percentage |
 | --- | --- | --- |
