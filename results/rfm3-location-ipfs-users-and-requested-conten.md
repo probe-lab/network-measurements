@@ -220,7 +220,7 @@ Figure 4 presents the concentration of requests on the y axis over the Autonomou
 
 #### Request latency
 
-Next we analyse the time it takes for the gateway to process the requests (i.e., request latency). Figure 5 presents an ECDF (empirical cumulative distribution function, it is empirical because it is obtained from the observed data points)  plot of the request latency (represented in the x axis of the plot, labeled request time, in seconds).  Here we see that about half of the requests made to the gateway have sub-second latency, which, although can be considered a positive result, it is still slow for most users that expect quick responses in the order of few hundreds of milliseconds.
+Next we analyse the time it takes for the gateway to process the requests (i.e., request latency). Figure 5 presents an ECDF (empirical cumulative distribution function. It is empirical because it is obtained from the observed data points)  plot of the request latency (represented in the x axis of the plot, labeled request time, in seconds).  Here we see that about half of the requests made to the gateway have sub-second latency, which, although can be considered a positive result, it is still slow for most users that expect quick responses in the order of few hundreds of milliseconds.
 
 If look at the tail latency, we have requests that take from several minutes (> 100, < 1000 seconds), and requests that can take up to hours (> 1000, < 10,000 seconds) which are unacceptable latencies for any user.
 
