@@ -238,7 +238,7 @@ Latency is influenced by two main factors: network communication and content siz
 | EXPIRED | 3566 | 0.006% |
 | REVALIDATED | 7504 | 0.013% |
 
-From here we see that about about 27% of all requests (with cache status HIT) were cached in the gateway at the time of the request, and about 71% of all requests (with cache status MISS) actually made requests to the IPFS network. Note that are other cache status albeit at very small percentages. Nevertheless, the status EXPIRED and REVALIDATED mean that a request made to the gateway updated the cache entry. The status marked as “-”  means that the request never made it to the cache, where the request most likely failed.
+From here we see that about about 27% of all requests (with cache status HIT) were cached in the gateway at the time of the request, and about 71% of all requests (with cache status MISS) actually made requests to the IPFS network. Note that there are other cache statuses albeit at very small percentages. Nevertheless, the status EXPIRED and REVALIDATED mean that a request made to the gateway updated the cache entry. The status marked as “-”  means that the request never made it to the cache, where the request most likely failed.
 
 In Figure 6 we plot the request latency ECDF characterized by the cache status. From here we see that requests with a cache status of MISS take more time than the rest. This is not surprising as these requests make a request to the IPFS network. However, interestingly, request that have a cache status of HIT can still take some time, which we believe is most likely due to the size of the content.
 
