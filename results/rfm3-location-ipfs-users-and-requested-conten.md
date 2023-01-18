@@ -272,7 +272,7 @@ In Figure 10 we show the ECDF of the request latency of request with a cache sta
 
 Figure 10. Request latency (time in seconds) for requests with cache status MISS by provider continent.
 
-Intuitively, a Multi-level DHT design that groups nodes by their geographic region would present different results for Figures 9 and 10, showing a clear pattern where content provided by peers in the region of the DHT would yield a lower latency than requests to content provided by peers in different regions that of the gateway. However, this depends on the access patterns of from where content is requested to where it provided, as well as the amount of content requested. In the following we analyse the frequency of requests over each distinct CID - with this we effectively measure the popularity of CIDs.
+Intuitively, a Multi-level DHT design that groups nodes by their geographic region would present different results for Figures 9 and 10, showing a clear pattern where content provided by peers in the region of the DHT would yield a lower latency than requests to content provided by peers in different regions than that of the gateway. However, this depends on the access patterns of where content is requested from to where it was provided, as well as the amount of content requested. In the following we analyse the frequency of requests over each distinct CID - with this we effectively measure the popularity of CIDs.
 
 #### Requested CIDs popularity
 
