@@ -353,7 +353,7 @@ Figure 17. ECDF distribution of CIDs provided by different peers (CID replicas) 
 
 #### Distribution of CIDs per Provider
 
-Figure 18 shows the ECDF for the percentage of providers (in the y axis) that provided at most a given number of distinct CIDs (in the x axis). From this, we can see that almost 60% of providers only provide a single CID, and that less than 5% of providers provide more than 100 different CIDS. This shows that there are a select few providers that provided most of the requested content.
+Figure 18 shows the ECDF for the percentage of providers (in the y axis) that provided at most a given number of distinct CIDs (in the x axis). From this, we can see that almost 60% of providers only provide a single CID, and that less than 5% of providers provide more than 100 different CIDs. This shows that there are a select few providers that provided most of the requested content.
 
 Figure 19 breaks down this information by continent. Here we can see the providers that provide more CIDs are located in North America and in Europe.
 
