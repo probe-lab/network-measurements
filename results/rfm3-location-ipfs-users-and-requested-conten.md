@@ -341,7 +341,7 @@ In the following we analyse the distribution of CIDs over providers. In more det
 
 #### Distribution of CIDs over different Providers
 
-Figure 16 shows an ECDF distribution on the percentage of CIDs (in the y axis) that have at most a given amount of different providers (in the x axis). We can see here that a bit more than 40% of CIDs only have single provider and that only a small percentage of CIDs have more than 10 different providers. This shows that in IPFS (for the requested content from the gateway) most content have only a select few providers. Figure 17 breaks this information by continent, where we can see that CIDs provided by providers in Africa and North America have more distinct providers in that region. However, this can be simply due to the fact that these represent the largest and smallest partition respectively.  
+Figure 16 shows an ECDF distribution on the percentage of CIDs (in the y axis) that have at most a given amount of different providers (in the x axis). We can see here that a bit more than 40% of CIDs only have single provider and that only a small percentage of CIDs have more than 10 different providers. This shows that in IPFS (for the particular dataset from the gateway) most content items have only a select few providers. Figure 17 breaks this information by continent, where we can see that CIDs provided by providers in Africa and North America have more distinct providers in that region. However, this can be simply due to the fact that these represent the largest and smallest partition respectively.  
 
 ![Figure 16. ECDF distribution of CIDs provided by different peers (CID replicas).](../implementations/rmf3-location-ipfs-users-and-requested-content/plots/cid_replicas.png)
 
