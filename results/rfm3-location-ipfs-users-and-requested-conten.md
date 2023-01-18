@@ -304,7 +304,7 @@ For a Multi-level DHT design that groups nodes according to their geographic reg
 
 ### Providers
 
-For the providers data, we begin by analysing the geo-distribution of providers. This is shown in following table.
+For the providers data, we begin by analysing the geo-distribution of providers. This is shown in the following table.
 
 |  | Africa (AF) | Asia (AS) | Europe (EU) | North America (NA) | Oceania (OC) | South America (SA) | Antartica (AN) | Relayed (Rl) | Unknown (Un) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
