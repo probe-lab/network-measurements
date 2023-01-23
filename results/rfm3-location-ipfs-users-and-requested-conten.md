@@ -222,13 +222,13 @@ These findings suggest that because most requests are made from a few different 
 
 #### Request latency
 
-Next we analyse the time it takes for the gateway to process the requests (i.e., request latency). Figure 5 presents an ECDF (empirical cumulative distribution function. It is empirical because it is obtained from the observed data points)  plot of the request latency (represented in the x axis of the plot, labeled request time, in seconds).  Here we see that about half of the requests made to the gateway have sub-second latency, which, although can be considered a positive result, it is still slow for most users that expect quick responses in the order of few hundreds of milliseconds.
+Next we analyse the time it takes for the gateway to process the requests (i.e., request latency). Here we are considering the time from when the gateway received the first byte from the client to when the gateway sent the last byte to the client. Figure 5 presents an ECDF (empirical cumulative distribution function. It is empirical because it is obtained from the observed data points) plot of the request latency, represented in the x axis of the plot, labeled Full Request Time, in seconds.  Here we see that about half of the requests made to the gateway have sub-second latency, which, although can be considered a positive result, it is still slow for most users that expect quick responses in the order of few hundreds of milliseconds.
 
-If we look at the tail latency, we have requests that take from several minutes (> 100, < 1000 seconds) to requests that can take up to hours (> 1000, < 10,000 seconds) which are unacceptable latencies for any user.
+If we look at the tail latency, we have requests that take from several minutes (higher than 100 seconds and lower than 1000 seconds) to requests that can take up to hours (higher than 1000 and lower than 10,000 seconds) which are unacceptable latencies for any user.
 
-![Figure 5. Request latency (time).](../implementations/rmf3-location-ipfs-users-and-requested-content/plots/request_time.png)
+![Figure 5. Request latency (Full Request Time).](../implementations/rmf3-location-ipfs-users-and-requested-content/plots/request_time.png)
 
-Figure 5. Request latency (time).
+Figure 5. Request latency (Full Request Time).
 
 Latency is influenced by two main factors: network communication and content size. The IPFS gateway contains a cache, to avoid having the gateway to request every content on the IPFS network. The following table summarizes the cache status of all requests that we processed.
 
@@ -242,37 +242,37 @@ Latency is influenced by two main factors: network communication and content siz
 
 From here we see that about about 27% of all requests (with cache status HIT) were cached in the gateway at the time of the request, and about 71% of all requests (with cache status MISS) actually made requests to the IPFS network. Note that there are other cache statuses albeit at very small percentages. Nevertheless, the status EXPIRED and REVALIDATED mean that a request made to the gateway updated the cache entry. The status marked as “-”  means that the request never made it to the cache, where the request most likely failed.
 
-In Figure 6 we plot the request latency ECDF characterized by the cache status. From here we see that requests with a cache status of MISS take more time than the rest. This is not surprising as these requests make a request to the IPFS network. However, interestingly, requests that have a cache status of HIT can still take some time, which we believe is most likely due to the size of the content.
+In Figure 6 we plot the full request latency ECDF characterized by the cache status. From here we see that requests with a cache status of MISS take more time than the rest. This is not surprising as these requests make a request to the IPFS network. However, interestingly, requests that have a cache status of HIT can still take some time, which we believe is most likely due to the size of the content.
 
-![Figure 6. Request latency (time) by cache status.](../implementations/rmf3-location-ipfs-users-and-requested-content/plots/request_time_cache.png)
+![Figure 6. Request latency (Full Request Time) by cache status.](../implementations/rmf3-location-ipfs-users-and-requested-content/plots/request_time_cache.png)
 
 Figure 6. Request latency (time) by cache status.
 
-Figure 7 shows the distribution of the size of the requested content (in the y axis, labeled Body Bytes, in bytes) over the request latency (in the x axis, labeled Request Time, in seconds) for requests with cache status HIT. From this figure we can see the relation between the size of the content and the latency of the request, without the effects of network communication. We see, from the top left part of the figure that the higher the content is the longer the request takes to be processed. However, we also see that there are a lot of requests that independent of the size of the requested content, still take several seconds. We believe this may be due to queuing of requests or exhaustion of resources in the gateway. However, with the data we analysed we cannot draw any conclusions, yet we suggest this should be further investigated.
+Figure 7 shows the distribution of the size of the requested content (in the y axis, labeled Body Bytes, in bytes) over the request latency (in the x axis, labeled Full Request Time, in seconds) for requests with cache status HIT. From this figure we can see the relation between the size of the content and the latency of the request, without the effects of network communication. We see, from the top left part of the figure that the higher the content is the longer the request takes to be processed. However, we also see that there are a lot of requests that independent of the size of the requested content, still take several seconds. We believe this may be due to queuing of requests or exhaustion of resources in the gateway. However, with the data we analysed we cannot draw any conclusions, yet we suggest this should be further investigated.
 
-![Figure 7. Size of the content (Body bytes) over request latency (Request time) for requests with cache status HIT.](../implementations/rmf3-location-ipfs-users-and-requested-content/plots/request_time_body_bytes_hits.png)
+![Figure 7. Size of the content (Body bytes) over request latency (Full Request Time) for requests with cache status HIT.](../implementations/rmf3-location-ipfs-users-and-requested-content/plots/request_time_body_bytes_hits.png)
 
-Figure 7. Size of the content (Body bytes) over request latency (Request time) for requests with cache status HIT.
+Figure 7. Size of the content (Body bytes) over request latency (Full Request time) for requests with cache status HIT.
 
-Figure 8 shows the distribution of the size of the requested content (in the y axis, labeled Body Bytes, in bytes) over the request latency (in the x axis, labeled Request Time, in seconds) for requests with cache status MISS. From this figure we can see the effects of network communication when processing requests. This is most noticeable on the left most part of the figure, where we see that, compared with Figure 7, requests take longer to process. An interesting thing about Figure 8 is the sudden increase in latency for content sizes of 10Kb. We do not know the reason for this, but we suspect it to be related to the size of blocks that compose the content, and the way the gateway node transfers blocks that belong to the same content.
+Figure 8 shows the distribution of the size of the requested content (in the y axis, labeled Body Bytes, in bytes) over the request latency (in the x axis, labeled Full Request Time, in seconds) for requests with cache status MISS. From this figure we can see the effects of network communication when processing requests. This is most noticeable on the left most part of the figure, where we see that, compared with Figure 7, requests take longer to process. An interesting thing about Figure 8 is the sudden increase in latency for content sizes of 10Kb. We do not know the reason for this, but we suspect it to be related to the size of blocks that compose the content, and the way the gateway node transfers blocks that belong to the same content.
 
-![Figure 8. Size of content (Body bytes) over request latency (Request time) for requests with cache status MISS.](../implementations/rmf3-location-ipfs-users-and-requested-content/plots/request_time_body_bytes_misses.png)
+![Figure 8. Size of content (Body bytes) over request latency (Full Request Time) for requests with cache status MISS.](../implementations/rmf3-location-ipfs-users-and-requested-content/plots/request_time_body_bytes_misses.png)
 
-Figure 8. Size of content (Body bytes) over request latency (Request time) for requests with cache status MISS.
+Figure 8. Size of content (Body bytes) over request latency (Full Request time) for requests with cache status MISS.
 
-Lastly, one additional factor can influence network communication, which is the distance to the content provider. In Figure 9 we plot the distribution of the size of the requested content (in the y axis, labeled Body Bytes, in bytes) over the request latency (in the x axis, labeled Request Time, in seconds) for requests with cache status MISS, characterized by the continent where there is a provider for that content. Note that because content can be provided by multiple peers it multiples the number of requests over the number of providers for the requested content. To avoid plotting all the data, we choose only to present a random sample (1% of all requests served by providers in each continent) to see if there was the possibility that regions closer or farther to that of the gateway would influence the request latency.
+Lastly, one additional factor can influence network communication, which is the distance to the content provider. In Figure 9 we plot the distribution of the size of the requested content (in the y axis, labeled Body Bytes, in bytes) over the request latency (in the x axis, labeled Full Request Time, in seconds) for requests with cache status MISS, characterized by the continent where there is a provider for that content. Note that because content can be provided by multiple peers it multiples the number of requests over the number of providers for the requested content. To avoid plotting all the data, we choose only to present a random sample (1% of all requests served by providers in each continent) to see if there was the possibility that regions closer or farther to that of the gateway would influence the request latency.
 
 We see from Figure 9 that there is no evident pattern related to the continent where the content is served. In a way, this is not surprising as the IPFS network is not topologically organized geographically.
 
-![Figure 9. Size of content (Body bytes) over request latency (Request time) for requests with cache status MISS by provider continent.](../implementations/rmf3-location-ipfs-users-and-requested-content/plots/request_time_x_continent_dist.png)
+![Figure 9. Size of content (Body bytes) over request latency (Full Request Time) for requests with cache status MISS by provider continent.](../implementations/rmf3-location-ipfs-users-and-requested-content/plots/request_time_x_continent_dist.png)
 
-Figure 9. Size of content (Body bytes) over request latency (Request time) for requests with cache status MISS by provider continent.
+Figure 9. Size of content (Body bytes) over request latency (Full Request time) for requests with cache status MISS by provider continent.
 
 In Figure 10 we show the ECDF of the request latency of request with a cache status of MISS, characterized by the continent where there is a provider for the requested content. In this figure we plot all the data, not just the sample as in the previous figure. From this figure we can see that, except from Africa (AF), present a similar distribution of request latency. The results for content provided by peers in Africa, take unexpectedly less time than the remainder regions. This can be explained by the fact that there is a lot less providers in the African regions (shown further ahead).
 
-![Figure 10. Request latency (time in seconds) for requests with cache status MISS by provider continent.](../implementations/rmf3-location-ipfs-users-and-requested-content/plots/request_time_x_continent_ecdf.png)
+![Figure 10. Request latency (Full Request Time) for requests with cache status MISS by provider continent.](../implementations/rmf3-location-ipfs-users-and-requested-content/plots/request_time_x_continent_ecdf.png)
 
-Figure 10. Request latency (time in seconds) for requests with cache status MISS by provider continent.
+Figure 10. Request latency (Full Request Time) for requests with cache status MISS by provider continent.
 
 Intuitively, a Multi-level DHT design that groups nodes by their geographic region would present different results for Figures 9 and 10, showing a clear pattern where content provided by peers in the region of the DHT would yield a lower latency than requests to content provided by peers in different regions than that of the gateway. However, this depends on the access patterns of where content is requested from to where it was provided, as well as the amount of content requested. In the following we analyse the frequency of requests over each distinct CID - with this we effectively measure the popularity of CIDs.
 
