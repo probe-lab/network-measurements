@@ -105,9 +105,9 @@ From the total unique CID dataset we gathered from the previous step (4,009,575 
 | CIDs w/out Providers | 2, 175, 608 | 54.26% |
 | CIDs w/ Providers | 1, 833, 967 | 45.74% |
 | Total Providers | 55, 830 | 100% |
-| Providers w/out address | 32, 968 | 59% |
-| Providers w/ address | 22, 862 | 41% |
-| Providers w/ address after find | 26, 886 | 48% |
+| Providers w/out address after FindProviders | 32, 968 | 59% |
+| Providers w/ address after FindProviders | 22, 862 | 41% |
+| Providers w/ address after FindProviders + FindPeer | 26, 886 | 48% |
 
 ### Step 3. Visualize data
 
@@ -203,7 +203,9 @@ For completeness, we perform a brief analysis on the origin Autonomous systems o
 
 Figure 4. Concentration of requests over Autonomous systems (ASes)
 
-Figure 4 presents the concentration of requests on the y axis over the Autonomous systems on the x axis. Here we see that there are a lot of requests coming from the same Autonomous systems, which demonstrated that for most requests there is a low variability of the Autonomous system. The following table presents a summary of the top 10 Autonomous systems with most originating requests.
+Figure 4 presents the concentration of requests on the y axis over the Autonomous systems on the x axis. Here we see that there are a lot of requests coming from the same Autonomous systems, which demonstrated that for most requests there is a low variability of the Autonomous system. The following table presents a summary of the top 10 Autonomous systems with most originating requests. Note that this represents more than 50% of all requests.
+These findings suggest that because most requests are made from a few different ASes, a multi-level DHT design that groups peers based on their AS could be beneficial. However, such design also depends on where are these requests routed to. We perform this analysis further ahead in the report.
+
 
 | ASN | ASO | Requests | Percentage |
 | --- | --- | --- | --- |
