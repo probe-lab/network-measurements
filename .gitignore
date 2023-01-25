@@ -22,3 +22,10 @@
 # csv files too large for Github (max limit 100MB)
 implementations/rfm19-dht-routing-table-health/data/nebula-peers-5crawls.csv
 implementations/rfm19-dht-routing-table-health/data/nebula-peers-1week.csv
+
+# RFM16
+# ignore log files
+implementations/rfm16-bitswap-discovery-effectiveness/measurements/data/**/*.log
+implementations/rfm16-bitswap-discovery-effectiveness/measurements/data/**/*.txt
+implementations/rfm16-bitswap-discovery-effectiveness/measurements/cids/all-cids.txt
+

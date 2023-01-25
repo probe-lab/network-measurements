@@ -4,61 +4,62 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 ## Completed
 
-**[RFM 2 | Uptime and churn P2P network nodes](#rfm-2--uptime-and-churn-of-ipfs-network-nodes)**
+**[RFM 2 | Uptime and churn P2P network nodes](#rfm-2--uptime-and-churn-p2p-network-nodes)**
 
 **[RFM 17 | Provider Record Liveness](#rfm-17--provider-record-liveness)**
 
 **[RFM 17.1 | Sharing Provider Records with Multiaddress](#rfm-171--sharing-provider-records-with-multiaddress)**
 
+**[RFM 16 | Effectiveness of Bitswap Discovery Process](#rfm-16--effectiveness-of-bitswap-discovery-process)**
+
 **[RFM 19 | DHT Routing Table Health](#rfm-19--dht-routing-table-health)**
+
+**[RFM 21 | Quantify Hydra’s Performance Contribution](#rfm-21--quantify-hydras-performance-contribution)**
 
 ## Ongoing 
 
-**[RFM 3 | Location of IPFS end users and requested content](#_rd50td3ym8dy)**
+**[RFM 3 | Location of IPFS end users and requested content](#rfm-3---location-of-ipfs-end-users-and-requested-content)**
 
-**[RFM 7 | Distribution of DHT lookup times and Breakdown of Content Routing Latency](#_mjvqjcvas5uh)**
+**[RFM 7 | Distribution of DHT lookup times and Breakdown of Content Routing Latency](#rfm-7---distribution-of-dht-lookup-times-and-breakdown-of-content-routing-latency)**
 
 **[RFM 15 | Decentralized NAT Hole-Punching Performance](#rfm-15--decentralized-nat-hole-punching-performance)**
 
-**[RFM 16 | Effectiveness of Bitswap Discovery Process](#rfm-16--effectiveness-of-bitswap-discovery-process)**
-
 ## Current Priority - Batch 1
 
-**[RFM 4 | IP address Churn (Roaming) & PeerID distribution for nodes in the IPFS Network](#_1mu1tfaw8au3)**
+**[RFM 4 | IP address Churn (Roaming) & PeerID distribution for nodes in the IPFS Network](#rfm-4--ip-address-churn-roaming--peerid-distribution-for-nodes-in-the-ipfs-network)**
 
-**[RFM 6 | Mapping the AS-level topology of P2P networks](#_1xjatm7vfujn)**
+**[RFM 6 | Mapping the AS-level topology of P2P networks](#rfm-6---mapping-the-as-level-topology-of-the-ipfs-network)**
 
-**[RFM 11 | Compare how distributed is IPFS compared to Web2](#_5jccmpwaow0)**
+**[RFM 11 | Compare how distributed is IPFS compared to Web2](#rfm-11--compare-how-distributed-is-ipfs-compared-to-web2)**
 
 **[RFM 18 | TTFB through different architecture components](#rfm-18--ttfb-through-different-architecture-components)**
 
 ## Next Priority
 
-**[RFM 1 | Lifetime of a document in the IPFS Network](#_o575jad7aotj)**
+**[RFM 1 | Lifetime of a document in the IPFS Network](#rfm-1--liveness-of-a-document-in-the-ipfs-network)**
 
-**[RFM 5 | IP Geolocation of P2P networks](#_fld2sr9emn3m)**
+**[RFM 5 | IP Geolocation of P2P networks](#rfm-5---ip-address-geolocation-of-peers-in-the-ipfs-network)**
 
-**[RFM 8 | Path length and Latency measurements](#_22mtgvvx3kv0)**
+**[RFM 8 | Path length and Latency measurements](#rfm-8---path-length-and-latency-measurements)**
 
-**[RFM 9 | Compare the lifetime of content in the Web 2.0 vs Web 3.0](#_shcpqw274ty2)**
+**[RFM 9 | Compare the lifetime of content in the Web 2.0 vs Web 3.0](#rfm-9---compare-the-availability-and-lifetime-of-content-in-the-web-20-vs-web-30)**
 
-**[RFM 10 | Compare the content delivery latency of content hosted in IPFS to Web2](#_nzea2tn76odd)**
+**[RFM 10 | Compare the content delivery latency of content hosted in IPFS to Web2](#rfm-10---compare-the-content-delivery-latency-of-content-hosted-in-ipfs-to-web2)**
 
-**[RFM 12 | Bandwidth heat map](#_raqcome2o67l)**
+**[RFM 12 | Bandwidth heat map](#rfm-12--bandwidth-heat-map)**
 
-**[RFM 13 | The Impact of Gateways to IPFS as a content delivery network](#_ksnbuwtki94z)**
+**[RFM 13 | The Impact of Gateways to IPFS as a content delivery network](#rfm-13---the-impact-of-gateways-to-ipfs-as-a-content-delivery-network)**
 
-**[RFM 14 | How efficient is caching in the IPFS network?](#_j426cm9u3j1h)**
+**[RFM 14 | How efficient is caching in the IPFS network?](#rfm-14--how-efficient-is-caching-in-the-ipfs-network)**
 
-**[RFM 20 | Data volume stored on IPFS and file size distribution](#data-volume)**
+**[RFM 20 | Data volume stored on IPFS and file size distribution](#rfm-20--data-volume-stored-on-ipfs-and-file-size-distribution)**
 
 ## Other
 
-**[Tooling/Other notes](#tooling)**
+**[Tooling/Other notes](#toolingother-notes)**
 
 ---
 
-<a id="_o575jad7aotj"></a>
 ## RFM 1 | Liveness of a document in the IPFS Network
 
 
@@ -138,7 +139,6 @@ We have a dashboard or plots that are produced periodically (e.g., daily or week
 
 ##
 
-<a id="_rd50td3ym8dy"></a>
 ## RFM 3 - Location of IPFS end users and requested content.
 
 * _Status:_ **ready**
@@ -162,7 +162,6 @@ We have a heatmap-style plot that visualizes the volume of requests between diff
 
 ##
 
-<a id="_1mu1tfaw8au3"></a>
 ## RFM 4 | IP address Churn (Roaming) & PeerID distribution for nodes in the IPFS Network
 
 * _Status:_ **ready**
@@ -216,7 +215,6 @@ Additional ideas: we have a dashboard that shows the IP address churn of nodes:
 
 ##
 
-<a id="_fld2sr9emn3m"></a>
 ## RFM 5 - IP Address Geolocation of peers in the IPFS Network
 
 * _Status:_ **draft**
@@ -242,7 +240,6 @@ We will have a dynamic database that will map IPs to geographic coordinates, and
 
 ##
 
-<a id="_1xjatm7vfujn"></a>
 ## RFM 6 - Mapping the AS-level topology of the IPFS Network
 
 * _Status:_ **ready**
@@ -266,7 +263,6 @@ We have a dashboard or plot that shows the distribution of nodes to ASNs, and an
 
 ##
 
-<a id="_mjvqjcvas5uh"></a>
 ## RFM 7 - Distribution of DHT lookup times and Breakdown of Content Routing Latency
 
 * _Status:_ **ready**
@@ -308,7 +304,6 @@ We have a dashboard, or a range of plots that show different buckets with the nu
 
 ##
 
-<a id="_22mtgvvx3kv0"></a>
 ## RFM 8 - Path length and Latency measurements
 
 * _Status:_ **brainstorm**
@@ -332,7 +327,6 @@ A real-time observatory of latencies and path lengths in the form of a dashboard
 
 ##
 
-<a id="_shcpqw274ty2"></a>
 ## RFM 9 - Compare the availability and lifetime of content in the Web 2.0 vs Web 3.0
 
 * _Status:_ **brainstorm**
@@ -356,7 +350,6 @@ A dashboard that will provide statistics on content overlap and content availabi
 
 ##
 
-<a id="_nzea2tn76odd"></a>
 ## RFM 10 - Compare the content delivery latency of content hosted in IPFS to Web2
 
 * _Status:_ **brainstorm**
@@ -380,7 +373,6 @@ Measure and analyze the performance of retrieving content between IPFS and Web2 
 
 ##
 
-<a id="_5jccmpwaow0"></a>
 ## RFM 11 | Compare how distributed is IPFS compared to Web2
 
 * _Status:_ **ready**
@@ -413,7 +405,6 @@ Excessive dependency on centralized cloud operators may have performance and res
 
 ##
 
-<a id="_raqcome2o67l"></a>
 ## RFM 12 | Bandwidth heat map
 
 * _Status:_ **brainstorm**
@@ -437,7 +428,6 @@ Once we have mapped the topology of the network, it may be useful to map the lin
 
 ##
 
-<a id="_ksnbuwtki94z"></a>
 ## RFM 13 - The Impact of Gateways to IPFS as a content delivery network
 
 * _Status:_ **brainstorm**
@@ -477,7 +467,6 @@ A plot to show the times content has been fetched from Gateways as compared to r
 
 ##
 
-<a id="_j426cm9u3j1h"></a>
 ## RFM 14 | How efficient is caching in the IPFS network?
 
 * _Status:_ **brainstorm**
@@ -545,12 +534,12 @@ All three components need to be build.
 
 ## RFM 16 | Effectiveness of Bitswap Discovery Process
 
-* _Status:_ **ready**
-* _DRI/Team:_
+* _Status:_ **complete**
+* _DRI/Team:_ [`@guillaumemichel`](https://github.com/guillaumemichel)
 * _Effort Needed:_
 * _Prerequisite(s):_
 * _Value:_ **HIGH**
-* _Report:_ \<insert link to report once work is complete\>
+* _Report:_ [`rfm16-bitswap-discovery-effectiveness.md`](./results/rfm16-bitswap-discovery-effectiveness.md)
 
 
 #### Proposal
@@ -681,7 +670,7 @@ Requirements to get valid results:
 - If using cloud infrastructure to store and retrieve content, it would be good to experiment with diverse cloud infrastructures (i.e., not both client and provider in the same cloud provider's infra).
 - For all retrievals we should be collecting results for the Time To First Byte (TTFB).
 
-#### Sucess Criteria
+#### Success Criteria
 
 - We have enough results, in the order of hundreds of retrievals for each Retrieval Method, to draw conclusive results on the latencies observed with each.
 - The primary metric of interest is the Time To First Byte (TTFB).
@@ -691,8 +680,8 @@ Intuitively, we are expecting the following order in terms of latency: RM-3 < RM
 
 ## RFM 19 | DHT Routing Table Health
 
-* _Status:_ **completed**
-* _DRI/Team:_ @guillaumemichel
+* _Status:_ **complete**
+* _DRI/Team:_ [`@guillaumemichel`](https://github.com/guillaumemichel)
 * _Effort Needed:_
 * _Prerequisite(s):_ None
 * _Value:_ **HIGH**
@@ -711,14 +700,13 @@ The [Nebula Crawler](https://github.com/dennis-tra/nebula-crawler) can be used t
 
 A [binary trie](https://github.com/guillaumemichel/py-binary-trie) implementation is necessary to compute XOR distances efficiently.
 
-#### Sucess Criteria
+#### Success Criteria
 
 - Get the routing table entries ditribution in the k-buckets
 - Verify if each node has its 20 closest neighbors in its routing table
 - Check if non-full k-buckets are missing any reachable peer
 - Unresponsive nodes rate in the routing table
 
-<a id="data-volume"></a>
 ## RFM 20 | Data volume stored on IPFS and file size distribution
 
 * _Status:_ **brainstorm**
@@ -741,18 +729,46 @@ The idea is to get a view of the amount of data currently stored on IPFS as well
 - From that data derive the distribution of content items published/stored on IPFS
 - Apply that distribution to the number of records seen on hydra nodes and get a relatively good estimate of the volume ￼
 
-#### Sucess Criteria
+#### Success Criteria
 
 - Get a statistically robust view of the file size distribution over time
 - Get a good estimate of the data volume stored on IPFS
 
+## RFM 21 | Quantify Hydra’s Performance Contribution
 
-<a id="tooling"></a>
+* _Status:_ **completed**
+* _DRI/Team:_ @dennis-tra
+* _Effort Needed:_ medium
+* _Prerequisite(s):_ None
+* _Value:_ **HIGH**
+* _Report:_ [`./results/rfm21-hydras-performance-contribution.md`](./results/rfm21-hydras-performance-contribution.md)
+* _Material:_ [Notion page](https://pl-strflt.notion.site/Hydras-Reliability-and-Effectiveness-7aa5088070794bd795780b74533bd6b2)
+
+#### Proposal
+
+Although not a core component of the IPFS architecture, Hydra peers play a central role in content discovery with several users and applications (see Indexer nodes) depending on them. However, there hasn’t been a thorough (or at least not documented) investigation of the Hydras’ performance with regard to: their effectiveness in providing records (i.e., do they cover the entire hash space in order to be effective?), their performance (i.e., how quick is the process of hitting a Hydra node to get the  record back, what percentage of requests do they satisfy?), or their reliability (i.e., do they constantly cover 100% of the hash space, are there more Hydras needed?). Based on these findings, we need to answer questions, such as what space for optimization exists with regard to the Hydra deployment and ultimately, how useful are they to the IPFS network in terms of the performance improvement they bring.
+
+#### Measurement Plan
+
+We run the IPFS lookup measurement that we did for the SigCOMM paper again. Once without any modification, so that we have fresh data for the current state of the network and once with slightly modified IPFS instances. Those instances either:
+
+1. Discard responses from Hydra-Boosters (in the publication and retrieval process) **OR**
+2. Get fed a list Hydra-Booster head PeerIDs and ignore those peers
+    - This would have the inaccuracy that other (non-PL) parties may run Hydra-Boosters and we wouldn’t discard those.
+
+Ideally, we should combine both.
+
+#### Success Criteria
+
+- We have an accurate view of the performance of the network (primarily in terms of DHT Lookup) when Hydras are not contributing.
+- We have a view of how DHT Lookups are affected in a Hydra-less world in different regions.
+
+
 ## Tooling/Other notes
 
 ### Longitudinal repository of IPFS crawling snapshots
 
-Currently we have no clear view of how the IPFS evolves over time.
+Currently, we have no clear view of how the IPFS evolves over time.
 
 It would be very useful to collect periodic (e.g. daily if possible) snapshots of the IPFS crawling results.
 
