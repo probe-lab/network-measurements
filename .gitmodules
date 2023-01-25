@@ -4,3 +4,11 @@
 [submodule "implementations/rmf3-location-ipfs-users-and-requested-content/IPFS-location-requested-content"]
 	path = implementations/rmf3-location-ipfs-users-and-requested-content/IPFS-location-requested-content
 	url = https://github.com/pedroAkos/IPFS-location-requested-content
+[submodule "implementations/rfm16-bitswap-discovery-effectiveness/kubo"]
+	path = implementations/rfm16-bitswap-discovery-effectiveness/kubo
+	url = https://github.com/guillaumemichel/kubo
+	branch = bitswap-discovery-effectiveness
+[submodule "implementations/rfm16-bitswap-discovery-effectiveness/go-bitswap"]
+	path = implementations/rfm16-bitswap-discovery-effectiveness/go-bitswap
+	url = https://github.com/guillaumemichel/go-bitswap
+	branch = bitswap-discovery-effectiveness
