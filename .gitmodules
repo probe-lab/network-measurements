@@ -1,6 +1,9 @@
 [submodule "implementations/rfm2-uptime-and-churn/nebula-crawler"]
 	path = implementations/rfm2-uptime-and-churn/nebula-crawler
 	url = https://github.com/dennis-tra/nebula-crawler.git
+[submodule "implementations/rmf3-location-ipfs-users-and-requested-content/IPFS-location-requested-content"]
+	path = implementations/rmf3-location-ipfs-users-and-requested-content/IPFS-location-requested-content
+	url = https://github.com/pedroAkos/IPFS-location-requested-content
 [submodule "implementations/rfm16-bitswap-discovery-effectiveness/kubo"]
 	path = implementations/rfm16-bitswap-discovery-effectiveness/kubo
 	url = https://github.com/guillaumemichel/kubo
