@@ -16,7 +16,9 @@ There are numerous decentralized, P2P networks. This projoect focuses primarily 
 
 **RFMs:** We organize work around Requests for Measurements (RFMs). RFMs are micro-projects that individuals or teams can take up and deliver. The [RFMs](RFMs.md) document containts the proposals for measurements that have been suggested so far and will be implemented as part of the IPFS Network Observatory.
 
-**Results:** The results of this project are reported in the form of technical reports in the [Reports](reports/) folder. Each RFM, once completed, should be accompanied by one report to document the findings.
+**Results:** The results of this project are reported in the form of technical reports in the [./results](./results/) folder. Each RFM, once completed, should be accompanied by one report to document the findings.
+
+**Reports:** Discover the latest updates on DHT server nodes in the IPFS network by accessing our [weekly reports](./reports/README.md). These reports showcase statistics and insights on node distribution, performance, and more. Stay informed and track the growth of the IPFS network by exploring our comprehensive and easily accessible reports.
 
 **Get Involved:** There are two ways you can get involved:
 - You can choose an RFM you want to take on from the list of existing [RFMs](RFMs.md).
