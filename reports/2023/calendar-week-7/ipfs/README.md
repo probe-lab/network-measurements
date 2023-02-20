@@ -29,6 +29,10 @@
     - [Classification](#classification-3)
     - [Agents](#agents-2)
   - [Top Updating Peers](#top-updating-peers)
+  - [Website Monitoring](#website-monitoring)
+    - [Performance Timing Page Load](#performance-timing-page-load)
+    - [Time To First Byte](#time-to-first-byte)
+  - [Terminology](#terminology)
     - [Peer Classification](#peer-classification)
     - [Storm Specific Protocols](#storm-specific-protocols)
 
@@ -252,6 +256,27 @@ An "updating peer" is a peer that we observed with multiple agent versions.
 | `12D3KooWGBGducVn...` | `kubo/0.14.0/e0fabd6` | 168  | kubo/0.14.0/e0fabd6<br/>kubo/0.14.0/e0fabd6/docker | 2 |
 | `12D3KooWDNeeug7H...` | `kubo/0.14.0/e0fabd6` | 168  | kubo/0.14.0/e0fabd6<br/>kubo/0.14.0/e0fabd6/docker | 2 |
 | `12D3KooWQn1N1pWz...` | `kubo/0.14.0/e0fabd6` | 167  | kubo/0.14.0/e0fabd6<br/>kubo/0.14.0/e0fabd6/docker | 2 |
+
+## Website Monitoring
+
+We are using [`phantomas`](https://github.com/macbre/phantomas) for the following measurements. The graphs below show the p50, p90, and p99 timings of different metrics and aggregate the performance across the last week.
+
+**Do you want another metric visualized?** Check out [this long list](https://github.com/macbre/phantomas/blob/devel/docs/metrics.md) of options.
+
+### Performance Timing Page Load
+
+![Performance Timing Page Load](./plots/tiros-performance-timing-page-load.png)
+
+The time it took to fully load the page. The large number in each tile is the time in second and the small number in each lower right corner is the number of data points that went into each measurement.
+
+### Time To First Byte
+
+![Time To First Byte](./plots/tiros-ttfb.png)
+
+
+The time it took to receive the first byte of the first response (that was not a redirect). The large number in each tile is the time in second and the small number in each lower right corner is the number of data points that went into each measurement.
+
+## Terminology
 
 ### Peer Classification
 
