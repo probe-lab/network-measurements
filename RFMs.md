@@ -16,13 +16,13 @@ This page lists measurements that are useful to understand the dynamics and the 
 
 **[RFM 21 | Quantify Hydra’s Performance Contribution](#rfm-21--quantify-hydras-performance-contribution)**
 
+**[RFM 15 | Decentralized NAT Hole-Punching Performance](#rfm-15--decentralized-nat-hole-punching-performance)**
+
 ## Ongoing 
 
 **[RFM 3 | Location of IPFS end users and requested content](#rfm-3---location-of-ipfs-end-users-and-requested-content)**
 
 **[RFM 7 | Distribution of DHT lookup times and Breakdown of Content Routing Latency](#rfm-7---distribution-of-dht-lookup-times-and-breakdown-of-content-routing-latency)**
-
-**[RFM 15 | Decentralized NAT Hole-Punching Performance](#rfm-15--decentralized-nat-hole-punching-performance)**
 
 ## Current Priority - Batch 1
 
@@ -497,13 +497,13 @@ NOTE: This is an important RFM, as it relates a lot to our projects Multi-Level 
 
 ## RFM 15 | Decentralized NAT Hole-Punching Performance
 
-* _Status:_ **ready to implement**
+* _Status:_ **completed**
 * _DRI/Team:_ @dennis-tra
-* _Effort Needed:_
+* _Effort Needed:_ HIGH
 * _Prerequisite(s):_
 * _Value:_ **HIGH**
 * _Report:_ \<insert link to report once work is complete\>
-* _Material:_ https://github.com/dennis-tra/punchr
+* _Material:_ https://github.com/libp2p/punchr
 
 #### Proposal
 
