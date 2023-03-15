@@ -6,16 +6,16 @@ Starting in 2023, we are publishing weekly reports about the IPFS network from o
 
 ### IPFS
 
-- [Calendar Week 0](2023/calendar-week-0/ipfs/README.md)
-- [Calendar Week 1](2023/calendar-week-1/ipfs/README.md)
-- [Calendar Week 2](2023/calendar-week-2/ipfs/README.md)
-- [Calendar Week 3](2023/calendar-week-3/ipfs/README.md)
-- [Calendar Week 4](2023/calendar-week-4/ipfs/README.md)
-- [Calendar Week 5](2023/calendar-week-5/ipfs/README.md)
-- [Calendar Week 6](2023/calendar-week-6/ipfs/README.md)
-- [Calendar Week 7](2023/calendar-week-7/ipfs/README.md)
-- [Calendar Week 8](2023/calendar-week-8/ipfs/README.md)
-- [Calendar Week 9](2023/calendar-week-9/ipfs/README.md)
+- [Calendar Week 00](2023/calendar-week-00/ipfs/README.md)
+- [Calendar Week 01](2023/calendar-week-01/ipfs/README.md)
+- [Calendar Week 02](2023/calendar-week-02/ipfs/README.md)
+- [Calendar Week 03](2023/calendar-week-03/ipfs/README.md)
+- [Calendar Week 04](2023/calendar-week-04/ipfs/README.md)
+- [Calendar Week 05](2023/calendar-week-05/ipfs/README.md)
+- [Calendar Week 06](2023/calendar-week-06/ipfs/README.md)
+- [Calendar Week 07](2023/calendar-week-07/ipfs/README.md)
+- [Calendar Week 08](2023/calendar-week-08/ipfs/README.md)
+- [Calendar Week 09](2023/calendar-week-09/ipfs/README.md)
 - [Calendar Week 10](2023/calendar-week-10/ipfs/README.md)
 
 ## 2021
