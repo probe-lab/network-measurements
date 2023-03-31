@@ -155,8 +155,6 @@ Only the top 10 kubo versions appear in the right graph (due to lack of colors) 
 - DHT Server peers: unique peers that we found with our network crawls
 - DHT Client peers: unique peers that we saw from our bootstrapper/preload nodes minus DHT Server peers
 
-We extract the number of DHT server peers as found via our network crawls from the DHT client peers that we saw from our bootstrappers and 
-
 #### Errors
 
 ![Crawl Errors](./plots/crawl-errors.png)
