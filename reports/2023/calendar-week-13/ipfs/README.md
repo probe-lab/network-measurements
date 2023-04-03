@@ -175,6 +175,13 @@ Only the top 10 kubo versions appear in the right graph (due to lack of colors) 
 
 `storm*` are `go-ipfs/0.8.0/48f94e2` peers that support at least one [storm specific protocol](#storm-specific-protocols).
 
+#### DHT Server vs. Clients
+
+![DHT Server vs. Clients](./plots/dht-servers-vs-clients.png)
+
+- DHT Server peers: unique peers that we found with our network crawls
+- DHT Client peers: unique peers that we saw from our bootstrapper/preload nodes minus DHT Server peers
+
 #### Errors
 
 ![Crawl Errors](./plots/crawl-errors.png)
