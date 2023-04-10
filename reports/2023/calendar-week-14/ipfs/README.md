@@ -42,7 +42,7 @@
   - [Terminology](#terminology)
     - [Peer Classification](#peer-classification)
     - [Storm Specific Protocols](#storm-specific-protocols)
-    
+
 ## General Information
 
 The following results show measurement data that were collected in calendar week 14 in 2023 from `2023-04-03` to `2023-04-10`.
@@ -180,6 +180,14 @@ A "rotating node" is a node (as identified by its IP address) that was found to 
 Only the top 10 kubo versions appear in the right graph (due to lack of colors) based on the average count in the time interval. The `0.8.x` versions **do not** contain disguised storm peers.
 
 `storm*` are `go-ipfs/0.8.0/48f94e2` peers that support at least one [storm specific protocol](#storm-specific-protocols).
+
+#### DHT Server vs. Clients
+
+![DHT Server vs. Clients](./plots/dht-servers-vs-clients.png)
+
+- DHT Server peers: unique peers that we found with our network crawls
+- DHT Client peers: unique peers that we saw from our bootstrapper/preload nodes minus DHT Server peers
+
 
 #### Errors
 
