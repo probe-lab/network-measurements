@@ -127,15 +127,15 @@ A "rotating node" is a node (as identified by its IP address) that was found to 
 
 #### Overall
 
-![Crawl Overview](/crawl-overview.png)
+![Crawl Overview](./plots/crawl-overview.png)
 
 #### Classification
 
-![Crawl Classifications](/crawl-classifications.png)
+![Crawl Classifications](./plots/crawl-classifications.png)
 
 #### Agents
 
-![Crawl Properties By Agent](/crawl-properties.png)
+![Crawl Properties By Agent](./plots/crawl-properties.png)
 
 Only the top 10 kubo versions appear in the right graph (due to lack of colors) based on the average count in the time interval. The `0.8.x` versions **do not** contain disguised storm peers.
 
@@ -150,11 +150,11 @@ Only the top 10 kubo versions appear in the right graph (due to lack of colors) 
 
 #### Errors
 
-![Crawl Errors](/crawl-errors.png)
+![Crawl Errors](./plots/crawl-errors.png)
 
 #### Total Peer IDs Discovered Classification
 
-![Peer count by classification](/peer-classifications.png)
+![Peer count by classification](./plots/peer-classifications.png)
 
 In the specified time interval from `2023-04-24` to `2023-05-01` we visited `` unique peer IDs.
 All peer IDs fall into one of the following classifications:
@@ -170,11 +170,11 @@ All peer IDs fall into one of the following classifications:
 
 #### Protocols
 
-![Crawl Properties By Protocols](/crawl-protocols.png)
+![Crawl Properties By Protocols](./plots/crawl-protocols.png)
 
 ## Churn
 
-![Peer Churn](/peer-churn.png)
+![Peer Churn](./plots/peer-churn.png)
 
 Only the top 10 kubo versions appear in the right graph (due to lack of colors) based on the average count in the time interval. The `0.8.x` versions **do not** contain disguised storm peers. This graph also excludes peers that were online the whole time. You can read this graph as: if I see a peer joining the network, what's the likelihood for it to stay `X` hours in the network.
 
@@ -182,7 +182,7 @@ Only the top 10 kubo versions appear in the right graph (due to lack of colors) 
 
 ## Inter Arrival Time
 
-![Inter Arrival Time](/peer-inter-arrival-time.png)
+![Inter Arrival Time](./plots/peer-inter-arrival-time.png)
 
 Only the top 10 kubo versions appear in the right graph (due to lack of colors) based on the average count in the time interval. The `0.8.x` versions **do not** contain disguised storm peers.
 
@@ -192,19 +192,19 @@ Only the top 10 kubo versions appear in the right graph (due to lack of colors) 
 
 ### Overall
 
-![Overall Agent Distribution](/agents-overall.png)
+![Overall Agent Distribution](./plots/agents-overall.png)
 
 Includes all peers that the crawler was able to connect to at least once: `dangling`, `online`, `oneoff`, `entered`. Hence, the total number of peers is lower as the graph excludes `offline` and `left` peers (see [classification](#peer-classification)).
 
 ### Kubo
 
-![Kubo Agent Distribution](/agents-kubo.png)
+![Kubo Agent Distribution](./plots/agents-kubo.png)
 
 `storm` shows the `go-ipfs/0.8.0/48f94e2` peers that support at least one [storm specific protocol](#storm-specific-protocols).
 
 ### Classification
 
-![Agents by Classification](/agents-classification.png)
+![Agents by Classification](./plots/agents-classification.png)
 
 The classifications are documented [here](#peer-classification).
 `storm*` are `go-ipfs/0.8.0/48f94e2` peers that support at least one [storm specific protocol](#storm-specific-protocols).
@@ -213,20 +213,20 @@ The classifications are documented [here](#peer-classification).
 
 ### Unique IP Addresses
 
-![Unique IP addresses](/geo-unique-ip.png)
+![Unique IP addresses](./plots/geo-unique-ip.png)
 
 This graph shows all IP addresses that we found from `2023-04-24` to `2023-05-01` in the DHT and their geolocation distribution by country.
 
 ### Classification
 
-![Peer Geolocation By Classification](/geo-peer-classification.png)
+![Peer Geolocation By Classification](./plots/geo-peer-classification.png)
 
 The classifications are documented [here](#peer-classification). 
 The number in parentheses in the graph titles show the number of unique peer IDs that went into the specific subgraph.
 
 ### Agents
 
-![Peer Geolocation By Agent](/geo-peer-agents.png)
+![Peer Geolocation By Agent](./plots/geo-peer-agents.png)
 
 `storm*` are `go-ipfs/0.8.0/48f94e2` peers that support at least one [storm specific protocol](#storm-specific-protocols).
 
@@ -234,19 +234,19 @@ The number in parentheses in the graph titles show the number of unique peer IDs
 
 ### Overall
 
-![Overall Datacenter Distribution](/cloud-overall.png)
+![Overall Datacenter Distribution](./plots/cloud-overall.png)
 
 This graph shows all IP addresses that we found from `2023-04-24` to `2023-05-01` in the DHT and their datacenter association.
 
 ### Classification
 
-![Datacenter Distribution By Classification](/cloud-classification.png)
+![Datacenter Distribution By Classification](./plots/cloud-classification.png)
 
 The classifications are documented [here](#peer-classification). Note that the x-axes are different.
 
 ### Agents
 
-![Datacenter Distribution By Agent](/cloud-agents.png)
+![Datacenter Distribution By Agent](./plots/cloud-agents.png)
 
 The number in parentheses in the graph titles show the number of unique peer IDs that went into the specific subgraph.
 
