@@ -39,7 +39,6 @@
     - [Weekly](#weekly)
     - [Daily](#daily)
     - [Error Rate](#error-rate-1)
-  - [Terminology](#terminology)
     - [Peer Classification](#peer-classification)
     - [Storm Specific Protocols](#storm-specific-protocols)
 
@@ -143,7 +142,7 @@ Only the top 10 kubo versions appear in the right graph (due to lack of colors) 
 
 #### DHT Server vs. Clients
 
-![DHT Server vs. Clients](./plots/dht-servers-vs-clients.png)
+![DHT Server vs. Clients](./plots/ipfs-servers-vs-clients.png)
 
 - DHT Server peers: unique peers that we found with our network crawls
 - DHT Client peers: unique peers that we saw from our bootstrapper/preload nodes minus DHT Server peers
