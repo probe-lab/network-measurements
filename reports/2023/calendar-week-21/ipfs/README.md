@@ -3,6 +3,7 @@
 ## Table of Contents
 
 - [Nebula Measurement Results Calendar Week 21 - 2023](#nebula-measurement-results-calendar-week-21---2023)
+  - [Table of Contents](#table-of-contents)
   - [General Information](#general-information)
     - [Agent Versions](#agent-versions)
     - [Protocols](#protocols)
@@ -39,7 +40,6 @@
     - [Weekly](#weekly)
     - [Daily](#daily)
     - [Error Rate](#error-rate-1)
-  - [Terminology](#terminology)
     - [Peer Classification](#peer-classification)
     - [Storm Specific Protocols](#storm-specific-protocols)
 
