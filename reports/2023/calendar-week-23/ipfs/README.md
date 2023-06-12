@@ -39,7 +39,6 @@
     - [Weekly](#weekly)
     - [Daily](#daily)
     - [Error Rate](#error-rate-1)
-  - [Terminology](#terminology)
     - [Peer Classification](#peer-classification)
     - [Storm Specific Protocols](#storm-specific-protocols)
 
