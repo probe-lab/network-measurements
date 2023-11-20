@@ -52,6 +52,7 @@ Starting in 2023, we are publishing weekly reports about the IPFS network from o
 - [Calendar Week 43 - 2023-10-23](2023/calendar-week-43/ipfs/README.md)
 - [Calendar Week 44 - 2023-10-30](2023/calendar-week-44/ipfs/README.md)
 - [Calendar Week 45 - 2023-11-06](2023/calendar-week-45/ipfs/README.md)
+- [Calendar Week 46 - 2023-11-13](2023/calendar-week-46/ipfs/README.md)
 
 ### Polkadot
 
