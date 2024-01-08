@@ -1,6 +1,0 @@
----
-docker_img: vgiotsas/ipfs-crawler:0.1
-container_name: ipfs-crawler
-aws_access_key: AKIAIPYC7WDA7Z3KM4RA
-aws_secret_key: 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
-bucket_name: ipfs-crawls3
