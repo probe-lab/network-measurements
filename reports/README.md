@@ -2,6 +2,14 @@
 
 Starting in 2023, we are publishing weekly reports about the IPFS network from our [Nebula crawler](https://github.com/dennis-tra/nebula). Feel free to reach out to us on [`#probe-lab` in Discord](https://discord.com/channels/806902334369824788/958879774032416769) or open an issue in this repository to discuss results.
 
+## 2025
+
+### IPFS
+
+- [Calendar Week 00 - 2024-01-06](2025/calendar-week-00/ipfs/README.md)
+- [Calendar Week 01 - 2024-01-13](2025/calendar-week-01/ipfs/README.md)
+
+
 ## 2024
 
 ### IPFS
