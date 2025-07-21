@@ -30,6 +30,12 @@ Starting in 2023, we are publishing weekly reports about the IPFS network from o
 - [Calendar Week 21 - 2024-06-02](2025/calendar-week-21/ipfs/README.md)
 - [Calendar Week 22 - 2024-06-09](2025/calendar-week-22/ipfs/README.md)
 - [Calendar Week 23 - 2024-06-16](2025/calendar-week-23/ipfs/README.md)
+- [Calendar Week 24 - 2024-06-23](2025/calendar-week-24/ipfs/README.md)
+- [Calendar Week 25 - 2024-06-30](2025/calendar-week-25/ipfs/README.md)
+- [Calendar Week 26 - 2024-07-07](2025/calendar-week-26/ipfs/README.md)
+- [Calendar Week 27 - 2024-07-14](2025/calendar-week-23/ipfs/README.md)
+- [Calendar Week 28 - 2024-07-21](2025/calendar-week-23/ipfs/README.md)
+  
 
 
 ## 2024
