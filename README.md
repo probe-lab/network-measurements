@@ -1,5 +1,8 @@
 # IPFS Network Observatory 
 
+## UPDATE
+As of Q4 2025, this repo is archived and will no longer be updated. Please refer to: https://probelab.io/ipfs/ for up-to-date statistics on the IPFS network.
+
 ## Motivation & Vision
 
 The dynamics of public, user-run, permissionless, P2P networks are rather unpredictable due to the multiple types of applications and services that leverage them. Because they are not owned by a single user, or operated by a single entity, analysing their behavior needs to be done through (non-invasive) proxies and probes, rather than through (invasive) controls as is the case in a centralized system. Because of this hard challenge, most P2P networks put observability as a secondary goal. However, they should not!
